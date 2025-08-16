@@ -39,16 +39,16 @@ public class homepage extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(429, 429, 429)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(551, Short.MAX_VALUE))
+                .addGap(357, 357, 357)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(143, 143, 143)
-                .addComponent(jLabel1)
-                .addContainerGap(419, Short.MAX_VALUE))
+                .addGap(147, 147, 147)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();
