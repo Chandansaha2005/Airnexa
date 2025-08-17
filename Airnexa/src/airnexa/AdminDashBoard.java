@@ -35,18 +35,19 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jToggleButton4 = new javax.swing.JToggleButton();
         jToggleButton6 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
-        tabs = new javax.swing.JTabbedPane();
-        tabs1 = new javax.swing.JTabbedPane();
-        tabs2 = new javax.swing.JTabbedPane();
-        tabs3 = new javax.swing.JTabbedPane();
-        tabs4 = new javax.swing.JTabbedPane();
-        tabs5 = new javax.swing.JTabbedPane();
-        tabs6 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        MainPanel = new javax.swing.JPanel();
+        DashBoardPanel = new javax.swing.JPanel();
+        FlightsPanel = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        BookingsPanel = new javax.swing.JPanel();
+        UsersPanel = new javax.swing.JPanel();
+        ReportsPanel = new javax.swing.JPanel();
+        SettingsPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +60,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jToggleButton3.setBackground(new java.awt.Color(0, 0, 204));
         jToggleButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton3.setText("DASHBOARD");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton3);
 
         jToggleButton1.setBackground(new java.awt.Color(0, 0, 204));
@@ -101,18 +107,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jToggleButton2.setText("SETTINGS");
         jPanel2.add(jToggleButton2);
 
-        tabs.setBackground(new java.awt.Color(0, 0, 0));
-        tabs.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-        tabs1.setBackground(new java.awt.Color(255, 255, 255));
-        tabs1.setForeground(new java.awt.Color(0, 0, 0));
-        tabs.addTab("              DASHBOARD              ", tabs1);
-        tabs.addTab("              MANAGE FLIGHTS              ", tabs2);
-        tabs.addTab("              MANAGE BOOKING              ", tabs3);
-        tabs.addTab("              MANAGE USERS              ", tabs4);
-        tabs.addTab("              REPORTS              ", tabs5);
-        tabs.addTab("          SETTINGS          ", tabs6);
-
         jPanel1.setBackground(new java.awt.Color(40, 120, 200));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -146,21 +140,113 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.LINE_END);
 
+        MainPanel.setLayout(new java.awt.CardLayout());
+
+        javax.swing.GroupLayout DashBoardPanelLayout = new javax.swing.GroupLayout(DashBoardPanel);
+        DashBoardPanel.setLayout(DashBoardPanelLayout);
+        DashBoardPanelLayout.setHorizontalGroup(
+            DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        DashBoardPanelLayout.setVerticalGroup(
+            DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        MainPanel.add(DashBoardPanel, "card2");
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout FlightsPanelLayout = new javax.swing.GroupLayout(FlightsPanel);
+        FlightsPanel.setLayout(FlightsPanelLayout);
+        FlightsPanelLayout.setHorizontalGroup(
+            FlightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1100, Short.MAX_VALUE)
+            .addGroup(FlightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FlightsPanelLayout.createSequentialGroup()
+                    .addContainerGap(550, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(323, Short.MAX_VALUE)))
+        );
+        FlightsPanelLayout.setVerticalGroup(
+            FlightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 602, Short.MAX_VALUE)
+            .addGroup(FlightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FlightsPanelLayout.createSequentialGroup()
+                    .addContainerGap(301, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(148, Short.MAX_VALUE)))
+        );
+
+        MainPanel.add(FlightsPanel, "card2");
+
+        javax.swing.GroupLayout BookingsPanelLayout = new javax.swing.GroupLayout(BookingsPanel);
+        BookingsPanel.setLayout(BookingsPanelLayout);
+        BookingsPanelLayout.setHorizontalGroup(
+            BookingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1100, Short.MAX_VALUE)
+        );
+        BookingsPanelLayout.setVerticalGroup(
+            BookingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 602, Short.MAX_VALUE)
+        );
+
+        MainPanel.add(BookingsPanel, "card2");
+
+        javax.swing.GroupLayout UsersPanelLayout = new javax.swing.GroupLayout(UsersPanel);
+        UsersPanel.setLayout(UsersPanelLayout);
+        UsersPanelLayout.setHorizontalGroup(
+            UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1100, Short.MAX_VALUE)
+        );
+        UsersPanelLayout.setVerticalGroup(
+            UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 602, Short.MAX_VALUE)
+        );
+
+        MainPanel.add(UsersPanel, "card2");
+
+        javax.swing.GroupLayout ReportsPanelLayout = new javax.swing.GroupLayout(ReportsPanel);
+        ReportsPanel.setLayout(ReportsPanelLayout);
+        ReportsPanelLayout.setHorizontalGroup(
+            ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1100, Short.MAX_VALUE)
+        );
+        ReportsPanelLayout.setVerticalGroup(
+            ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 602, Short.MAX_VALUE)
+        );
+
+        MainPanel.add(ReportsPanel, "card2");
+
+        javax.swing.GroupLayout SettingsPanelLayout = new javax.swing.GroupLayout(SettingsPanel);
+        SettingsPanel.setLayout(SettingsPanelLayout);
+        SettingsPanelLayout.setHorizontalGroup(
+            SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1100, Short.MAX_VALUE)
+        );
+        SettingsPanelLayout.setVerticalGroup(
+            SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 602, Short.MAX_VALUE)
+        );
+
+        MainPanel.add(SettingsPanel, "card2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(tabs, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -186,6 +272,10 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton6ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,24 +303,25 @@ public class AdminDashBoard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel BookingsPanel;
+    private javax.swing.JPanel DashBoardPanel;
+    private javax.swing.JPanel FlightsPanel;
+    private javax.swing.JPanel MainPanel;
+    private javax.swing.JPanel ReportsPanel;
+    private javax.swing.JPanel SettingsPanel;
+    private javax.swing.JPanel UsersPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JToggleButton jToggleButton5;
     private javax.swing.JToggleButton jToggleButton6;
-    private javax.swing.JTabbedPane tabs;
-    private javax.swing.JTabbedPane tabs1;
-    private javax.swing.JTabbedPane tabs2;
-    private javax.swing.JTabbedPane tabs3;
-    private javax.swing.JTabbedPane tabs4;
-    private javax.swing.JTabbedPane tabs5;
-    private javax.swing.JTabbedPane tabs6;
     // End of variables declaration//GEN-END:variables
 }
