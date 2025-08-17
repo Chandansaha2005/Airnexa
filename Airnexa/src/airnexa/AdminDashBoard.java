@@ -35,6 +35,13 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jToggleButton4 = new javax.swing.JToggleButton();
         jToggleButton6 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
+        tabs = new javax.swing.JTabbedPane();
+        tabs1 = new javax.swing.JTabbedPane();
+        tabs2 = new javax.swing.JTabbedPane();
+        tabs3 = new javax.swing.JTabbedPane();
+        tabs4 = new javax.swing.JTabbedPane();
+        tabs5 = new javax.swing.JTabbedPane();
+        tabs6 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -94,6 +101,18 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jToggleButton2.setText("SETTINGS");
         jPanel2.add(jToggleButton2);
 
+        tabs.setBackground(new java.awt.Color(0, 0, 0));
+        tabs.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tabs1.setBackground(new java.awt.Color(255, 255, 255));
+        tabs1.setForeground(new java.awt.Color(0, 0, 0));
+        tabs.addTab("              DASHBOARD              ", tabs1);
+        tabs.addTab("              MANAGE FLIGHTS              ", tabs2);
+        tabs.addTab("              MANAGE BOOKING              ", tabs3);
+        tabs.addTab("              MANAGE USERS              ", tabs4);
+        tabs.addTab("              REPORTS              ", tabs5);
+        tabs.addTab("          SETTINGS          ", tabs6);
+
         jPanel1.setBackground(new java.awt.Color(40, 120, 200));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -133,12 +152,15 @@ public class AdminDashBoard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(tabs, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 635, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -203,5 +225,12 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JToggleButton jToggleButton5;
     private javax.swing.JToggleButton jToggleButton6;
+    private javax.swing.JTabbedPane tabs;
+    private javax.swing.JTabbedPane tabs1;
+    private javax.swing.JTabbedPane tabs2;
+    private javax.swing.JTabbedPane tabs3;
+    private javax.swing.JTabbedPane tabs4;
+    private javax.swing.JTabbedPane tabs5;
+    private javax.swing.JTabbedPane tabs6;
     // End of variables declaration//GEN-END:variables
 }
