@@ -47,13 +47,15 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel2.setFocusable(false);
         jPanel2.setPreferredSize(new java.awt.Dimension(150, 0));
         jPanel2.setVerifyInputWhenFocusTarget(false);
-        jPanel2.setLayout(new java.awt.GridLayout(0, 1, 6, 6));
+        jPanel2.setLayout(new java.awt.GridLayout());
 
         jToggleButton3.setBackground(new java.awt.Color(0, 0, 204));
+        jToggleButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton3.setText("DASHBOARD");
         jPanel2.add(jToggleButton3);
 
         jToggleButton1.setBackground(new java.awt.Color(0, 0, 204));
+        jToggleButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jToggleButton1.setText("MANAGE FLIGHTS");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,16 +64,34 @@ public class AdminDashBoard extends javax.swing.JFrame {
         });
         jPanel2.add(jToggleButton1);
 
-        jToggleButton5.setText("jToggleButton5");
+        jToggleButton5.setBackground(new java.awt.Color(0, 0, 204));
+        jToggleButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jToggleButton5.setText("MANAGE BOOKING");
+        jToggleButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton5ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton5);
 
-        jToggleButton4.setText("jToggleButton4");
+        jToggleButton4.setBackground(new java.awt.Color(0, 0, 204));
+        jToggleButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jToggleButton4.setText("USERS");
         jPanel2.add(jToggleButton4);
 
-        jToggleButton6.setText("jToggleButton6");
+        jToggleButton6.setBackground(new java.awt.Color(0, 0, 204));
+        jToggleButton6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jToggleButton6.setText("REPORTS");
+        jToggleButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton6ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jToggleButton6);
 
-        jToggleButton2.setText("jToggleButton2");
+        jToggleButton2.setBackground(new java.awt.Color(0, 0, 204));
+        jToggleButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jToggleButton2.setText("SETTINGS");
         jPanel2.add(jToggleButton2);
 
         jPanel1.setBackground(new java.awt.Color(40, 120, 200));
@@ -111,17 +131,15 @@ public class AdminDashBoard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 996, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 635, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -138,6 +156,14 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton5ActionPerformed
+
+    private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton6ActionPerformed
 
     /**
      * @param args the command line arguments
