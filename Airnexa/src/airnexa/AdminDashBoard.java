@@ -46,14 +46,14 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         MainPanel = new javax.swing.JPanel();
-        DashBoardPanel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         FlightsPanel = new javax.swing.JPanel();
         BookingsPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         UsersPanel = new javax.swing.JPanel();
         ReportsPanel = new javax.swing.JPanel();
         SettingsPanel = new javax.swing.JPanel();
+        DashBoardPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,27 +158,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         MainPanel.setLayout(new java.awt.CardLayout());
 
-        jLabel2.setText("dashhhhhhhhhhh");
-
-        javax.swing.GroupLayout DashBoardPanelLayout = new javax.swing.GroupLayout(DashBoardPanel);
-        DashBoardPanel.setLayout(DashBoardPanelLayout);
-        DashBoardPanelLayout.setHorizontalGroup(
-            DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DashBoardPanelLayout.createSequentialGroup()
-                .addContainerGap(426, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(411, 411, 411))
-        );
-        DashBoardPanelLayout.setVerticalGroup(
-            DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DashBoardPanelLayout.createSequentialGroup()
-                .addGap(272, 272, 272)
-                .addComponent(jLabel2)
-                .addContainerGap(324, Short.MAX_VALUE))
-        );
-
-        MainPanel.add(DashBoardPanel, "card2");
-
         javax.swing.GroupLayout FlightsPanelLayout = new javax.swing.GroupLayout(FlightsPanel);
         FlightsPanel.setLayout(FlightsPanelLayout);
         FlightsPanelLayout.setHorizontalGroup(
@@ -251,6 +230,27 @@ public class AdminDashBoard extends javax.swing.JFrame {
         );
 
         MainPanel.add(SettingsPanel, "card2");
+
+        jLabel2.setText("dashhhhhhhhhhh");
+
+        javax.swing.GroupLayout DashBoardPanelLayout = new javax.swing.GroupLayout(DashBoardPanel);
+        DashBoardPanel.setLayout(DashBoardPanelLayout);
+        DashBoardPanelLayout.setHorizontalGroup(
+            DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DashBoardPanelLayout.createSequentialGroup()
+                .addContainerGap(426, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(411, 411, 411))
+        );
+        DashBoardPanelLayout.setVerticalGroup(
+            DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DashBoardPanelLayout.createSequentialGroup()
+                .addGap(272, 272, 272)
+                .addComponent(jLabel2)
+                .addContainerGap(324, Short.MAX_VALUE))
+        );
+
+        MainPanel.add(DashBoardPanel, "card2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
