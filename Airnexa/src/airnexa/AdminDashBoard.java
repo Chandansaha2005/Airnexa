@@ -19,7 +19,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
      */
     public AdminDashBoard() {
         initComponents();
-         CardLayout cl = (CardLayout) (MainPanel.getLayout());
+        CardLayout cl = (CardLayout) (MainPanel.getLayout());
         cl.show(MainPanel, "Dashboard");
     }
 
@@ -47,13 +47,19 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         MainPanel = new javax.swing.JPanel();
         FlightsPanel = new javax.swing.JPanel();
-        BookingsPanel = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        BookingsPanel = new javax.swing.JPanel();
         UsersPanel = new javax.swing.JPanel();
         ReportsPanel = new javax.swing.JPanel();
         SettingsPanel = new javax.swing.JPanel();
         DashBoardPanel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,99 +164,135 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         MainPanel.setLayout(new java.awt.CardLayout());
 
-        javax.swing.GroupLayout FlightsPanelLayout = new javax.swing.GroupLayout(FlightsPanel);
-        FlightsPanel.setLayout(FlightsPanelLayout);
-        FlightsPanelLayout.setHorizontalGroup(
-            FlightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        FlightsPanelLayout.setVerticalGroup(
-            FlightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        FlightsPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        FlightsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        FlightsPanel.setLayout(new java.awt.BorderLayout());
 
-        MainPanel.add(FlightsPanel, "card2");
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
+        jPanel4.setLayout(new java.awt.BorderLayout());
 
-        jLabel3.setText("bookkkkkkkkkk");
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.setPreferredSize(new java.awt.Dimension(300, 150));
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        FlightsPanel.add(jPanel4, java.awt.BorderLayout.CENTER);
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setText("Manage Flights ");
+        jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel6.add(jLabel3, java.awt.BorderLayout.CENTER);
+
+        jPanel7.setOpaque(false);
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jButton5.setBackground(new java.awt.Color(20, 120, 200));
+        jButton5.setForeground(new java.awt.Color(255, 255, 51));
+        jButton5.setText("🔔");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButton5);
+
+        jButton6.setBackground(new java.awt.Color(255, 51, 51));
+        jButton6.setText("LOGOUT");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButton6);
+
+        jPanel6.add(jPanel7, java.awt.BorderLayout.LINE_END);
+
+        FlightsPanel.add(jPanel6, java.awt.BorderLayout.PAGE_START);
+
+        MainPanel.add(FlightsPanel, "FlightBox");
 
         javax.swing.GroupLayout BookingsPanelLayout = new javax.swing.GroupLayout(BookingsPanel);
         BookingsPanel.setLayout(BookingsPanelLayout);
         BookingsPanelLayout.setHorizontalGroup(
             BookingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BookingsPanelLayout.createSequentialGroup()
-                .addContainerGap(498, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(353, 353, 353))
+            .addGap(0, 1124, Short.MAX_VALUE)
         );
         BookingsPanelLayout.setVerticalGroup(
             BookingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BookingsPanelLayout.createSequentialGroup()
-                .addContainerGap(412, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(184, 184, 184))
+            .addGap(0, 777, Short.MAX_VALUE)
         );
 
-        MainPanel.add(BookingsPanel, "card2");
+        MainPanel.add(BookingsPanel, "BookingBox");
 
         javax.swing.GroupLayout UsersPanelLayout = new javax.swing.GroupLayout(UsersPanel);
         UsersPanel.setLayout(UsersPanelLayout);
         UsersPanelLayout.setHorizontalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 932, Short.MAX_VALUE)
+            .addGap(0, 1124, Short.MAX_VALUE)
         );
         UsersPanelLayout.setVerticalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 612, Short.MAX_VALUE)
+            .addGap(0, 777, Short.MAX_VALUE)
         );
 
-        MainPanel.add(UsersPanel, "card2");
+        MainPanel.add(UsersPanel, "UsersBox");
 
         javax.swing.GroupLayout ReportsPanelLayout = new javax.swing.GroupLayout(ReportsPanel);
         ReportsPanel.setLayout(ReportsPanelLayout);
         ReportsPanelLayout.setHorizontalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 932, Short.MAX_VALUE)
+            .addGap(0, 1124, Short.MAX_VALUE)
         );
         ReportsPanelLayout.setVerticalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 612, Short.MAX_VALUE)
+            .addGap(0, 777, Short.MAX_VALUE)
         );
 
-        MainPanel.add(ReportsPanel, "card2");
+        MainPanel.add(ReportsPanel, "ReportsBox");
 
         javax.swing.GroupLayout SettingsPanelLayout = new javax.swing.GroupLayout(SettingsPanel);
         SettingsPanel.setLayout(SettingsPanelLayout);
         SettingsPanelLayout.setHorizontalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 932, Short.MAX_VALUE)
+            .addGap(0, 1124, Short.MAX_VALUE)
         );
         SettingsPanelLayout.setVerticalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 612, Short.MAX_VALUE)
+            .addGap(0, 777, Short.MAX_VALUE)
         );
 
-        MainPanel.add(SettingsPanel, "card2");
-
-        jLabel2.setText("dashhhhhhhhhhh");
+        MainPanel.add(SettingsPanel, "SettingsBox");
 
         javax.swing.GroupLayout DashBoardPanelLayout = new javax.swing.GroupLayout(DashBoardPanel);
         DashBoardPanel.setLayout(DashBoardPanelLayout);
         DashBoardPanelLayout.setHorizontalGroup(
             DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DashBoardPanelLayout.createSequentialGroup()
-                .addContainerGap(426, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(411, 411, 411))
+            .addGap(0, 1124, Short.MAX_VALUE)
         );
         DashBoardPanelLayout.setVerticalGroup(
             DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DashBoardPanelLayout.createSequentialGroup()
-                .addGap(272, 272, 272)
-                .addComponent(jLabel2)
-                .addContainerGap(324, Short.MAX_VALUE))
+            .addGap(0, 777, Short.MAX_VALUE)
         );
 
-        MainPanel.add(DashBoardPanel, "card2");
+        MainPanel.add(DashBoardPanel, "DashBoardBox");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -259,17 +301,17 @@ public class AdminDashBoard extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addGap(0, 0, 0)
                 .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -278,7 +320,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
     private void FlightsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FlightsButtonActionPerformed
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
-        cl.show(MainPanel, "Flights");
+        cl.show(MainPanel, "FlightBox");
         System.out.println("Flights clicked");
     }//GEN-LAST:event_FlightsButtonActionPerformed
 
@@ -292,29 +334,37 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
     private void BookingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookingsButtonActionPerformed
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
-        cl.show(MainPanel, "BookingsPanel");
+        cl.show(MainPanel, "BookingBox");
     }//GEN-LAST:event_BookingsButtonActionPerformed
 
     private void ReportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportsButtonActionPerformed
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
-        cl.show(MainPanel, "Reports");
+        cl.show(MainPanel, "ReportsBox");
     }//GEN-LAST:event_ReportsButtonActionPerformed
 
     private void DashboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DashboardButtonActionPerformed
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
-        cl.show(MainPanel, "DashBoardPanel");
+        cl.show(MainPanel, "DashBoardBox");
 
     }//GEN-LAST:event_DashboardButtonActionPerformed
 
     private void SettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SettingsButtonActionPerformed
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
-        cl.show(MainPanel, "Settings");
+        cl.show(MainPanel, "SettingsBox");
     }//GEN-LAST:event_SettingsButtonActionPerformed
 
     private void UsersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsersButtonActionPerformed
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
-        cl.show(MainPanel, "Users");
+        cl.show(MainPanel, "UsersBox");
     }//GEN-LAST:event_UsersButtonActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -357,12 +407,18 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel UsersPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
