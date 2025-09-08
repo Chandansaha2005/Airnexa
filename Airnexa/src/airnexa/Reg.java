@@ -5,14 +5,18 @@
 package airnexa;
 
 import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import java.sql.*;
+import javax.swing.*;
 /**
  *
  * @author User
  */
 public class Reg extends javax.swing.JFrame {
-    
+    Connection con;
+    PreparedStatement pst;
+    Statement stmt;
+    ResultSet res;
+    int c=0;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Reg.class.getName());
 
     /**
@@ -24,6 +28,28 @@ public class Reg extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("/airnexa/plane.png"));
         Image img = icon.getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
         l12.setIcon(new ImageIcon(img));
+        
+        
+        
+        try
+        {
+           Class.forName("com.mysql.cj.jdbc.Driver");
+           con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project2?useSSL=false","root","Monster@1008"); 
+           String sql = "select * from user";
+           stmt = this.con.createStatement();
+           res= stmt.executeQuery(sql);
+           while(res.next())
+           {
+             c++;
+           }
+           con.close();
+           res.close();
+           stmt.close();
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(rootPane,"Error Occured");
+        }
     }
 
     /**
