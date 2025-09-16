@@ -5,16 +5,18 @@
 package airnexa;
 
 import java.awt.Image;
-import java.sql.DriverManager;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import java.sql.*;
+import javax.swing.*;
 
 /**
  *
  * @author User
  */
 public class Forgot extends javax.swing.JFrame {
-    
+    int otpCode = 0;
+    Connection con;
+    PreparedStatement pst;
+    ResultSet rs;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Forgot.class.getName());
 
     /**
@@ -210,20 +212,88 @@ public class Forgot extends javax.swing.JFrame {
 
     private void b21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b21ActionPerformed
         // TODO add your handling code here:
+    try 
+    {
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","Monster@1008");
+    String role = c1.getSelectedItem().toString();  
+    String email = t21.getText();
+    int adminFlag = role.equalsIgnoreCase("Admin") ? 1 : 0;
+    String sql = "SELECT * FROM user WHERE email_id=? AND admin_check=?";
+    pst = con.prepareStatement(sql);
+    pst.setString(1, email);
+    pst.setInt(2, adminFlag);
+    rs = pst.executeQuery();
+    if(rs.next()){
+        otpCode = (int)(Math.random() * 9000) + 1000;
+        JOptionPane.showMessageDialog(rootPane, "Your Verification Code Is: " + otpCode);
+    } 
+    else {
+        JOptionPane.showMessageDialog(rootPane, "Email Not Found!");
+    }
+
+    rs.close();
+    pst.close();
+    con.close();
+    }
+    catch(Exception e)
+    {
+    JOptionPane.showMessageDialog(rootPane,"Error: "+e.getMessage());
+    }
+
     }//GEN-LAST:event_b21ActionPerformed
 
     private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
         // TODO add your handling code here:
-          try
-        {
-              JOptionPane.showMessageDialog(rootPane,"Password Changed Successfully");
-              this.hide();
-              Login ob = new Login();
-              ob.show();
+    try {
+    String role = c1.getSelectedItem().toString();
+    String email = t21.getText();
+    String otp = t22.getText();
+    String newPwd = t23.getText();
+    String rePwd = t24.getText();
+ 
+    int adminFlag = role.equalsIgnoreCase("Admin") ? 1 : 0;
+
+    if(newPwd.equals("") || rePwd.equals("")){
+        JOptionPane.showMessageDialog(rootPane, "Please enter new password!");
+        return;
+    }
+    if(!newPwd.equals(rePwd)){
+        JOptionPane.showMessageDialog(rootPane, "Passwords does not match!");
+        return;
+    }
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","Monster@1008");
+
+    String sql = "UPDATE user SET password=? WHERE email_id=? AND admin_check=?";
+    pst = con.prepareStatement(sql);
+    pst.setString(1, newPwd);
+    pst.setString(2, email);
+    pst.setInt(3, adminFlag);
+    
+    int x = pst.executeUpdate();
+    if(x==1){
+        if(otp == null || !otp.equals(String.valueOf(otpCode))){
+        JOptionPane.showMessageDialog(rootPane, "Invalid verification code!");
+        return;
         }
-        catch(Exception e)
-        {
-        }    
+        JOptionPane.showMessageDialog(rootPane, "Password updated successfully!");
+        this.hide();
+        Login ob = new Login();
+        ob.show();
+    } 
+    else {
+        JOptionPane.showMessageDialog(rootPane, "Password reset failed!");
+    }
+
+    pst.close();
+    con.close();
+}
+     catch(Exception e)
+     {
+      JOptionPane.showMessageDialog(rootPane,"Error: "+e.getMessage());
+     }
+
     }//GEN-LAST:event_b2ActionPerformed
 
     /**

@@ -6,8 +6,7 @@ package airnexa;
 
 import java.awt.Image;
 import java.sql.*;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
