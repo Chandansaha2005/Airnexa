@@ -14,9 +14,6 @@ import javax.swing.*;
 public class Reg extends javax.swing.JFrame {
     Connection con;
     PreparedStatement pst;
-    Statement stmt;
-    ResultSet res;
-    int c=0;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Reg.class.getName());
 
     /**
@@ -28,28 +25,6 @@ public class Reg extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("/airnexa/plane.png"));
         Image img = icon.getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
         l12.setIcon(new ImageIcon(img));
-        
-        
-        
-        try
-        {
-           Class.forName("com.mysql.cj.jdbc.Driver");
-           con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project2?useSSL=false","root","Monster@1008"); 
-           String sql = "select * from user";
-           stmt = this.con.createStatement();
-           res= stmt.executeQuery(sql);
-           while(res.next())
-           {
-             c++;
-           }
-           con.close();
-           res.close();
-           stmt.close();
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(rootPane,"Error Occured");
-        }
     }
 
     /**
@@ -76,14 +51,16 @@ public class Reg extends javax.swing.JFrame {
         t11 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         t14 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         l1.setText("icon");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setFont(new java.awt.Font("Monotype Corsiva", 1, 55)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Lucida Fax", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText(" Airnexa ");
+        jLabel2.setText(" Register ");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         l12.setText("jLabel1");
@@ -138,11 +115,6 @@ public class Reg extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(119, 119, 119)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(b12))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6)
@@ -155,13 +127,18 @@ public class Reg extends javax.swing.JFrame {
                             .addComponent(t14)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(180, 180, 180)
-                        .addComponent(b11)))
+                        .addComponent(b11))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(b12)))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(t11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,39 +156,68 @@ public class Reg extends javax.swing.JFrame {
                 .addComponent(t14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(b11, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(b12))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
+
+        jLabel7.setFont(new java.awt.Font("Lucida Fax", 1, 36)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText(" Login ");
+        jLabel7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        jLabel8.setFont(new java.awt.Font("Monotype Corsiva", 1, 55)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText(" Airnexa ");
+        jLabel8.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addComponent(l12, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(430, 430, 430))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(402, 402, 402)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(l12, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(312, 312, 312)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(310, 310, 310)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(326, Short.MAX_VALUE))
+                        .addGap(444, 444, 444)
+                        .addComponent(jLabel2)))
+                .addContainerGap(336, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel7)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(l12, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(l12, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(59, 59, 59))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel7)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -233,6 +239,48 @@ public class Reg extends javax.swing.JFrame {
 
     private void b11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b11ActionPerformed
         // TODO add your handling code here:
+    try
+    {
+       Class.forName("com.mysql.cj.jdbc.Driver");
+       con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","Monster@1008");
+       String nm, em, ph, pwd, sql;
+       int x;
+       em = t11.getText();    
+       nm = t12.getText();   
+       ph = t13.getText(); 
+       pwd = t14.getText();   
+       if(em.equals("") || nm.equals("") || ph.equals("") || pwd.equals("")){
+            JOptionPane.showMessageDialog(rootPane,"Please fill all fields!");
+       }
+       else{
+        sql = "INSERT INTO user (username, password, email_id, phone_no, admin_check) VALUES (?, ?, ?, ?, ?)";
+        pst = this.con.prepareStatement(sql);
+        pst.setString(1, nm);
+        pst.setString(2, pwd);
+        pst.setString(3, em);
+        pst.setString(4, ph);
+        pst.setInt(5, 0);
+        x = pst.executeUpdate();
+        if(x==1){
+            JOptionPane.showMessageDialog(rootPane,"Registered Successfully");
+            this.hide();
+            Login ob = new Login();
+            ob.show();
+        }   
+        else{
+            JOptionPane.showMessageDialog(rootPane,"Registration Failed");
+            t11.setText("");
+            t12.setText("");
+            t13.setText("");
+            t14.setText("");
+        }
+    }
+}
+catch(Exception e)
+{
+    JOptionPane.showMessageDialog(rootPane,"Error: "+e.getMessage());
+}
+
     }//GEN-LAST:event_b11ActionPerformed
 
     /**
@@ -269,6 +317,8 @@ public class Reg extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel l1;
     private javax.swing.JLabel l12;

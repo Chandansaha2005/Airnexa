@@ -5,7 +5,7 @@
 package airnexa;
 
 import java.awt.Image;
-import java.sql.DriverManager;
+import java.sql.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -14,7 +14,9 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class Login extends javax.swing.JFrame {
-    
+    Connection con;
+    PreparedStatement pst;
+    ResultSet rs;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
     /**
@@ -52,6 +54,7 @@ public class Login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         b3 = new javax.swing.JButton();
         canvas1 = new java.awt.Canvas();
+        jLabel6 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -99,6 +102,11 @@ public class Login extends javax.swing.JFrame {
 
         b1.setBackground(new java.awt.Color(204, 204, 255));
         b1.setText("SIGN IN");
+        b1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b1ActionPerformed(evt);
+            }
+        });
 
         b2.setBackground(new java.awt.Color(204, 204, 255));
         b2.setText("Forgot Password");
@@ -171,8 +179,13 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(b3))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
+
+        jLabel6.setFont(new java.awt.Font("Lucida Fax", 1, 36)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText(" Login ");
+        jLabel6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,7 +202,10 @@ public class Login extends javax.swing.JFrame {
                         .addGap(311, 311, 311)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(69, 69, 69)
-                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(474, 474, 474)
+                        .addComponent(jLabel6)))
                 .addContainerGap(268, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -204,7 +220,9 @@ public class Login extends javax.swing.JFrame {
                         .addGap(219, 219, 219)
                         .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
@@ -237,6 +255,58 @@ public class Login extends javax.swing.JFrame {
         {
         }    
     }//GEN-LAST:event_b2ActionPerformed
+
+    private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
+        // TODO add your handling code here:
+    try
+    {
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","Monster@1008");
+    String role = c1.getSelectedItem().toString();
+    String unameOrEmail = t1.getText();
+    String pwd = t2.getText();
+
+    int adminFlag = 0;  
+    if(role.equalsIgnoreCase("Admin")){
+        adminFlag = 1;
+    } else {
+        adminFlag = 0;
+    }
+    String sql = "SELECT * FROM user WHERE (username = ? OR email_id = ?) AND password = ? AND admin_check = ?";
+    pst = this.con.prepareStatement(sql);
+    pst.setString(1, unameOrEmail);
+    pst.setString(2, unameOrEmail);
+    pst.setString(3, pwd);
+    pst.setInt(4, adminFlag);
+
+    rs = pst.executeQuery();
+
+    if(rs.next()){
+        JOptionPane.showMessageDialog(rootPane, "Login Successful!");
+        this.hide();
+        /*if(adminFlag == 1){
+            AdminDash ad = new AdminDash();
+            ad.show();
+        } else {
+            UserDash ud = new UserDash();
+            ud.show();
+        }*/
+    }
+    else{
+        JOptionPane.showMessageDialog(rootPane, "Invalid Username/Password or Role!");
+        t1.setText("");
+        t2.setText("");
+    }
+    rs.close();
+    pst.close();
+    con.close();
+}
+catch(Exception e)
+{
+    JOptionPane.showMessageDialog(rootPane,"Error: "+e.getMessage());
+}
+
+    }//GEN-LAST:event_b1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,6 +345,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel l1;
     private javax.swing.JTextField t1;
