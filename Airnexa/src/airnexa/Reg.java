@@ -63,7 +63,7 @@ public class Reg extends javax.swing.JFrame {
         jLabel2.setText(" Register ");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        l12.setText("jLabel1");
+        l12.setText("icon");
 
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 255, 255), new java.awt.Color(204, 255, 255)));
@@ -227,9 +227,10 @@ public class Reg extends javax.swing.JFrame {
         // TODO add your handling code here:
           try
         {
-              this.hide();
-              Login ob = new Login();
-              ob.show();
+            Login ob = new Login();
+            ob.show();
+            this.hide();
+              
         }
         catch(Exception e)
         {
@@ -263,9 +264,9 @@ public class Reg extends javax.swing.JFrame {
         x = pst.executeUpdate();
         if(x==1){
             JOptionPane.showMessageDialog(rootPane,"Registered Successfully");
-            this.hide();
             Login ob = new Login();
             ob.show();
+            this.hide();
         }   
         else{
             JOptionPane.showMessageDialog(rootPane,"Registration Failed");

@@ -232,10 +232,10 @@ public class Login extends javax.swing.JFrame {
     private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
         // TODO add your handling code here:
         try
-        {
-              this.hide();
+        {  
               Reg ob = new Reg();
               ob.show();
+              this.hide();
         }
         catch(Exception e)
         {
@@ -246,9 +246,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
           try
         {
-              this.hide();
               Forgot ob = new Forgot();
               ob.show();
+              this.hide();
         }
         catch(Exception e)
         {
@@ -282,7 +282,6 @@ public class Login extends javax.swing.JFrame {
 
     if(rs.next()){
         JOptionPane.showMessageDialog(rootPane, "Login Successful!");
-        this.hide();
         /*if(adminFlag == 1){
             AdminDash ad = new AdminDash();
             ad.show();
@@ -290,6 +289,7 @@ public class Login extends javax.swing.JFrame {
             UserDash ud = new UserDash();
             ud.show();
         }*/
+        this.hide();
     }
     else{
         JOptionPane.showMessageDialog(rootPane, "Invalid Username/Password or Role!");

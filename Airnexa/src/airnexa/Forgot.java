@@ -52,8 +52,8 @@ public class Forgot extends javax.swing.JFrame {
         b21 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        t23 = new javax.swing.JTextField();
         t24 = new javax.swing.JTextField();
+        t23 = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,7 +63,7 @@ public class Forgot extends javax.swing.JFrame {
         jLabel2.setText(" Airnexa ");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        l13.setText("jLabel1");
+        l13.setText("icon");
 
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 255, 255), new java.awt.Color(204, 255, 255)));
@@ -80,6 +80,11 @@ public class Forgot extends javax.swing.JFrame {
         jLabel3.setText("Enter Email For Code");
 
         t21.setBackground(new java.awt.Color(204, 204, 255));
+        t21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t21ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel4.setText("Enter Code");
@@ -108,9 +113,14 @@ public class Forgot extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setText("Enter New Password");
 
-        t23.setBackground(new java.awt.Color(204, 204, 255));
-
         t24.setBackground(new java.awt.Color(204, 204, 255));
+
+        t23.setBackground(new java.awt.Color(204, 204, 255));
+        t23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t23ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,6 +128,9 @@ public class Forgot extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(163, 163, 163)
+                        .addComponent(b2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -133,10 +146,7 @@ public class Forgot extends javax.swing.JFrame {
                                 .addComponent(b21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel5)
                             .addComponent(t24)
-                            .addComponent(t23)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(b2)))
+                            .addComponent(t23))))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -245,7 +255,9 @@ public class Forgot extends javax.swing.JFrame {
 
     private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
         // TODO add your handling code here:
-    try {
+    try 
+    
+    {
     String role = c1.getSelectedItem().toString();
     String email = t21.getText();
     String otp = t22.getText();
@@ -269,8 +281,7 @@ public class Forgot extends javax.swing.JFrame {
     pst = con.prepareStatement(sql);
     pst.setString(1, newPwd);
     pst.setString(2, email);
-    pst.setInt(3, adminFlag);
-    
+    pst.setInt(3, adminFlag);    
     int x = pst.executeUpdate();
     if(x==1){
         if(otp == null || !otp.equals(String.valueOf(otpCode))){
@@ -278,23 +289,30 @@ public class Forgot extends javax.swing.JFrame {
         return;
         }
         JOptionPane.showMessageDialog(rootPane, "Password updated successfully!");
-        this.hide();
         Login ob = new Login();
         ob.show();
+        this.hide();
     } 
     else {
         JOptionPane.showMessageDialog(rootPane, "Password reset failed!");
     }
-
     pst.close();
     con.close();
-}
+    }
      catch(Exception e)
      {
       JOptionPane.showMessageDialog(rootPane,"Error: "+e.getMessage());
      }
 
     }//GEN-LAST:event_b2ActionPerformed
+
+    private void t23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t23ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t23ActionPerformed
+
+    private void t21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t21ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t21ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -336,7 +354,7 @@ public class Forgot extends javax.swing.JFrame {
     private javax.swing.JLabel l13;
     private javax.swing.JTextField t21;
     private javax.swing.JTextField t22;
-    private javax.swing.JTextField t23;
+    private javax.swing.JPasswordField t23;
     private javax.swing.JTextField t24;
     // End of variables declaration//GEN-END:variables
 }
