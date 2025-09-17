@@ -6,6 +6,8 @@ package airnexa;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import javax.swing.Timer;
@@ -19,6 +21,8 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
     private boolean sidebarVisible = true;
     private Timer sidebarTimer;
+    private boolean isEditMode = false;
+    private int editingFlightId = -1;
     Connection con;
     Statement stmt;
     ResultSet rs;
@@ -30,12 +34,20 @@ public class AdminDashBoard extends javax.swing.JFrame {
      */
     public AdminDashBoard() {
         initComponents();
+        initFlightDialog();
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
         cl.show(MainPanel, "DashBoardBox");
 
         sidebarVisible = true;
         loadFlightData();
 
+    }
+
+    private void initFlightDialog() {
+        FlightDialog.setModal(true);
+        FlightDialog.setResizable(false);
+        FlightDialog.pack();
+        FlightDialog.setLocationRelativeTo(this);
     }
 
     /**
@@ -49,6 +61,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
         FlightDialog = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
         Add1 = new javax.swing.JTextField();
         Add2 = new javax.swing.JTextField();
         Add3 = new javax.swing.JTextField();
@@ -59,6 +72,14 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jSpinner2 = new javax.swing.JSpinner();
         Add_save = new javax.swing.JButton();
         Add_cnl = new javax.swing.JButton();
+        l1 = new javax.swing.JLabel();
+        l2 = new javax.swing.JLabel();
+        l3 = new javax.swing.JLabel();
+        l4 = new javax.swing.JLabel();
+        l5 = new javax.swing.JLabel();
+        l6 = new javax.swing.JLabel();
+        l7 = new javax.swing.JLabel();
+        l8 = new javax.swing.JLabel();
         sidebar = new javax.swing.JPanel();
         DashboardButton = new javax.swing.JToggleButton();
         FlightsButton = new javax.swing.JToggleButton();
@@ -94,17 +115,44 @@ public class AdminDashBoard extends javax.swing.JFrame {
         FlightDialog.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         FlightDialog.setModal(true);
 
+        jPanel2.setBackground(new java.awt.Color(11, 18, 32));
+
+        Add1.setBackground(new java.awt.Color(1, 18, 32));
+        Add1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        Add1.setForeground(new java.awt.Color(255, 255, 255));
+
+        Add2.setBackground(new java.awt.Color(1, 18, 32));
+        Add2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        Add2.setForeground(new java.awt.Color(255, 255, 255));
         Add2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Add2ActionPerformed(evt);
             }
         });
 
+        Add3.setBackground(new java.awt.Color(1, 18, 32));
+        Add3.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        Add3.setForeground(new java.awt.Color(255, 255, 255));
+
+        Add4.setBackground(new java.awt.Color(1, 18, 32));
+        Add4.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        Add4.setForeground(new java.awt.Color(255, 255, 255));
+
+        Add5.setBackground(new java.awt.Color(1, 18, 32));
+        Add5.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        Add5.setForeground(new java.awt.Color(255, 255, 255));
+
+        Add6.setBackground(new java.awt.Color(1, 18, 32));
+        Add6.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        Add6.setForeground(new java.awt.Color(255, 255, 255));
+
         depert.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         depert.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), java.util.Calendar.MINUTE));
+        depert.setName(""); // NOI18N
 
         jSpinner2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jSpinner2.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), java.util.Calendar.MINUTE));
+        jSpinner2.setName(""); // NOI18N
 
         Add_save.setBackground(new java.awt.Color(14, 165, 164));
         Add_save.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -124,58 +172,152 @@ public class AdminDashBoard extends javax.swing.JFrame {
             }
         });
 
+        l1.setBackground(new java.awt.Color(11, 18, 32));
+        l1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        l1.setForeground(new java.awt.Color(255, 255, 255));
+        l1.setText("Flight Number :");
+
+        l2.setBackground(new java.awt.Color(11, 18, 32));
+        l2.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        l2.setForeground(new java.awt.Color(255, 255, 255));
+        l2.setText("Flight Name :");
+
+        l3.setBackground(new java.awt.Color(11, 18, 32));
+        l3.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        l3.setForeground(new java.awt.Color(255, 255, 255));
+        l3.setText("Source :");
+
+        l4.setBackground(new java.awt.Color(11, 18, 32));
+        l4.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        l4.setForeground(new java.awt.Color(255, 255, 255));
+        l4.setText("Destination :");
+
+        l5.setBackground(new java.awt.Color(11, 18, 32));
+        l5.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        l5.setForeground(new java.awt.Color(255, 255, 255));
+        l5.setText("Departure Time :");
+
+        l6.setBackground(new java.awt.Color(11, 18, 32));
+        l6.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        l6.setForeground(new java.awt.Color(255, 255, 255));
+        l6.setText("Arrival Time :");
+
+        l7.setBackground(new java.awt.Color(11, 18, 32));
+        l7.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        l7.setForeground(new java.awt.Color(255, 255, 255));
+        l7.setText("Available Seats :");
+
+        l8.setBackground(new java.awt.Color(11, 18, 32));
+        l8.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        l8.setForeground(new java.awt.Color(255, 255, 255));
+        l8.setText("Ticket Price :");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(l1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Add1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Add_save, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(l2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Add2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Add_cnl, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(l4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(l6, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(l8, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Add4, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(Add6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 3, Short.MAX_VALUE)))))
+                .addGap(25, 25, 25))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(depert, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(343, 343, 343))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(l3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(Add3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(343, 343, 343))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(l5, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(l7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(Add5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Add1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(l1)
+                        .addComponent(l2))
+                    .addComponent(Add2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Add4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l4)
+                    .addComponent(Add3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l3))
+                .addGap(60, 60, 60)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l5)
+                    .addComponent(depert, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l6)
+                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(l7)
+                    .addComponent(Add5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l8)
+                    .addComponent(Add6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Add_save)
+                    .addComponent(Add_cnl))
+                .addGap(37, 37, 37))
+        );
+
         javax.swing.GroupLayout FlightDialogLayout = new javax.swing.GroupLayout(FlightDialog.getContentPane());
         FlightDialog.getContentPane().setLayout(FlightDialogLayout);
         FlightDialogLayout.setHorizontalGroup(
             FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FlightDialogLayout.createSequentialGroup()
-                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(FlightDialogLayout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Add3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(depert, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Add1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Add5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
-                        .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(Add2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                    .addComponent(Add4, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
-                            .addComponent(Add6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(FlightDialogLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Add_save, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Add_cnl, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         FlightDialogLayout.setVerticalGroup(
             FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(FlightDialogLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Add1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Add2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Add3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Add4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(depert, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Add6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Add5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Add_save)
-                    .addComponent(Add_cnl))
-                .addContainerGap(48, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -549,6 +691,16 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to logout?", "Confirm Logout",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            this.dispose();
+            //Login ob = new Login(/*null,null*/);
+//        this.hide();
+//        ob.show();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BookingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookingsButtonActionPerformed
@@ -598,12 +750,10 @@ public class AdminDashBoard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteflightActionPerformed
 
-    private void Add2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Add2ActionPerformed
-
     private void addflightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addflightActionPerformed
         // TODO add your handling code here:
+        isEditMode = false;
+        editingFlightId = -1;
         openFlightDialog(false, null);
     }//GEN-LAST:event_addflightActionPerformed
 
@@ -614,11 +764,21 @@ public class AdminDashBoard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please select a flight to edit");
             return;
         }
+        isEditMode = true;
+        editingFlightId = (Integer) flightTable.getValueAt(selectedRow, 0);
         openFlightDialog(true, selectedRow);
     }//GEN-LAST:event_editflightActionPerformed
 
-    private void Add_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_saveActionPerformed
+    private void Add2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add2ActionPerformed
         // TODO add your handling code here:
+    }//GEN-LAST:event_Add2ActionPerformed
+
+    private void Add_cnlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_cnlActionPerformed
+        // TODO add your handling code here:
+        FlightDialog.setVisible(false);
+    }//GEN-LAST:event_Add_cnlActionPerformed
+
+    private void Add_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_saveActionPerformed
         String flightNo = Add1.getText().trim();
         String airline = Add2.getText().trim();
         String source = Add3.getText().trim();
@@ -626,8 +786,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         String seats = Add5.getText().trim();
         String price = Add6.getText().trim();
 
-        if (flightNo.isEmpty() || airline.isEmpty() || source.isEmpty() || destination.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill all required fields");
+        if (flightNo.isEmpty() || airline.isEmpty() || source.isEmpty()
+            || destination.isEmpty() || seats.isEmpty() || price.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields");
             return;
         }
 
@@ -639,10 +800,17 @@ public class AdminDashBoard extends javax.swing.JFrame {
             java.util.Date depDate = (java.util.Date) depert.getValue();
             java.util.Date arrDate = (java.util.Date) jSpinner2.getValue();
 
-            addFlightToDB(flightNo, airline, source, destination,
+            if (isEditMode) {
+                updateFlightInDB(editingFlightId, flightNo, airline, source, destination,
                     new Timestamp(depDate.getTime()),
                     new Timestamp(arrDate.getTime()),
                     seatCount, priceValue);
+            } else {
+                addFlightToDB(flightNo, airline, source, destination,
+                    new Timestamp(depDate.getTime()),
+                    new Timestamp(arrDate.getTime()),
+                    seatCount, priceValue);
+            }
 
             FlightDialog.setVisible(false);
             loadFlightData(); // Refresh table
@@ -651,11 +819,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Invalid number format for seats or price");
         }
     }//GEN-LAST:event_Add_saveActionPerformed
-
-    private void Add_cnlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_cnlActionPerformed
-        // TODO add your handling code here:
-        FlightDialog.setVisible(false);
-    }//GEN-LAST:event_Add_cnlActionPerformed
 
     /**
      * @param args the command line arguments
@@ -707,6 +870,26 @@ public class AdminDashBoard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error loading flights: " + e.getMessage());
+        } finally {
+            // Close resources
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
         }
     }
 
@@ -739,6 +922,37 @@ public class AdminDashBoard extends javax.swing.JFrame {
         }
     }
 
+    private void updateFlightInDB(int flightId, String flightNo, String airline, String source,
+            String destination, Timestamp depTime, Timestamp arrTime, int seats, double price) {
+        try {
+            con = airnexa.DatabaseConnection.getConnection();
+            String sql = "UPDATE flight SET flight_no=?, airline=?, depart_from=?, departure_time=?, "
+                    + "arrive_at=?, arrival_time=?, seat_availability=?, ticket_price=? WHERE flight_id=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+
+            pst.setString(1, flightNo);
+            pst.setString(2, airline);
+            pst.setString(3, source);
+            pst.setTimestamp(4, depTime);
+            pst.setString(5, destination);
+            pst.setTimestamp(6, arrTime);
+            pst.setInt(7, seats);
+            pst.setDouble(8, price);
+            pst.setInt(9, flightId);
+
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this, "Flight updated successfully!");
+            }
+
+            pst.close();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error updating flight: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void deleteFlight(int selectedRow) {
         try {
             // Get the flight ID from selected row
@@ -765,43 +979,85 @@ public class AdminDashBoard extends javax.swing.JFrame {
         }
     }
 
+    // Replace your current toggleSidebar method with this improved version
     private void toggleSidebar() {
         sidebarVisible = !sidebarVisible;
         if (sidebarTimer != null && sidebarTimer.isRunning()) {
             sidebarTimer.stop();
         }
-        sidebarTimer = new Timer(15, e -> {
-            Dimension currentSize = sidebar.getPreferredSize();
-            int targetWidth = sidebarVisible ? 220 : 0;
-            int currentWidth = currentSize.width;
-            int step = 15;
 
-            if (sidebarVisible && currentWidth < targetWidth) {
-                int newWidth = Math.min(currentWidth + step, targetWidth);
-                sidebar.setPreferredSize(new Dimension(newWidth, currentSize.height));
-            } else if (!sidebarVisible && currentWidth > targetWidth) {
-                int newWidth = Math.max(currentWidth - step, targetWidth);
-                sidebar.setPreferredSize(new Dimension(newWidth, currentSize.height));
-            } else {
-                sidebarTimer.stop();
-                return;
+        final int targetWidth = sidebarVisible ? 220 : 0;
+        final int step = 5;
+        final int delay = 5;
+
+        sidebarTimer = new Timer(delay, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int currentWidth = sidebar.getWidth();
+
+                if (sidebarVisible && currentWidth < targetWidth) {
+                    sidebar.setPreferredSize(new Dimension(currentWidth + step, sidebar.getHeight()));
+                } else if (!sidebarVisible && currentWidth > targetWidth) {
+                    sidebar.setPreferredSize(new Dimension(currentWidth - step, sidebar.getHeight()));
+                } else {
+                    ((Timer) e.getSource()).stop();
+                    sidebar.setPreferredSize(new Dimension(targetWidth, sidebar.getHeight()));
+                    return;
+                }
+
+                revalidate();
+                repaint();
             }
-
-            getContentPane().revalidate();
-            getContentPane().repaint();
         });
 
         sidebarTimer.start();
     }
 
+    private boolean validateFlightForm() {
+        if (Add1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Flight number is required");
+            Add1.requestFocus();
+            return false;
+        }
+
+        if (Add2.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Airline is required");
+            Add2.requestFocus();
+            return false;
+        }
+
+        // Validate other fields similarly...
+        try {
+            Integer.parseInt(Add5.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Seats must be a number");
+            Add5.requestFocus();
+            return false;
+        }
+
+        try {
+            Double.parseDouble(Add6.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Price must be a number");
+            Add6.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
     private void openFlightDialog(boolean isEdit, Integer selectedRow) {
         // Set labels for the dialog fields
-        Add1.setText(""); // Flight No
-        Add2.setText(""); // Airline
-        Add3.setText(""); // Source  
-        Add4.setText(""); // Destination
-        Add5.setText(""); // Seats
-        Add6.setText(""); // Price
+        Add1.setText("");
+        Add2.setText("");
+        Add3.setText("");
+        Add4.setText("");
+        Add5.setText("");
+        Add6.setText("");
+
+        // Set current date/time as default for the spinners
+        depert.setValue(new java.util.Date());
+        jSpinner2.setValue(new java.util.Date());
 
         if (isEdit && selectedRow != null) {
             // Fill fields with existing data
@@ -811,10 +1067,20 @@ public class AdminDashBoard extends javax.swing.JFrame {
             Add4.setText(flightTable.getValueAt(selectedRow, 5).toString()); // Destination
             Add5.setText(flightTable.getValueAt(selectedRow, 7).toString()); // Seats
             Add6.setText(flightTable.getValueAt(selectedRow, 8).toString()); // Price
+
+            // Set the dialog title for edit mode
+            FlightDialog.setTitle("Edit Flight");
+        } else {
+            // Set the dialog title for add mode
+            FlightDialog.setTitle("Add New Flight");
         }
 
+        // Center the dialog on the screen
+        FlightDialog.pack();
+        FlightDialog.setLocationRelativeTo(this);
         FlightDialog.setVisible(true);
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Add1;
     private javax.swing.JTextField Add2;
@@ -850,9 +1116,18 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JLabel l1;
+    private javax.swing.JLabel l2;
+    private javax.swing.JLabel l3;
+    private javax.swing.JLabel l4;
+    private javax.swing.JLabel l5;
+    private javax.swing.JLabel l6;
+    private javax.swing.JLabel l7;
+    private javax.swing.JLabel l8;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel sidebar;
     private javax.swing.JPanel top;
