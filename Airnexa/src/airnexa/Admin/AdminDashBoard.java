@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package airnexa;
+package airnexa.Admin;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -28,16 +28,16 @@ public class AdminDashBoard extends javax.swing.JFrame {
     ResultSet rs;
     String uname;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminDashBoard.class.getName());
-
-    /**
-     * Creates new form AdminDashBoard
-     */
+    
+    //constractors
     public AdminDashBoard() {
+        
         initComponents();
         initFlightDialog();
+        
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
         cl.show(MainPanel, "DashBoardBox");
-
+        
         sidebarVisible = true;
         loadFlightData();
 
@@ -106,6 +106,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
         editflight = new javax.swing.JButton();
         deleteflight = new javax.swing.JButton();
         BookingsPanel = new javax.swing.JPanel();
+        book_top = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        bookingtable = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        bookingTable = new javax.swing.JTable();
         UsersPanel = new javax.swing.JPanel();
         ReportsPanel = new javax.swing.JPanel();
         SettingsPanel = new javax.swing.JPanel();
@@ -147,7 +152,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         Add6.setForeground(new java.awt.Color(255, 255, 255));
 
         depert.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        depert.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), java.util.Calendar.MINUTE));
+        depert.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.MINUTE));
         depert.setName(""); // NOI18N
 
         jSpinner2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
@@ -256,14 +261,12 @@ public class AdminDashBoard extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(depert, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(343, 343, 343))
+                            .addComponent(depert, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(l3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(Add3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(343, 343, 343))))
+                                .addComponent(Add3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(343, 343, 343))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -553,17 +556,57 @@ public class AdminDashBoard extends javax.swing.JFrame {
         MainPanel.add(FlightsPanel, "FlightBox");
 
         BookingsPanel.setBackground(new java.awt.Color(11, 18, 32));
+        BookingsPanel.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout BookingsPanelLayout = new javax.swing.GroupLayout(BookingsPanel);
-        BookingsPanel.setLayout(BookingsPanelLayout);
-        BookingsPanelLayout.setHorizontalGroup(
-            BookingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 974, Short.MAX_VALUE)
-        );
-        BookingsPanelLayout.setVerticalGroup(
-            BookingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
-        );
+        book_top.setBackground(new java.awt.Color(11, 18, 32));
+        book_top.setForeground(new java.awt.Color(255, 255, 255));
+        book_top.setLayout(new java.awt.BorderLayout());
+
+        jLabel2.setBackground(new java.awt.Color(11, 18, 32));
+        jLabel2.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel2.setText("🧾 BOOKINGS");
+        book_top.add(jLabel2, java.awt.BorderLayout.CENTER);
+
+        BookingsPanel.add(book_top, java.awt.BorderLayout.PAGE_START);
+
+        bookingtable.setBackground(new java.awt.Color(11, 18, 32));
+        bookingtable.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane2.setBackground(new java.awt.Color(11, 18, 32));
+
+        bookingTable.setAutoCreateRowSorter(true);
+        bookingTable.setBackground(new java.awt.Color(7, 16, 24));
+        bookingTable.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        bookingTable.setForeground(new java.awt.Color(255, 255, 255));
+        bookingTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Booking ID", "User ID", "Flight ID", "Date time", "Ticket Price", "No. Of Seats"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        bookingTable.setToolTipText("");
+        bookingTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bookingTable.setFillsViewportHeight(true);
+        bookingTable.setGridColor(new java.awt.Color(30, 41, 55));
+        bookingTable.setPreferredSize(new java.awt.Dimension(300, 150));
+        bookingTable.setSelectionBackground(new java.awt.Color(6, 182, 212));
+        bookingTable.setShowVerticalLines(true);
+        bookingTable.setSurrendersFocusOnKeystroke(true);
+        jScrollPane2.setViewportView(bookingTable);
+
+        bookingtable.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        BookingsPanel.add(bookingtable, java.awt.BorderLayout.CENTER);
 
         MainPanel.add(BookingsPanel, "BookingBox");
 
@@ -573,7 +616,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         UsersPanel.setLayout(UsersPanelLayout);
         UsersPanelLayout.setHorizontalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 974, Short.MAX_VALUE)
+            .addGap(0, 1374, Short.MAX_VALUE)
         );
         UsersPanelLayout.setVerticalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -588,7 +631,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         ReportsPanel.setLayout(ReportsPanelLayout);
         ReportsPanelLayout.setHorizontalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 974, Short.MAX_VALUE)
+            .addGap(0, 1374, Short.MAX_VALUE)
         );
         ReportsPanelLayout.setVerticalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -603,7 +646,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         SettingsPanel.setLayout(SettingsPanelLayout);
         SettingsPanelLayout.setHorizontalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 974, Short.MAX_VALUE)
+            .addGap(0, 1374, Short.MAX_VALUE)
         );
         SettingsPanelLayout.setVerticalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -618,7 +661,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         DashBoardPanel.setLayout(DashBoardPanelLayout);
         DashBoardPanelLayout.setHorizontalGroup(
             DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 974, Short.MAX_VALUE)
+            .addGap(0, 1374, Short.MAX_VALUE)
         );
         DashBoardPanelLayout.setVerticalGroup(
             DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1099,6 +1142,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JToggleButton UsersButton;
     private javax.swing.JPanel UsersPanel;
     private javax.swing.JButton addflight;
+    private javax.swing.JPanel book_top;
+    private javax.swing.JTable bookingTable;
+    private javax.swing.JPanel bookingtable;
     private javax.swing.JButton deleteflight;
     private javax.swing.JSpinner depert;
     private javax.swing.JButton editflight;
@@ -1107,11 +1153,13 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JLabel l1;
     private javax.swing.JLabel l2;
