@@ -5,14 +5,21 @@
 package airnexa;
 
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author CHANDAN
  */
 public class AdminDashBoard extends javax.swing.JFrame {
-    private boolean sidebarVisible = true;
 
+    private boolean sidebarVisible = true;
+    Connection con;
+    Statement stmt;
+    ResultSet rs;
+    String uname;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminDashBoard.class.getName());
 
     /**
@@ -22,6 +29,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         initComponents();
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
         cl.show(MainPanel, "Dashboard");
+
     }
 
     /**
@@ -52,9 +60,13 @@ public class AdminDashBoard extends javax.swing.JFrame {
         FlightsPanel = new javax.swing.JPanel();
         flighttable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        flghtTable = new javax.swing.JTable();
         top = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        addflight = new javax.swing.JButton();
+        editflight = new javax.swing.JButton();
+        deleteflight = new javax.swing.JButton();
         BookingsPanel = new javax.swing.JPanel();
         UsersPanel = new javax.swing.JPanel();
         ReportsPanel = new javax.swing.JPanel();
@@ -70,9 +82,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
         sidebar.setVerifyInputWhenFocusTarget(false);
         sidebar.setLayout(new java.awt.GridLayout(6, 1, 0, 1));
 
-        DashboardButton.setBackground(new java.awt.Color(11, 21, 32));
+        DashboardButton.setBackground(new java.awt.Color(7, 16, 26));
         DashboardButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        DashboardButton.setForeground(new java.awt.Color(255, 255, 255));
         DashboardButton.setText("DASHBOARD");
+        DashboardButton.setBorder(null);
         DashboardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DashboardButtonActionPerformed(evt);
@@ -80,9 +94,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
         });
         sidebar.add(DashboardButton);
 
-        FlightsButton.setBackground(new java.awt.Color(11, 21, 32));
+        FlightsButton.setBackground(new java.awt.Color(7, 16, 26));
         FlightsButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        FlightsButton.setForeground(new java.awt.Color(255, 255, 255));
         FlightsButton.setText("MANAGE FLIGHTS");
+        FlightsButton.setBorder(null);
         FlightsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FlightsButtonActionPerformed(evt);
@@ -90,9 +106,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
         });
         sidebar.add(FlightsButton);
 
-        BookingsButton.setBackground(new java.awt.Color(11, 21, 32));
+        BookingsButton.setBackground(new java.awt.Color(7, 16, 26));
         BookingsButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        BookingsButton.setForeground(new java.awt.Color(255, 255, 255));
         BookingsButton.setText("MANAGE BOOKING");
+        BookingsButton.setBorder(null);
         BookingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BookingsButtonActionPerformed(evt);
@@ -100,9 +118,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
         });
         sidebar.add(BookingsButton);
 
-        UsersButton.setBackground(new java.awt.Color(11, 21, 32));
+        UsersButton.setBackground(new java.awt.Color(7, 16, 26));
         UsersButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        UsersButton.setForeground(new java.awt.Color(255, 255, 255));
         UsersButton.setText("USERS");
+        UsersButton.setBorder(null);
         UsersButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsersButtonActionPerformed(evt);
@@ -110,9 +130,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
         });
         sidebar.add(UsersButton);
 
-        ReportsButton.setBackground(new java.awt.Color(11, 21, 32));
+        ReportsButton.setBackground(new java.awt.Color(7, 16, 26));
         ReportsButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        ReportsButton.setForeground(new java.awt.Color(255, 255, 255));
         ReportsButton.setText("REPORTS");
+        ReportsButton.setBorder(null);
         ReportsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ReportsButtonActionPerformed(evt);
@@ -120,9 +142,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
         });
         sidebar.add(ReportsButton);
 
-        SettingsButton.setBackground(new java.awt.Color(11, 21, 32));
+        SettingsButton.setBackground(new java.awt.Color(7, 16, 26));
         SettingsButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        SettingsButton.setForeground(new java.awt.Color(255, 255, 255));
         SettingsButton.setText("SETTINGS");
+        SettingsButton.setBorder(null);
         SettingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SettingsButtonActionPerformed(evt);
@@ -195,22 +219,33 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         jScrollPane1.setBackground(new java.awt.Color(11, 18, 32));
 
-        jTable1.setBackground(new java.awt.Color(7, 16, 24));
-        jTable1.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(7, 16, 24));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        flghtTable.setBackground(new java.awt.Color(7, 16, 24));
+        flghtTable.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        flghtTable.setForeground(new java.awt.Color(255, 255, 255));
+        flghtTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Flight ID", "Flight No.", "Airline", "Source", "Departure_Time", "Destination", "Arrival_Time", "Seat_Availability", "Ticket_Price"
             }
-        ));
-        jTable1.setGridColor(new java.awt.Color(30, 41, 55));
-        jTable1.setPreferredSize(new java.awt.Dimension(300, 150));
-        jTable1.setSelectionBackground(new java.awt.Color(6, 182, 212));
-        jTable1.setSurrendersFocusOnKeystroke(true);
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        flghtTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        flghtTable.setFillsViewportHeight(true);
+        flghtTable.setGridColor(new java.awt.Color(30, 41, 55));
+        flghtTable.setPreferredSize(new java.awt.Dimension(300, 150));
+        flghtTable.setSelectionBackground(new java.awt.Color(6, 182, 212));
+        flghtTable.setShowVerticalLines(true);
+        flghtTable.setSurrendersFocusOnKeystroke(true);
+        jScrollPane1.setViewportView(flghtTable);
 
         flighttable.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -221,11 +256,34 @@ public class AdminDashBoard extends javax.swing.JFrame {
         top.setLayout(new java.awt.BorderLayout());
 
         jLabel3.setBackground(new java.awt.Color(200, 200, 200));
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Manage Flights ");
         jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         top.add(jLabel3, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setBackground(new java.awt.Color(11, 21, 32));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+
+        addflight.setBackground(new java.awt.Color(11, 21, 32));
+        addflight.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        addflight.setForeground(new java.awt.Color(255, 255, 255));
+        addflight.setText("ADD");
+        jPanel1.add(addflight);
+
+        editflight.setBackground(new java.awt.Color(11, 21, 32));
+        editflight.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        editflight.setForeground(new java.awt.Color(255, 255, 255));
+        editflight.setText("EDIT");
+        jPanel1.add(editflight);
+
+        deleteflight.setBackground(new java.awt.Color(11, 21, 32));
+        deleteflight.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        deleteflight.setForeground(new java.awt.Color(255, 255, 255));
+        deleteflight.setText("DELETE");
+        jPanel1.add(deleteflight);
+
+        top.add(jPanel1, java.awt.BorderLayout.LINE_END);
 
         FlightsPanel.add(top, java.awt.BorderLayout.PAGE_START);
 
@@ -331,9 +389,51 @@ public class AdminDashBoard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void FlightsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FlightsButtonActionPerformed
+
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
         cl.show(MainPanel, "FlightBox");
         System.out.println("Flights clicked");
+
+        try {
+            // Load driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Connect to database
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/java_swing?useSSL=false",
+                    "root",
+                    "1234567k"
+            );
+
+            // SQL query
+            String sql = "SELECT * FROM airline.flight";
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            // Get table model
+            DefaultTableModel ob = (DefaultTableModel) flghtTable.getModel();
+            ob.setRowCount(0); // Clear old rows
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("flight_id"),
+                    rs.getString("flight_no"),
+                    rs.getString("airline"),
+                    rs.getString("depart_from"),
+                    rs.getString("departure_time"),
+                    rs.getString("arrive_at"),
+                    rs.getString("arrival_time"),
+                    rs.getInt("seat_availability"),
+                    rs.getFloat("ticket_price")
+                };
+                ob.addRow(row);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Print error
+            JOptionPane.showMessageDialog(this, "Error loading flights: " + e.getMessage());
+        }
+
     }//GEN-LAST:event_FlightsButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -372,28 +472,36 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
     private void BurgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BurgerActionPerformed
         // TODO add your handling code here:
-                                              
-    new Thread(() -> {
-        try {
-            if (sidebarVisible) {
-                for (int i = 220; i >= 0; i -= 10) {
-                    sidebar.setPreferredSize(new java.awt.Dimension(i, sidebar.getHeight()));
-                    sidebar.revalidate();
-                    Thread.sleep(10);
+
+        new Thread(() -> {
+            try {
+                if (sidebarVisible) {
+                    for (int i = 220; i >= 0; i -= 10) {
+                        final int width = i;
+                        javax.swing.SwingUtilities.invokeLater(() -> {
+                            sidebar.setPreferredSize(new java.awt.Dimension(width, sidebar.getHeight()));
+                            getContentPane().revalidate();
+                            getContentPane().repaint();
+                        });
+                        Thread.sleep(10);
+                    }
+                    sidebarVisible = false;
+                } else {
+                    for (int i = 0; i <= 220; i += 10) {
+                        final int width = i;
+                        javax.swing.SwingUtilities.invokeLater(() -> {
+                            sidebar.setPreferredSize(new java.awt.Dimension(width, sidebar.getHeight()));
+                            getContentPane().revalidate();
+                            getContentPane().repaint();
+                        });
+                        Thread.sleep(10);
+                    }
+                    sidebarVisible = true;
                 }
-                sidebarVisible = false;
-            } else {
-                for (int i = 0; i <= 220; i += 10) {
-                    sidebar.setPreferredSize(new java.awt.Dimension(i, sidebar.getHeight()));
-                    sidebar.revalidate();
-                    Thread.sleep(10);
-                }
-                sidebarVisible = true;
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
             }
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
-    }).start();
+        }).start();
 
 
     }//GEN-LAST:event_BurgerActionPerformed
@@ -422,7 +530,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new AdminDashBoard().setVisible(true));
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton BookingsButton;
     private javax.swing.JPanel BookingsPanel;
@@ -438,14 +546,18 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel SettingsPanel;
     private javax.swing.JToggleButton UsersButton;
     private javax.swing.JPanel UsersPanel;
+    private javax.swing.JButton addflight;
+    private javax.swing.JButton deleteflight;
+    private javax.swing.JButton editflight;
+    private javax.swing.JTable flghtTable;
     private javax.swing.JPanel flighttable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel sidebar;
     private javax.swing.JPanel top;
