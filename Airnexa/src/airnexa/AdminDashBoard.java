@@ -787,7 +787,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         String price = Add6.getText().trim();
 
         if (flightNo.isEmpty() || airline.isEmpty() || source.isEmpty()
-            || destination.isEmpty() || seats.isEmpty() || price.isEmpty()) {
+                || destination.isEmpty() || seats.isEmpty() || price.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill all fields");
             return;
         }
@@ -796,20 +796,19 @@ public class AdminDashBoard extends javax.swing.JFrame {
             int seatCount = Integer.parseInt(seats);
             double priceValue = Double.parseDouble(price);
 
-            // Get datetime from spinners
             java.util.Date depDate = (java.util.Date) depert.getValue();
             java.util.Date arrDate = (java.util.Date) jSpinner2.getValue();
 
             if (isEditMode) {
                 updateFlightInDB(editingFlightId, flightNo, airline, source, destination,
-                    new Timestamp(depDate.getTime()),
-                    new Timestamp(arrDate.getTime()),
-                    seatCount, priceValue);
+                        new Timestamp(depDate.getTime()),
+                        new Timestamp(arrDate.getTime()),
+                        seatCount, priceValue);
             } else {
                 addFlightToDB(flightNo, airline, source, destination,
-                    new Timestamp(depDate.getTime()),
-                    new Timestamp(arrDate.getTime()),
-                    seatCount, priceValue);
+                        new Timestamp(depDate.getTime()),
+                        new Timestamp(arrDate.getTime()),
+                        seatCount, priceValue);
             }
 
             FlightDialog.setVisible(false);
@@ -979,7 +978,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
         }
     }
 
-    // Replace your current toggleSidebar method with this improved version
     private void toggleSidebar() {
         sidebarVisible = !sidebarVisible;
         if (sidebarTimer != null && sidebarTimer.isRunning()) {
@@ -1047,7 +1045,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
     }
 
     private void openFlightDialog(boolean isEdit, Integer selectedRow) {
-        // Set labels for the dialog fields
         Add1.setText("");
         Add2.setText("");
         Add3.setText("");
@@ -1055,12 +1052,10 @@ public class AdminDashBoard extends javax.swing.JFrame {
         Add5.setText("");
         Add6.setText("");
 
-        // Set current date/time as default for the spinners
         depert.setValue(new java.util.Date());
         jSpinner2.setValue(new java.util.Date());
 
         if (isEdit && selectedRow != null) {
-            // Fill fields with existing data
             Add1.setText(flightTable.getValueAt(selectedRow, 1).toString()); // Flight No
             Add2.setText(flightTable.getValueAt(selectedRow, 2).toString()); // Airline
             Add3.setText(flightTable.getValueAt(selectedRow, 3).toString()); // Source
@@ -1068,14 +1063,12 @@ public class AdminDashBoard extends javax.swing.JFrame {
             Add5.setText(flightTable.getValueAt(selectedRow, 7).toString()); // Seats
             Add6.setText(flightTable.getValueAt(selectedRow, 8).toString()); // Price
 
-            // Set the dialog title for edit mode
             FlightDialog.setTitle("Edit Flight");
         } else {
-            // Set the dialog title for add mode
+
             FlightDialog.setTitle("Add New Flight");
         }
 
-        // Center the dialog on the screen
         FlightDialog.pack();
         FlightDialog.setLocationRelativeTo(this);
         FlightDialog.setVisible(true);
