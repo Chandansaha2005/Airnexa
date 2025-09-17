@@ -11,6 +11,7 @@ import java.awt.CardLayout;
  * @author CHANDAN
  */
 public class AdminDashBoard extends javax.swing.JFrame {
+    private boolean sidebarVisible = true;
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminDashBoard.class.getName());
 
@@ -33,28 +34,27 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
-        jPanel2 = new javax.swing.JPanel();
+        sidebar = new javax.swing.JPanel();
         DashboardButton = new javax.swing.JToggleButton();
         FlightsButton = new javax.swing.JToggleButton();
         BookingsButton = new javax.swing.JToggleButton();
         UsersButton = new javax.swing.JToggleButton();
         ReportsButton = new javax.swing.JToggleButton();
         SettingsButton = new javax.swing.JToggleButton();
-        jPanel1 = new javax.swing.JPanel();
+        topbar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        topbarleft = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        menu = new javax.swing.JPanel();
+        Burger = new javax.swing.JButton();
         MainPanel = new javax.swing.JPanel();
         FlightsPanel = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        flighttable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel6 = new javax.swing.JPanel();
+        top = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         BookingsPanel = new javax.swing.JPanel();
         UsersPanel = new javax.swing.JPanel();
         ReportsPanel = new javax.swing.JPanel();
@@ -62,86 +62,90 @@ public class AdminDashBoard extends javax.swing.JFrame {
         DashBoardPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(11, 18, 32));
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 102));
-        jPanel2.setFocusable(false);
-        jPanel2.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel2.setVerifyInputWhenFocusTarget(false);
-        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
+        sidebar.setBackground(new java.awt.Color(15, 23, 36));
+        sidebar.setFocusable(false);
+        sidebar.setPreferredSize(new java.awt.Dimension(150, 0));
+        sidebar.setVerifyInputWhenFocusTarget(false);
+        sidebar.setLayout(new java.awt.GridLayout(6, 1, 0, 1));
 
-        DashboardButton.setBackground(new java.awt.Color(0, 0, 204));
-        DashboardButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        DashboardButton.setBackground(new java.awt.Color(11, 21, 32));
+        DashboardButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         DashboardButton.setText("DASHBOARD");
         DashboardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DashboardButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(DashboardButton);
+        sidebar.add(DashboardButton);
 
-        FlightsButton.setBackground(new java.awt.Color(0, 0, 204));
-        FlightsButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FlightsButton.setBackground(new java.awt.Color(11, 21, 32));
+        FlightsButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         FlightsButton.setText("MANAGE FLIGHTS");
         FlightsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FlightsButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(FlightsButton);
+        sidebar.add(FlightsButton);
 
-        BookingsButton.setBackground(new java.awt.Color(0, 0, 204));
-        BookingsButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        BookingsButton.setBackground(new java.awt.Color(11, 21, 32));
+        BookingsButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         BookingsButton.setText("MANAGE BOOKING");
         BookingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BookingsButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(BookingsButton);
+        sidebar.add(BookingsButton);
 
-        UsersButton.setBackground(new java.awt.Color(0, 0, 204));
-        UsersButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        UsersButton.setBackground(new java.awt.Color(11, 21, 32));
+        UsersButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         UsersButton.setText("USERS");
         UsersButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsersButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(UsersButton);
+        sidebar.add(UsersButton);
 
-        ReportsButton.setBackground(new java.awt.Color(0, 0, 204));
-        ReportsButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ReportsButton.setBackground(new java.awt.Color(11, 21, 32));
+        ReportsButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         ReportsButton.setText("REPORTS");
         ReportsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ReportsButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(ReportsButton);
+        sidebar.add(ReportsButton);
 
-        SettingsButton.setBackground(new java.awt.Color(0, 0, 204));
-        SettingsButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        SettingsButton.setBackground(new java.awt.Color(11, 21, 32));
+        SettingsButton.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         SettingsButton.setText("SETTINGS");
         SettingsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SettingsButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(SettingsButton);
+        sidebar.add(SettingsButton);
 
-        jPanel1.setBackground(new java.awt.Color(40, 120, 200));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        topbar.setBackground(new java.awt.Color(7, 16, 26));
+        topbar.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
+        topbar.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("AirNexa Admin Panel");
         jLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(jLabel1, java.awt.BorderLayout.CENTER);
+        topbar.add(jLabel1, java.awt.BorderLayout.CENTER);
 
-        jPanel3.setOpaque(false);
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        topbarleft.setOpaque(false);
+        topbarleft.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jButton1.setBackground(new java.awt.Color(20, 120, 200));
+        jButton1.setBackground(new java.awt.Color(11, 21, 32));
+        jButton1.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 51));
         jButton1.setText("🔔");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -149,147 +153,155 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton1);
+        topbarleft.add(jButton1);
 
-        jButton2.setBackground(new java.awt.Color(255, 51, 51));
+        jButton2.setBackground(new java.awt.Color(200, 21, 32));
+        jButton2.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jButton2.setText("LOGOUT");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2);
+        topbarleft.add(jButton2);
 
-        jPanel1.add(jPanel3, java.awt.BorderLayout.LINE_END);
+        topbar.add(topbarleft, java.awt.BorderLayout.LINE_END);
 
+        menu.setBackground(new java.awt.Color(11, 18, 32));
+
+        Burger.setBackground(new java.awt.Color(20, 21, 32));
+        Burger.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        Burger.setText("=");
+        Burger.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BurgerActionPerformed(evt);
+            }
+        });
+        menu.add(Burger);
+
+        topbar.add(menu, java.awt.BorderLayout.LINE_START);
+
+        MainPanel.setBackground(new java.awt.Color(11, 18, 32));
         MainPanel.setLayout(new java.awt.CardLayout());
 
+        FlightsPanel.setBackground(new java.awt.Color(11, 18, 32));
         FlightsPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         FlightsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         FlightsPanel.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
-        jPanel4.setLayout(new java.awt.BorderLayout());
+        flighttable.setBackground(new java.awt.Color(11, 18, 32));
+        flighttable.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
+        flighttable.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBackground(new java.awt.Color(11, 18, 32));
 
+        jTable1.setBackground(new java.awt.Color(7, 16, 24));
+        jTable1.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(7, 16, 24));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setGridColor(new java.awt.Color(30, 41, 55));
         jTable1.setPreferredSize(new java.awt.Dimension(300, 150));
+        jTable1.setSelectionBackground(new java.awt.Color(6, 182, 212));
+        jTable1.setSurrendersFocusOnKeystroke(true);
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        flighttable.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        FlightsPanel.add(jPanel4, java.awt.BorderLayout.CENTER);
+        FlightsPanel.add(flighttable, java.awt.BorderLayout.CENTER);
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
-        jPanel6.setLayout(new java.awt.BorderLayout());
+        top.setBackground(new java.awt.Color(11, 18, 32));
+        top.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
+        top.setLayout(new java.awt.BorderLayout());
 
+        jLabel3.setBackground(new java.awt.Color(200, 200, 200));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Manage Flights ");
         jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel6.add(jLabel3, java.awt.BorderLayout.CENTER);
+        top.add(jLabel3, java.awt.BorderLayout.CENTER);
 
-        jPanel7.setOpaque(false);
-        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jButton5.setBackground(new java.awt.Color(20, 120, 200));
-        jButton5.setForeground(new java.awt.Color(255, 255, 51));
-        jButton5.setText("🔔");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jButton5);
-
-        jButton6.setBackground(new java.awt.Color(255, 51, 51));
-        jButton6.setText("LOGOUT");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jButton6);
-
-        jPanel6.add(jPanel7, java.awt.BorderLayout.LINE_END);
-
-        FlightsPanel.add(jPanel6, java.awt.BorderLayout.PAGE_START);
+        FlightsPanel.add(top, java.awt.BorderLayout.PAGE_START);
 
         MainPanel.add(FlightsPanel, "FlightBox");
+
+        BookingsPanel.setBackground(new java.awt.Color(11, 18, 32));
 
         javax.swing.GroupLayout BookingsPanelLayout = new javax.swing.GroupLayout(BookingsPanel);
         BookingsPanel.setLayout(BookingsPanelLayout);
         BookingsPanelLayout.setHorizontalGroup(
             BookingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1124, Short.MAX_VALUE)
+            .addGap(0, 974, Short.MAX_VALUE)
         );
         BookingsPanelLayout.setVerticalGroup(
             BookingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 777, Short.MAX_VALUE)
+            .addGap(0, 810, Short.MAX_VALUE)
         );
 
         MainPanel.add(BookingsPanel, "BookingBox");
+
+        UsersPanel.setBackground(new java.awt.Color(11, 18, 32));
 
         javax.swing.GroupLayout UsersPanelLayout = new javax.swing.GroupLayout(UsersPanel);
         UsersPanel.setLayout(UsersPanelLayout);
         UsersPanelLayout.setHorizontalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1124, Short.MAX_VALUE)
+            .addGap(0, 974, Short.MAX_VALUE)
         );
         UsersPanelLayout.setVerticalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 777, Short.MAX_VALUE)
+            .addGap(0, 810, Short.MAX_VALUE)
         );
 
         MainPanel.add(UsersPanel, "UsersBox");
+
+        ReportsPanel.setBackground(new java.awt.Color(11, 18, 32));
 
         javax.swing.GroupLayout ReportsPanelLayout = new javax.swing.GroupLayout(ReportsPanel);
         ReportsPanel.setLayout(ReportsPanelLayout);
         ReportsPanelLayout.setHorizontalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1124, Short.MAX_VALUE)
+            .addGap(0, 974, Short.MAX_VALUE)
         );
         ReportsPanelLayout.setVerticalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 777, Short.MAX_VALUE)
+            .addGap(0, 810, Short.MAX_VALUE)
         );
 
         MainPanel.add(ReportsPanel, "ReportsBox");
+
+        SettingsPanel.setBackground(new java.awt.Color(11, 18, 32));
 
         javax.swing.GroupLayout SettingsPanelLayout = new javax.swing.GroupLayout(SettingsPanel);
         SettingsPanel.setLayout(SettingsPanelLayout);
         SettingsPanelLayout.setHorizontalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1124, Short.MAX_VALUE)
+            .addGap(0, 974, Short.MAX_VALUE)
         );
         SettingsPanelLayout.setVerticalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 777, Short.MAX_VALUE)
+            .addGap(0, 810, Short.MAX_VALUE)
         );
 
         MainPanel.add(SettingsPanel, "SettingsBox");
+
+        DashBoardPanel.setBackground(new java.awt.Color(11, 18, 32));
 
         javax.swing.GroupLayout DashBoardPanelLayout = new javax.swing.GroupLayout(DashBoardPanel);
         DashBoardPanel.setLayout(DashBoardPanelLayout);
         DashBoardPanelLayout.setHorizontalGroup(
             DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1124, Short.MAX_VALUE)
+            .addGap(0, 974, Short.MAX_VALUE)
         );
         DashBoardPanelLayout.setVerticalGroup(
             DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 777, Short.MAX_VALUE)
+            .addGap(0, 810, Short.MAX_VALUE)
         );
 
         MainPanel.add(DashBoardPanel, "DashBoardBox");
@@ -298,20 +310,21 @@ public class AdminDashBoard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(topbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(topbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -357,13 +370,33 @@ public class AdminDashBoard extends javax.swing.JFrame {
         cl.show(MainPanel, "UsersBox");
     }//GEN-LAST:event_UsersButtonActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void BurgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BurgerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+                                              
+    new Thread(() -> {
+        try {
+            if (sidebarVisible) {
+                for (int i = 220; i >= 0; i -= 10) {
+                    sidebar.setPreferredSize(new java.awt.Dimension(i, sidebar.getHeight()));
+                    sidebar.revalidate();
+                    Thread.sleep(10);
+                }
+                sidebarVisible = false;
+            } else {
+                for (int i = 0; i <= 220; i += 10) {
+                    sidebar.setPreferredSize(new java.awt.Dimension(i, sidebar.getHeight()));
+                    sidebar.revalidate();
+                    Thread.sleep(10);
+                }
+                sidebarVisible = true;
+            }
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }).start();
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+
+    }//GEN-LAST:event_BurgerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -393,6 +426,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton BookingsButton;
     private javax.swing.JPanel BookingsPanel;
+    private javax.swing.JButton Burger;
     private javax.swing.JPanel DashBoardPanel;
     private javax.swing.JToggleButton DashboardButton;
     private javax.swing.JToggleButton FlightsButton;
@@ -404,20 +438,18 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel SettingsPanel;
     private javax.swing.JToggleButton UsersButton;
     private javax.swing.JPanel UsersPanel;
+    private javax.swing.JPanel flighttable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JPanel menu;
+    private javax.swing.JPanel sidebar;
+    private javax.swing.JPanel top;
+    private javax.swing.JPanel topbar;
+    private javax.swing.JPanel topbarleft;
     // End of variables declaration//GEN-END:variables
 }
