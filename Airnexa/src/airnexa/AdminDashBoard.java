@@ -395,25 +395,12 @@ public class AdminDashBoard extends javax.swing.JFrame {
         System.out.println("Flights clicked");
 
         try {
-            // Load driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Connect to database
-            con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/java_swing?useSSL=false",
-                    "root",
-                    "1234567k"
-            );
-
-            // SQL query
-            String sql = "SELECT * FROM airline.flight";
+            con = airnexa.DatabaseConnection.getConnection();
+            String sql = "SELECT * FROM flight";
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
-
-            // Get table model
             DefaultTableModel ob = (DefaultTableModel) flghtTable.getModel();
-            ob.setRowCount(0); // Clear old rows
-
+            ob.setRowCount(0);
             while (rs.next()) {
                 Object[] row = {
                     rs.getInt("flight_id"),
@@ -428,11 +415,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 };
                 ob.addRow(row);
             }
-
         } catch (Exception e) {
-            e.printStackTrace(); // Print error
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error loading flights: " + e.getMessage());
         }
+
 
     }//GEN-LAST:event_FlightsButtonActionPerformed
 
@@ -530,7 +517,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new AdminDashBoard().setVisible(true));
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton BookingsButton;
     private javax.swing.JPanel BookingsPanel;

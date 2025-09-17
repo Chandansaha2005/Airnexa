@@ -37,7 +37,7 @@
           <Component id="topbar" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <Component id="sidebar" min="-2" pref="220" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="MainPanel" max="32767" attributes="0"/>
           </Group>
       </Group>
