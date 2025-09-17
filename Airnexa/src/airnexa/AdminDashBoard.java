@@ -5,8 +5,10 @@
 package airnexa;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 public class AdminDashBoard extends javax.swing.JFrame {
 
     private boolean sidebarVisible = true;
+    private Timer sidebarTimer;
     Connection con;
     Statement stmt;
     ResultSet rs;
@@ -28,7 +31,10 @@ public class AdminDashBoard extends javax.swing.JFrame {
     public AdminDashBoard() {
         initComponents();
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
-        cl.show(MainPanel, "Dashboard");
+        cl.show(MainPanel, "DashBoardBox");
+
+        sidebarVisible = true;
+        loadFlightData();
 
     }
 
@@ -42,6 +48,17 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        FlightDialog = new javax.swing.JDialog();
+        Add1 = new javax.swing.JTextField();
+        Add2 = new javax.swing.JTextField();
+        Add3 = new javax.swing.JTextField();
+        Add4 = new javax.swing.JTextField();
+        Add5 = new javax.swing.JTextField();
+        Add6 = new javax.swing.JTextField();
+        depert = new javax.swing.JSpinner();
+        jSpinner2 = new javax.swing.JSpinner();
+        Add_save = new javax.swing.JButton();
+        Add_cnl = new javax.swing.JButton();
         sidebar = new javax.swing.JPanel();
         DashboardButton = new javax.swing.JToggleButton();
         FlightsButton = new javax.swing.JToggleButton();
@@ -60,7 +77,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         FlightsPanel = new javax.swing.JPanel();
         flighttable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        flghtTable = new javax.swing.JTable();
+        flightTable = new javax.swing.JTable();
         top = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -72,6 +89,94 @@ public class AdminDashBoard extends javax.swing.JFrame {
         ReportsPanel = new javax.swing.JPanel();
         SettingsPanel = new javax.swing.JPanel();
         DashBoardPanel = new javax.swing.JPanel();
+
+        FlightDialog.setBackground(new java.awt.Color(11, 23, 34));
+        FlightDialog.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        FlightDialog.setModal(true);
+
+        Add2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Add2ActionPerformed(evt);
+            }
+        });
+
+        depert.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        depert.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), java.util.Calendar.MINUTE));
+
+        jSpinner2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jSpinner2.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), java.util.Calendar.MINUTE));
+
+        Add_save.setBackground(new java.awt.Color(14, 165, 164));
+        Add_save.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        Add_save.setText("SAVE");
+        Add_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Add_saveActionPerformed(evt);
+            }
+        });
+
+        Add_cnl.setBackground(new java.awt.Color(239, 68, 68));
+        Add_cnl.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        Add_cnl.setText("CANCEL");
+        Add_cnl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Add_cnlActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout FlightDialogLayout = new javax.swing.GroupLayout(FlightDialog.getContentPane());
+        FlightDialog.getContentPane().setLayout(FlightDialogLayout);
+        FlightDialogLayout.setHorizontalGroup(
+            FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FlightDialogLayout.createSequentialGroup()
+                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(FlightDialogLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Add3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(depert, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Add1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Add5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                        .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Add2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                    .addComponent(Add4, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
+                            .addComponent(Add6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(FlightDialogLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Add_save, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Add_cnl, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
+        );
+        FlightDialogLayout.setVerticalGroup(
+            FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FlightDialogLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Add1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Add2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Add3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Add4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(depert, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Add6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Add5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(FlightDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Add_save)
+                    .addComponent(Add_cnl))
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(11, 18, 32));
@@ -219,10 +324,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         jScrollPane1.setBackground(new java.awt.Color(11, 18, 32));
 
-        flghtTable.setBackground(new java.awt.Color(7, 16, 24));
-        flghtTable.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        flghtTable.setForeground(new java.awt.Color(255, 255, 255));
-        flghtTable.setModel(new javax.swing.table.DefaultTableModel(
+        flightTable.setAutoCreateRowSorter(true);
+        flightTable.setBackground(new java.awt.Color(7, 16, 24));
+        flightTable.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        flightTable.setForeground(new java.awt.Color(255, 255, 255));
+        flightTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -238,14 +344,14 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        flghtTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        flghtTable.setFillsViewportHeight(true);
-        flghtTable.setGridColor(new java.awt.Color(30, 41, 55));
-        flghtTable.setPreferredSize(new java.awt.Dimension(300, 150));
-        flghtTable.setSelectionBackground(new java.awt.Color(6, 182, 212));
-        flghtTable.setShowVerticalLines(true);
-        flghtTable.setSurrendersFocusOnKeystroke(true);
-        jScrollPane1.setViewportView(flghtTable);
+        flightTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        flightTable.setFillsViewportHeight(true);
+        flightTable.setGridColor(new java.awt.Color(30, 41, 55));
+        flightTable.setPreferredSize(new java.awt.Dimension(300, 150));
+        flightTable.setSelectionBackground(new java.awt.Color(6, 182, 212));
+        flightTable.setShowVerticalLines(true);
+        flightTable.setSurrendersFocusOnKeystroke(true);
+        jScrollPane1.setViewportView(flightTable);
 
         flighttable.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -265,22 +371,37 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(11, 21, 32));
         jPanel1.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
-        addflight.setBackground(new java.awt.Color(11, 21, 32));
+        addflight.setBackground(new java.awt.Color(14, 165, 164));
         addflight.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         addflight.setForeground(new java.awt.Color(255, 255, 255));
         addflight.setText("ADD");
+        addflight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addflightActionPerformed(evt);
+            }
+        });
         jPanel1.add(addflight);
 
-        editflight.setBackground(new java.awt.Color(11, 21, 32));
+        editflight.setBackground(new java.awt.Color(31, 41, 55));
         editflight.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         editflight.setForeground(new java.awt.Color(255, 255, 255));
         editflight.setText("EDIT");
+        editflight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editflightActionPerformed(evt);
+            }
+        });
         jPanel1.add(editflight);
 
-        deleteflight.setBackground(new java.awt.Color(11, 21, 32));
+        deleteflight.setBackground(new java.awt.Color(239, 68, 68));
         deleteflight.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         deleteflight.setForeground(new java.awt.Color(255, 255, 255));
         deleteflight.setText("DELETE");
+        deleteflight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteflightActionPerformed(evt);
+            }
+        });
         jPanel1.add(deleteflight);
 
         top.add(jPanel1, java.awt.BorderLayout.LINE_END);
@@ -399,7 +520,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
             String sql = "SELECT * FROM flight";
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
-            DefaultTableModel ob = (DefaultTableModel) flghtTable.getModel();
+            DefaultTableModel ob = (DefaultTableModel) flightTable.getModel();
             ob.setRowCount(0);
             while (rs.next()) {
                 Object[] row = {
@@ -419,7 +540,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error loading flights: " + e.getMessage());
         }
-
 
     }//GEN-LAST:event_FlightsButtonActionPerformed
 
@@ -458,40 +578,84 @@ public class AdminDashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_UsersButtonActionPerformed
 
     private void BurgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BurgerActionPerformed
-        // TODO add your handling code here:
-
-        new Thread(() -> {
-            try {
-                if (sidebarVisible) {
-                    for (int i = 220; i >= 0; i -= 10) {
-                        final int width = i;
-                        javax.swing.SwingUtilities.invokeLater(() -> {
-                            sidebar.setPreferredSize(new java.awt.Dimension(width, sidebar.getHeight()));
-                            getContentPane().revalidate();
-                            getContentPane().repaint();
-                        });
-                        Thread.sleep(10);
-                    }
-                    sidebarVisible = false;
-                } else {
-                    for (int i = 0; i <= 220; i += 10) {
-                        final int width = i;
-                        javax.swing.SwingUtilities.invokeLater(() -> {
-                            sidebar.setPreferredSize(new java.awt.Dimension(width, sidebar.getHeight()));
-                            getContentPane().revalidate();
-                            getContentPane().repaint();
-                        });
-                        Thread.sleep(10);
-                    }
-                    sidebarVisible = true;
-                }
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        }).start();
-
-
+        toggleSidebar();
     }//GEN-LAST:event_BurgerActionPerformed
+
+    private void deleteflightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteflightActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = flightTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a flight to delete");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to delete this flight?",
+                "Confirm Delete", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            deleteFlight(selectedRow);
+        }
+    }//GEN-LAST:event_deleteflightActionPerformed
+
+    private void Add2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Add2ActionPerformed
+
+    private void addflightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addflightActionPerformed
+        // TODO add your handling code here:
+        openFlightDialog(false, null);
+    }//GEN-LAST:event_addflightActionPerformed
+
+    private void editflightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editflightActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = flightTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a flight to edit");
+            return;
+        }
+        openFlightDialog(true, selectedRow);
+    }//GEN-LAST:event_editflightActionPerformed
+
+    private void Add_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_saveActionPerformed
+        // TODO add your handling code here:
+        String flightNo = Add1.getText().trim();
+        String airline = Add2.getText().trim();
+        String source = Add3.getText().trim();
+        String destination = Add4.getText().trim();
+        String seats = Add5.getText().trim();
+        String price = Add6.getText().trim();
+
+        if (flightNo.isEmpty() || airline.isEmpty() || source.isEmpty() || destination.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all required fields");
+            return;
+        }
+
+        try {
+            int seatCount = Integer.parseInt(seats);
+            double priceValue = Double.parseDouble(price);
+
+            // Get datetime from spinners
+            java.util.Date depDate = (java.util.Date) depert.getValue();
+            java.util.Date arrDate = (java.util.Date) jSpinner2.getValue();
+
+            addFlightToDB(flightNo, airline, source, destination,
+                    new Timestamp(depDate.getTime()),
+                    new Timestamp(arrDate.getTime()),
+                    seatCount, priceValue);
+
+            FlightDialog.setVisible(false);
+            loadFlightData(); // Refresh table
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid number format for seats or price");
+        }
+    }//GEN-LAST:event_Add_saveActionPerformed
+
+    private void Add_cnlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_cnlActionPerformed
+        // TODO add your handling code here:
+        FlightDialog.setVisible(false);
+    }//GEN-LAST:event_Add_cnlActionPerformed
 
     /**
      * @param args the command line arguments
@@ -518,12 +682,154 @@ public class AdminDashBoard extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new AdminDashBoard().setVisible(true));
     }
 
+    private void loadFlightData() {
+        try {
+            con = airnexa.DatabaseConnection.getConnection();
+            String sql = "SELECT * FROM flight";
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+            DefaultTableModel ob = (DefaultTableModel) flightTable.getModel();
+            ob.setRowCount(0);
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("flight_id"),
+                    rs.getString("flight_no"),
+                    rs.getString("airline"),
+                    rs.getString("depart_from"),
+                    rs.getString("departure_time"),
+                    rs.getString("arrive_at"),
+                    rs.getString("arrival_time"),
+                    rs.getInt("seat_availability"),
+                    rs.getFloat("ticket_price")
+                };
+                ob.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading flights: " + e.getMessage());
+        }
+    }
+
+    private void addFlightToDB(String flightNo, String airline, String source, String destination,
+            Timestamp depTime, Timestamp arrTime, int seats, double price) {
+        try {
+            con = airnexa.DatabaseConnection.getConnection();
+            String sql = "INSERT INTO flight (flight_no, airline, depart_from, departure_time, arrive_at, arrival_time, seat_availability, ticket_price) VALUES (?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = con.prepareStatement(sql);
+
+            pst.setString(1, flightNo);
+            pst.setString(2, airline);
+            pst.setString(3, source);
+            pst.setTimestamp(4, depTime);
+            pst.setString(5, destination);
+            pst.setTimestamp(6, arrTime);
+            pst.setInt(7, seats);
+            pst.setDouble(8, price);
+
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this, "Flight added successfully!");
+            }
+
+            pst.close();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error adding flight: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteFlight(int selectedRow) {
+        try {
+            // Get the flight ID from selected row
+            int flightId = (Integer) flightTable.getValueAt(selectedRow, 0);
+
+            con = airnexa.DatabaseConnection.getConnection();
+            String sql = "DELETE FROM flight WHERE flight_id = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, flightId);
+
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this, "Flight deleted successfully!");
+                loadFlightData(); // Refresh table
+            } else {
+                JOptionPane.showMessageDialog(this, "No flight found with that ID");
+            }
+
+            pst.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error deleting flight: " + e.getMessage());
+        }
+    }
+
+    private void toggleSidebar() {
+        sidebarVisible = !sidebarVisible;
+        if (sidebarTimer != null && sidebarTimer.isRunning()) {
+            sidebarTimer.stop();
+        }
+        sidebarTimer = new Timer(15, e -> {
+            Dimension currentSize = sidebar.getPreferredSize();
+            int targetWidth = sidebarVisible ? 220 : 0;
+            int currentWidth = currentSize.width;
+            int step = 15;
+
+            if (sidebarVisible && currentWidth < targetWidth) {
+                int newWidth = Math.min(currentWidth + step, targetWidth);
+                sidebar.setPreferredSize(new Dimension(newWidth, currentSize.height));
+            } else if (!sidebarVisible && currentWidth > targetWidth) {
+                int newWidth = Math.max(currentWidth - step, targetWidth);
+                sidebar.setPreferredSize(new Dimension(newWidth, currentSize.height));
+            } else {
+                sidebarTimer.stop();
+                return;
+            }
+
+            getContentPane().revalidate();
+            getContentPane().repaint();
+        });
+
+        sidebarTimer.start();
+    }
+
+    private void openFlightDialog(boolean isEdit, Integer selectedRow) {
+        // Set labels for the dialog fields
+        Add1.setText(""); // Flight No
+        Add2.setText(""); // Airline
+        Add3.setText(""); // Source  
+        Add4.setText(""); // Destination
+        Add5.setText(""); // Seats
+        Add6.setText(""); // Price
+
+        if (isEdit && selectedRow != null) {
+            // Fill fields with existing data
+            Add1.setText(flightTable.getValueAt(selectedRow, 1).toString()); // Flight No
+            Add2.setText(flightTable.getValueAt(selectedRow, 2).toString()); // Airline
+            Add3.setText(flightTable.getValueAt(selectedRow, 3).toString()); // Source
+            Add4.setText(flightTable.getValueAt(selectedRow, 5).toString()); // Destination
+            Add5.setText(flightTable.getValueAt(selectedRow, 7).toString()); // Seats
+            Add6.setText(flightTable.getValueAt(selectedRow, 8).toString()); // Price
+        }
+
+        FlightDialog.setVisible(true);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Add1;
+    private javax.swing.JTextField Add2;
+    private javax.swing.JTextField Add3;
+    private javax.swing.JTextField Add4;
+    private javax.swing.JTextField Add5;
+    private javax.swing.JTextField Add6;
+    private javax.swing.JButton Add_cnl;
+    private javax.swing.JButton Add_save;
     private javax.swing.JToggleButton BookingsButton;
     private javax.swing.JPanel BookingsPanel;
     private javax.swing.JButton Burger;
     private javax.swing.JPanel DashBoardPanel;
     private javax.swing.JToggleButton DashboardButton;
+    private javax.swing.JDialog FlightDialog;
     private javax.swing.JToggleButton FlightsButton;
     private javax.swing.JPanel FlightsPanel;
     private javax.swing.JPanel MainPanel;
@@ -535,8 +841,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel UsersPanel;
     private javax.swing.JButton addflight;
     private javax.swing.JButton deleteflight;
+    private javax.swing.JSpinner depert;
     private javax.swing.JButton editflight;
-    private javax.swing.JTable flghtTable;
+    private javax.swing.JTable flightTable;
     private javax.swing.JPanel flighttable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -545,6 +852,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel sidebar;
     private javax.swing.JPanel top;
