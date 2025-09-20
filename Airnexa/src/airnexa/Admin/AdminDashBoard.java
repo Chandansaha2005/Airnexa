@@ -620,7 +620,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         );
         UsersPanelLayout.setVerticalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addGap(0, 932, Short.MAX_VALUE)
         );
 
         MainPanel.add(UsersPanel, "UsersBox");
@@ -635,7 +635,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         );
         ReportsPanelLayout.setVerticalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addGap(0, 932, Short.MAX_VALUE)
         );
 
         MainPanel.add(ReportsPanel, "ReportsBox");
@@ -650,7 +650,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         );
         SettingsPanelLayout.setVerticalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addGap(0, 932, Short.MAX_VALUE)
         );
 
         MainPanel.add(SettingsPanel, "SettingsBox");
@@ -665,7 +665,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         );
         DashBoardPanelLayout.setVerticalGroup(
             DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addGap(0, 932, Short.MAX_VALUE)
         );
 
         MainPanel.add(DashBoardPanel, "DashBoardBox");
@@ -685,10 +685,11 @@ public class AdminDashBoard extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(topbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
