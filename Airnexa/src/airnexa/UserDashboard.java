@@ -18,9 +18,9 @@ import javax.swing.*;
 
 public class UserDashboard extends javax.swing.JFrame {
     
-//    Connection con;
-//    Statement stmt;
-//    ResultSet rs;
+    Connection con;
+    Statement stmt;
+    ResultSet rs;
     
     String type;
     
@@ -32,20 +32,20 @@ public class UserDashboard extends javax.swing.JFrame {
     public UserDashboard() {
         initComponents();    
         try{
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","S@tyam2006");
-//            
-//            String sql = "select depart_from,arrive_at from flight";
-//            stmt = this.con.createStatement();
-//            rs = stmt.executeQuery(sql);
-//            
-//            c1.addItem("");
-//            c2.addItem("");
-//            
-//            while(rs.next()){
-//                c1.addItem(rs.getString("depart_from"));
-//                c2.addItem(rs.getString("arrive_at"));
-//            }
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","S@tyam2006");
+            
+            String sql = "select depart_from,arrive_at from flight";
+            stmt = this.con.createStatement();
+            rs = stmt.executeQuery(sql);
+            
+            c1.addItem("");
+            c2.addItem("");
+            
+            while(rs.next()){
+                c1.addItem(rs.getString("depart_from"));
+                c2.addItem(rs.getString("arrive_at"));
+            }
             
             c4.removeAllItems();
             c4.addItem("");           
@@ -415,7 +415,7 @@ public class UserDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_c1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        SearchFlight ob1 = new SearchFlight();  
+        SearchFlight ob1 = new SearchFlight(c1.getSelectedItem().toString(), c2.getSelectedItem().toString(),c3.getSelectedItem().toString(),c4.getSelectedItem().toString(),c5.getSelectedItem().toString());  
         this.setVisible(false);
         ob1.setVisible(true);
         
