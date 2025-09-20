@@ -156,7 +156,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         depert.setName(""); // NOI18N
 
         jSpinner2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jSpinner2.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), new java.util.Date(-608794200000L), java.util.Calendar.MINUTE));
+        jSpinner2.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1758353216863L), new java.util.Date(), null, java.util.Calendar.MINUTE));
         jSpinner2.setName(""); // NOI18N
 
         Add_save.setBackground(new java.awt.Color(14, 165, 164));
