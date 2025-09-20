@@ -32,9 +32,8 @@ public class UserDashboard extends javax.swing.JFrame {
      */
     public UserDashboard() {
         initComponents();    
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","S@tyam2006");
+        try{           
+            con = airnexa.DatabaseConnection.getConnection();
             
             String sql = "select depart_from,arrive_at from flight";
             stmt = this.con.createStatement();
