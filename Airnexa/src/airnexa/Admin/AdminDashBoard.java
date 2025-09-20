@@ -156,7 +156,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         depert.setName(""); // NOI18N
 
         jSpinner2.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jSpinner2.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1758353216863L), new java.util.Date(), null, java.util.Calendar.MINUTE));
+        jSpinner2.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.MINUTE));
         jSpinner2.setName(""); // NOI18N
 
         Add_save.setBackground(new java.awt.Color(14, 165, 164));
@@ -268,10 +268,10 @@ public class AdminDashBoard extends javax.swing.JFrame {
                                 .addComponent(Add3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(343, 343, 343))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+                        .addGap(15, 15, 15)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(l5, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(l7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(l7, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(Add5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -616,7 +616,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         UsersPanel.setLayout(UsersPanelLayout);
         UsersPanelLayout.setHorizontalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1374, Short.MAX_VALUE)
+            .addGap(0, 1574, Short.MAX_VALUE)
         );
         UsersPanelLayout.setVerticalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -631,7 +631,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         ReportsPanel.setLayout(ReportsPanelLayout);
         ReportsPanelLayout.setHorizontalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1374, Short.MAX_VALUE)
+            .addGap(0, 1574, Short.MAX_VALUE)
         );
         ReportsPanelLayout.setVerticalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -646,7 +646,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         SettingsPanel.setLayout(SettingsPanelLayout);
         SettingsPanelLayout.setHorizontalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1374, Short.MAX_VALUE)
+            .addGap(0, 1574, Short.MAX_VALUE)
         );
         SettingsPanelLayout.setVerticalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -661,7 +661,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         DashBoardPanel.setLayout(DashBoardPanelLayout);
         DashBoardPanelLayout.setHorizontalGroup(
             DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1374, Short.MAX_VALUE)
+            .addGap(0, 1574, Short.MAX_VALUE)
         );
         DashBoardPanelLayout.setVerticalGroup(
             DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

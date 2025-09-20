@@ -105,10 +105,10 @@
                               <EmptySpace min="343" pref="343" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="l5" min="-2" pref="118" max="-2" attributes="0"/>
-                                  <Component id="l7" min="-2" pref="118" max="-2" attributes="0"/>
+                                  <Component id="l7" min="-2" pref="131" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="Add5" min="-2" pref="150" max="-2" attributes="0"/>
@@ -261,7 +261,7 @@
                   <Font name="Poppins" size="12" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                  <SpinnerModel initial="1758353216863" minimum="now" stepSize="12" type="date"/>
+                  <SpinnerModel initial="now" minimum="now" stepSize="12" type="date"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="" noResource="true"/>
               </Properties>
@@ -1192,7 +1192,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="1374" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="1574" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -1217,7 +1217,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="1374" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="1574" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -1242,7 +1242,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="1374" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="1574" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -1267,7 +1267,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="1374" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="1574" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
