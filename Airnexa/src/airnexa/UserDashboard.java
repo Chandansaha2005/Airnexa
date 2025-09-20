@@ -22,7 +22,8 @@ public class UserDashboard extends javax.swing.JFrame {
     Statement stmt;
     ResultSet rs;
     
-    String type;
+    String dept, arrv, type;
+    int d, m, y;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserDashboard.class.getName());
 
@@ -415,7 +416,13 @@ public class UserDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_c1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        SearchFlight ob1 = new SearchFlight(c1.getSelectedItem().toString(), c2.getSelectedItem().toString(),c3.getSelectedItem().toString(),c4.getSelectedItem().toString(),c5.getSelectedItem().toString());  
+        
+        dept = c1.getSelectedItem().toString();
+        arrv = c2.getSelectedItem().toString();
+        
+        
+        
+        SearchFlight ob1 = new SearchFlight(dept, arrv);  
         this.setVisible(false);
         ob1.setVisible(true);
         
