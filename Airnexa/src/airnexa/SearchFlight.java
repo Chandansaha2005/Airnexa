@@ -14,10 +14,14 @@ public class SearchFlight extends javax.swing.JFrame {
 
     /**
      * Creates new form SearchFlight
-     * @param dept
-     * @param arrv
+     * @param f
+     * @param dt
+     * @param a
+     * @param at
+     * @param air
+     * @param s
      */
-    public SearchFlight(String dept, String arrv) {
+    public SearchFlight(String f, String dt, String a, String at, String air, String s) {
         initComponents();
     }
 
@@ -45,8 +49,6 @@ public class SearchFlight extends javax.swing.JFrame {
         workingPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         l1 = new javax.swing.JLabel();
         l2 = new javax.swing.JLabel();
 
@@ -127,7 +129,7 @@ public class SearchFlight extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Perpetua Titling MT", 1, 28)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Flight Details");
+        jLabel2.setText("Fill the form");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -147,21 +149,6 @@ public class SearchFlight extends javax.swing.JFrame {
         );
 
         workingPanel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        workingPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 830, 250));
         workingPanel.add(l1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 150, 30));
         workingPanel.add(l2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 150, 30));
 
@@ -236,8 +223,6 @@ public class SearchFlight extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel l1;
     private javax.swing.JLabel l2;
     private javax.swing.JPanel titlePanel;

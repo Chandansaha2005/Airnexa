@@ -9,8 +9,11 @@ package airnexa;
  * @author User
  */
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.sql.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 //import java.awt.Image;
 //import java.awt.image.BufferedImage;
 //import java.io.ByteArrayInputStream;
@@ -19,11 +22,11 @@ import javax.swing.*;
 public class UserDashboard extends javax.swing.JFrame {
     
     Connection con;
-    Statement stmt;
-    ResultSet rs;
+    Statement stmt, stmt2;
+    PreparedStatement pst;
+    ResultSet rs, rs2;
+    String dept, arrv;
     
-    String dept, arrv, type;
-    int d, m, y;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserDashboard.class.getName());
 
@@ -33,45 +36,30 @@ public class UserDashboard extends javax.swing.JFrame {
     public UserDashboard() {
         initComponents();    
         try{           
+            sp1.setVisible(false);
+            
+            b4.setVisible(false);
+            b3.setVisible(false);
+            b2.setVisible(false);
+                        
             con = airnexa.DatabaseConnection.getConnection();
             
-            String sql = "select depart_from,arrive_at from flight";
+            String sql = "select distinct depart_from from flight order by depart_from asc";
             stmt = this.con.createStatement();
             rs = stmt.executeQuery(sql);
             
-            c1.addItem("");
-            c2.addItem("");
+            String sql1 = "select distinct arrive_at from flight order by arrive_at asc";
+            stmt2 = this.con.createStatement();
+            rs2 = stmt2.executeQuery(sql1);
+            c1.addItem("Select");
+            c2.addItem("Select");
             
             while(rs.next()){
-                c1.addItem(rs.getString("depart_from"));
-                c2.addItem(rs.getString("arrive_at"));
+                c1.addItem(rs.getString("depart_from"));               
+            }                
+            while(rs2.next()){
+                 c2.addItem(rs2.getString("arrive_at"));
             }
-            
-            c4.removeAllItems();
-            c4.addItem("");           
-            for(int i = 1;i<=12;i++){
-                c4.addItem("" + i);
-            }
-            
-            c5.removeAllItems();
-            c5.addItem("");
-            for(int i = 2025;i >= 1900;i--){
-                c5.addItem("" + i);
-            }
-            
-            int r = (c4.getSelectedItem()=="")?30:getDays(c4.getSelectedItem().toString()); 
-            c3.removeAllItems();
-            c3.addItem("");
-            for(int i = 1;i <= r;i++){
-                c3.addItem("" + i);
-            }    
-            
-            ButtonGroup bg = new ButtonGroup();
-            bg.add(r1);
-            bg.add(r2);
-            bg.add(r3);
-            
-            r1.setSelected(true);
             
         }
         catch(Exception e){
@@ -79,18 +67,17 @@ public class UserDashboard extends javax.swing.JFrame {
         }              
     }     
     
-    boolean isLeapYear(int y){
-        return (((y%4 == 0) && (y%100 != 0)) || (y%400 == 0));
-        
-    }
-
-    static int getDays(String str){        
-        return switch (str) {
-            case "1", "3", "5", "7", "8", "10", "12" -> 31;
-            case "2" -> 28;
-            default -> 30;
-        };        
-    }
+//    boolean isLeapYear(int y){
+//        return (((y%4 == 0) && (y%100 != 0)) || (y%400 == 0));        
+//    }
+//
+//    static int getDays(String str){        
+//        return switch (str) {
+//            case "1", "3", "5", "7", "8", "10", "12" -> 31;
+//            case "2" -> 28;
+//            default -> 30;
+//        };        
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,25 +93,23 @@ public class UserDashboard extends javax.swing.JFrame {
         titlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        b2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         workingPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        l1 = new javax.swing.JLabel();
+        jp5 = new javax.swing.JPanel();
+        h1 = new javax.swing.JLabel();
         c1 = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        h2 = new javax.swing.JLabel();
         c2 = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        c3 = new javax.swing.JComboBox<>();
-        c4 = new javax.swing.JComboBox<>();
-        c5 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        r1 = new javax.swing.JRadioButton();
-        r2 = new javax.swing.JRadioButton();
-        r3 = new javax.swing.JRadioButton();
+        b1 = new javax.swing.JButton();
+        sp1 = new javax.swing.JScrollPane();
+        t1 = new javax.swing.JTable();
+        b3 = new javax.swing.JButton();
+        b4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,7 +130,16 @@ public class UserDashboard extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        titlePanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 220, -1));
+        titlePanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 220, -1));
+
+        b2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        b2.setText("<--");
+        b2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b2ActionPerformed(evt);
+            }
+        });
+        titlePanel.add(b2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 10, 60, -1));
 
         mainPanel.add(titlePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 50));
 
@@ -193,10 +187,10 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel2.setFont(new java.awt.Font("Perpetua Titling MT", 1, 28)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Book A Flight");
+        l1.setFont(new java.awt.Font("Perpetua Titling MT", 1, 28)); // NOI18N
+        l1.setForeground(new java.awt.Color(0, 0, 0));
+        l1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        l1.setText("Book A Flight");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -204,25 +198,25 @@ public class UserDashboard extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(325, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(l1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(325, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(30, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(l1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
         workingPanel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jp5.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("From");
+        h1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        h1.setForeground(new java.awt.Color(0, 0, 0));
+        h1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        h1.setText("From");
 
         c1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,128 +224,117 @@ public class UserDashboard extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("To");
+        h2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        h2.setForeground(new java.awt.Color(0, 0, 0));
+        h2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        h2.setText("To");
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Departure Date");
-
-        c3.addActionListener(new java.awt.event.ActionListener() {
+        c2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                c3ActionPerformed(evt);
+                c2ActionPerformed(evt);
             }
         });
 
-        c4.addActionListener(new java.awt.event.ActionListener() {
+        b1.setFont(new java.awt.Font("Perpetua Titling MT", 1, 18)); // NOI18N
+        b1.setText("Search");
+        b1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                c4ActionPerformed(evt);
+                b1ActionPerformed(evt);
             }
         });
 
-        c5.addActionListener(new java.awt.event.ActionListener() {
+        t1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Departure From", "Departure Time", "Arrival At", "Ariival Time", "Airline", "Available Seat"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        sp1.setViewportView(t1);
+
+        b3.setFont(new java.awt.Font("Perpetua Titling MT", 1, 18)); // NOI18N
+        b3.setText("Book");
+        b3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                c5ActionPerformed(evt);
+                b3ActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Perpetua Titling MT", 1, 18)); // NOI18N
-        jButton2.setText("Search");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        b4.setFont(new java.awt.Font("Perpetua Titling MT", 1, 18)); // NOI18N
+        b4.setText("Filter");
+        b4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                b4ActionPerformed(evt);
             }
         });
 
-        r1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        r1.setForeground(new java.awt.Color(0, 0, 0));
-        r1.setText("One Way");
-        r1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                r1ActionPerformed(evt);
-            }
-        });
-
-        r2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        r2.setForeground(new java.awt.Color(0, 0, 0));
-        r2.setText("Round Trip");
-        r2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                r2ActionPerformed(evt);
-            }
-        });
-
-        r3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        r3.setForeground(new java.awt.Color(0, 0, 0));
-        r3.setText("Multi City");
-        r3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                r3ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addComponent(c1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addComponent(c2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(r1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(r2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(r3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(c3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(c4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(c5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79)))
-                .addContainerGap(30, Short.MAX_VALUE))
+        javax.swing.GroupLayout jp5Layout = new javax.swing.GroupLayout(jp5);
+        jp5.setLayout(jp5Layout);
+        jp5Layout.setHorizontalGroup(
+            jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jp5Layout.createSequentialGroup()
+                .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jp5Layout.createSequentialGroup()
+                        .addGap(400, 400, 400)
+                        .addComponent(b3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jp5Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(b4)
+                            .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(sp1)
+                                .addGroup(jp5Layout.createSequentialGroup()
+                                    .addComponent(h1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(32, 32, 32)
+                                    .addComponent(c1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(32, 32, 32)
+                                    .addComponent(h2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(32, 32, 32)
+                                    .addComponent(c2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(32, 32, 32)
+                                    .addComponent(b1))))))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(c2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(c1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(c3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(c4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(c5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(r1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(r2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(r3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addComponent(jButton2)
-                .addContainerGap(78, Short.MAX_VALUE))
+        jp5Layout.setVerticalGroup(
+            jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jp5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(h1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(h2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(c1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(c2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(b4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sp1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
+                .addComponent(b3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
 
-        workingPanel.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 900, 400));
+        workingPanel.add(jp5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 900, 400));
 
         mainPanel.add(workingPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 900, 500));
 
@@ -373,92 +356,135 @@ public class UserDashboard extends javax.swing.JFrame {
         profile pr = new profile();
         //this.setVisible(false);
         pr.setVisible(true);
-
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void c5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c5ActionPerformed
-       
-        
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_c5ActionPerformed
-
-    private void c4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c4ActionPerformed
-        
-        Object m = c4.getSelectedItem();
-        Object y = c5.getSelectedItem();
-        if (m == null || y == null) return;
-        
-        String m1 = m.toString() , y1 = y.toString();
-        int r = getDays(m1);
-        if("2".equals(m1)){
-            r = (isLeapYear(Integer.parseInt(y1)))?29:28;
-        }
-        
-        c3.removeAllItems();
-        c3.addItem("");      
-        for(int i = 1;i <= r;i++){
-            c3.addItem("" + i);
-        }
-
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_c4ActionPerformed
-
-    private void c3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_c3ActionPerformed
 
     private void c1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_c1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
+           
+        if(c2.getSelectedItem().toString().equalsIgnoreCase("Select") && c1.getSelectedItem().toString().equalsIgnoreCase("Select")){
+        } else {
+            dept = c1.getSelectedItem().toString();
+            arrv = c2.getSelectedItem().toString();              
+            if(b1.isVisible()){
+                l1.setText("Flight Details");
+                
+                
+                sp1.setVisible(true);
+                sp1.setPreferredSize(new Dimension(836,257));
+
+                b4.setVisible(true);
+                b3.setVisible(true);
+                b2.setVisible(true);
+
+                b1.setVisible(false);
+
+                h1.setVisible(false);
+                h2.setVisible(false);
+
+                c1.setVisible(false);
+                c2.setVisible(false);       
+            }
+            
+                
+            try{                               
+                if (!dept.equals("Select") && arrv.equals("Select")) {
+                    pst = con.prepareStatement("SELECT * FROM flight WHERE depart_from = ?");
+                    pst.setString(1, dept);
+                } else if (dept.equals("Select") && !arrv.equals("Select")) {
+                    pst = con.prepareStatement("SELECT * FROM flight WHERE arrive_at = ?");
+                    pst.setString(1, arrv);
+                } else if (!dept.equals("Select") && !arrv.equals("Select")) {
+                    pst = con.prepareStatement("SELECT * FROM flight WHERE depart_from = ? AND arrive_at = ?");
+                    pst.setString(1, dept);
+                    pst.setString(2, arrv);
+                }
+                
+                rs = pst.executeQuery();
+                
+                DefaultTableModel model = new DefaultTableModel();
+                model.setColumnIdentifiers(new String[] {
+                    "Departure From", "Departure Time", "Arrival At",
+                    "Arrival Time", "Airline", "Available Seat"
+                });
+                
+                
+                while(rs.next()){
+                    String f = rs.getString("depart_from");
+                    String dt = rs.getString("departure_time");
+                    String ar = rs.getString("arrive_at");
+                    String at = rs.getString("arrival_time");
+                    String air = rs.getString("airline");
+                    String s = rs.getString("seat_availability");
+
+                    Object row[] = { f, dt, ar, at, air, s };
+                    model.addRow(row);
+                }
+                t1.setModel(model);
+
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(rootPane, e);
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b1ActionPerformed
+
+    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
+        if(b4.getText().equalsIgnoreCase("Filter") && b4.isVisible()){
+            l1.setText("Book A Flight");
+            b1.setText("Search");
+            
+            h1.setVisible(true);
+            h2.setVisible(true);
+            
+            c1.setVisible(true);
+            c2.setVisible(true);
+            
+            sp1.setVisible(false);
+            
+            b4.setVisible(false);
+            b3.setVisible(false);
+            b2.setVisible(false);
+            
+            b1.setVisible(true);                                         
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b2ActionPerformed
+
+    private void c2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_c2ActionPerformed
+
+    private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
         
-        dept = c1.getSelectedItem().toString();
-        arrv = c2.getSelectedItem().toString();
-        
-        
-        
-        SearchFlight ob1 = new SearchFlight(dept, arrv);  
+        int selectedRow = t1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a flight to book.");
+        }
+                
+        String f = t1.getValueAt(selectedRow, 0).toString();
+        String dt = t1.getValueAt(selectedRow, 1).toString();
+        String a = t1.getValueAt(selectedRow, 2).toString();
+        String at = t1.getValueAt(selectedRow, 3).toString();
+        String air = t1.getValueAt(selectedRow, 4).toString();
+        String s = t1.getValueAt(selectedRow, 5).toString();
+
         this.setVisible(false);
-        ob1.setVisible(true);
+        SearchFlight ob = new SearchFlight(f, dt, a, at, air, s);
+        ob.setVisible(true);
         
-        //type(type);
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_b3ActionPerformed
 
-    private void r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r3ActionPerformed
-        if(r3.isSelected()){
-            r1.setSelected(false);
-            r2.setSelected(false);
-            type = "Multi City";
-        }
-
+    private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_r3ActionPerformed
-
-    private void r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r1ActionPerformed
-        if(r1.isSelected()){
-            r2.setSelected(false);
-            r3.setSelected(false);
-            type = "One Way";
-        }
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r1ActionPerformed
-
-    private void r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r2ActionPerformed
-        if(r2.isSelected()){
-            r1.setSelected(false);
-            r3.setSelected(false);
-            type = "Round Trip";
-        }
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r2ActionPerformed
+    }//GEN-LAST:event_b4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -486,27 +512,25 @@ public class UserDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b1;
+    private javax.swing.JButton b2;
+    private javax.swing.JButton b3;
+    private javax.swing.JButton b4;
     private javax.swing.JComboBox<String> c1;
     private javax.swing.JComboBox<String> c2;
-    private javax.swing.JComboBox<String> c3;
-    private javax.swing.JComboBox<String> c4;
-    private javax.swing.JComboBox<String> c5;
+    private javax.swing.JLabel h1;
+    private javax.swing.JLabel h2;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jp5;
+    private javax.swing.JLabel l1;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JRadioButton r1;
-    private javax.swing.JRadioButton r2;
-    private javax.swing.JRadioButton r3;
+    private javax.swing.JScrollPane sp1;
+    private javax.swing.JTable t1;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JPanel workingPanel;
     // End of variables declaration//GEN-END:variables
