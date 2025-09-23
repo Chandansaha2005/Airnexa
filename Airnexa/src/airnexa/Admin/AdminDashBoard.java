@@ -565,7 +565,8 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(11, 18, 32));
         jLabel2.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
-        jLabel2.setText("🧾 BOOKINGS");
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("BOOKINGS");
         book_top.add(jLabel2, java.awt.BorderLayout.CENTER);
 
         BookingsPanel.add(book_top, java.awt.BorderLayout.PAGE_START);
