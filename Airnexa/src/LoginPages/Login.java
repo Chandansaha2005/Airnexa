@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package airnexa;
+package LoginPages;
 
 import java.awt.Image;
 import java.sql.*;
@@ -24,7 +24,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         setContentPane(new bgimg());
         initComponents();
-         ImageIcon icon = new ImageIcon(getClass().getResource("/airnexa/plane.png"));
+         ImageIcon icon = new ImageIcon(getClass().getResource("/Asset/plane.png"));
          Image img = icon.getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
          l1.setIcon(new ImageIcon(img));
     }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package airnexa;
+package LoginPages;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -13,11 +13,11 @@ import javax.swing.JPanel;
  * @author User
  */
 public class bgimg extends JPanel {
-     private Image bgImage;
+     private final Image bgImage;
 
     public bgimg() {
         // background image load
-        bgImage = new ImageIcon(getClass().getResource("/airnexa/bg.jpg")).getImage();
+        bgImage = new ImageIcon(getClass().getResource("/Asset/bg.jpg")).getImage();
     }
 
     @Override
