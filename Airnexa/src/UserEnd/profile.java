@@ -318,10 +318,13 @@ public class profile extends javax.swing.JFrame {
             pst.setString(2,t2.getText());
             pst.setString(3,t4.getText());
             pst.setString(4,this.u_id);
-            if(JOptionPane.showConfirmDialog(rootPane,"Confirm..?" , "Updating Profile", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION && pst.executeUpdate() == 1){            
-                JOptionPane.showMessageDialog(rootPane,"Updation Successful...!!");
-                loadData();
+            if(JOptionPane.showConfirmDialog(rootPane,"Confirm..?" , "Updating Profile", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){            
+                if(pst.executeUpdate() == 1){                
+                    JOptionPane.showMessageDialog(rootPane,"Updation Successful...!!");
+                    
+                }
             }
+            loadData();
             
         }
         catch(Exception e){

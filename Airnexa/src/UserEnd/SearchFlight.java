@@ -13,26 +13,21 @@ import javax.swing.JOptionPane;
  */
 public class SearchFlight extends javax.swing.JFrame {
     
-    String u_id;
+    String u_id, fl_no;
     Connection con;
     PreparedStatement pst;
     ResultSet rs;
-    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SearchFlight.class.getName());
 
     /**
      * Creates new form SearchFlight
-     * @param f
-     * @param dt
-     * @param a
-     * @param at
-     * @param air
-     * @param s
+     * @param f_no
      * @param u_id
      */
-    public SearchFlight(String f, String dt, String a, String at, String air, String s, String u_id) {
+    public SearchFlight(String f_no, String u_id) {
         initComponents();
         this.u_id = u_id;
+        this.fl_no = f_no;
         loadData();
     }
 

@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Swing_Projects/Airnexa/Airnexa/src/airnexa/UserDashboard.java</file>
-            <file>file:/C:/Swing_Projects/Airnexa/Airnexa/src/airnexa/SearchFlight.java</file>
+            <file>file:/C:/Swing_Projects/Airnexa/Airnexa/src/UserEnd/UserDashboard.java</file>
+            <file>file:/C:/Swing_Projects/Airnexa/Airnexa/src/UserEnd/SearchFlight.java</file>
+            <file>file:/C:/Swing_Projects/Airnexa/Airnexa/src/UserEnd/profile.java</file>
+            <file>file:/C:/Swing_Projects/Airnexa/Airnexa/src/UserEnd/DatabaseConnection.java</file>
         </group>
     </open-files>
 </project-private>
