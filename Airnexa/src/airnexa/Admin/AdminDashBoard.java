@@ -28,18 +28,19 @@ public class AdminDashBoard extends javax.swing.JFrame {
     ResultSet rs;
     String uname;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminDashBoard.class.getName());
-    
+
     //constractors
     public AdminDashBoard() {
-        
+
         initComponents();
         initFlightDialog();
-        
+
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
         cl.show(MainPanel, "DashBoardBox");
-        
+
         sidebarVisible = true;
         loadFlightData();
+        loadBookingsData();
 
     }
 
@@ -91,7 +92,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         topbarleft = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        logout_btn = new javax.swing.JButton();
         menu = new javax.swing.JPanel();
         Burger = new javax.swing.JButton();
         MainPanel = new javax.swing.JPanel();
@@ -429,15 +430,15 @@ public class AdminDashBoard extends javax.swing.JFrame {
         });
         topbarleft.add(jButton1);
 
-        jButton2.setBackground(new java.awt.Color(200, 21, 32));
-        jButton2.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
-        jButton2.setText("LOGOUT");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        logout_btn.setBackground(new java.awt.Color(200, 21, 32));
+        logout_btn.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        logout_btn.setText("LOGOUT");
+        logout_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                logout_btnActionPerformed(evt);
             }
         });
-        topbarleft.add(jButton2);
+        topbarleft.add(logout_btn);
 
         topbar.add(topbarleft, java.awt.BorderLayout.LINE_END);
 
@@ -688,7 +689,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
+                        .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
 
@@ -733,7 +734,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void logout_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout_btnActionPerformed
         // TODO add your handling code here:
         int confirm = JOptionPane.showConfirmDialog(this,
                 "Are you sure you want to logout?", "Confirm Logout",
@@ -745,7 +746,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
 //        this.hide();
 //        ob.show();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_logout_btnActionPerformed
 
     private void BookingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookingsButtonActionPerformed
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
@@ -760,7 +761,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private void DashboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DashboardButtonActionPerformed
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
         cl.show(MainPanel, "DashBoardBox");
-
     }//GEN-LAST:event_DashboardButtonActionPerformed
 
     private void SettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SettingsButtonActionPerformed
@@ -886,6 +886,51 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new AdminDashBoard().setVisible(true));
+    }
+
+    private void loadBookingsData() {
+        try {
+            con = airnexa.DatabaseConnection.getConnection();
+            String sql = "SELECT * FROM booking";
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+            DefaultTableModel ob = (DefaultTableModel) bookingTable.getModel();
+            ob.setRowCount(0);
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("booking_id"),
+                    rs.getInt("user_id"),
+                    rs.getInt("flight_id"),
+                    rs.getString("date_time"),
+                    rs.getFloat("ticket_price"),
+                    rs.getInt("number_of_seats")
+                };
+                ob.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading flights: " + e.getMessage());
+        } finally {
+            // Close resources
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
     }
 
     private void loadFlightData() {
@@ -1152,7 +1197,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JTable flightTable;
     private javax.swing.JPanel flighttable;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1170,6 +1214,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel l6;
     private javax.swing.JLabel l7;
     private javax.swing.JLabel l8;
+    private javax.swing.JButton logout_btn;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel sidebar;
     private javax.swing.JPanel top;
