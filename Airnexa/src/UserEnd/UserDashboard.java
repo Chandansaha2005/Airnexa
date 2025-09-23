@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package airnexa;
+package UserEnd;
 
 /**
  *
@@ -10,7 +10,6 @@ package airnexa;
  */
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.sql.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,26 +22,51 @@ public class UserDashboard extends javax.swing.JFrame {
     
     Connection con;
     Statement stmt, stmt2;
-    PreparedStatement pst;
-    ResultSet rs, rs2;
-    String dept, arrv;
+    PreparedStatement pst,pst1;
+    ResultSet rs,rs1, rs2;
+    String dept, arrv, u_id;
+    
     
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserDashboard.class.getName());
 
     /**
      * Creates new form UserDashboard
+     * @param u_id
      */
-    public UserDashboard() {
-        initComponents();    
-        try{           
-            sp1.setVisible(false);
+    public UserDashboard(String u_id) {
+        initComponents();            
+        try{
+            con = UserEnd.DatabaseConnection.getConnection();
+//            this.u_id = u_id;
+//            pr1.setText(u_id);
+            this.u_id = "1";
             
+            loadData();
+            
+            sp1.setVisible(false);            
             b4.setVisible(false);
             b3.setVisible(false);
-            b2.setVisible(false);
-                        
-            con = airnexa.DatabaseConnection.getConnection();
+            b2.setVisible(false);                                                                     
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }              
+    }     
+
+    public void refreshData(){
+        loadData();
+    }
+    
+    private void loadData(){
+        try{
+            String s = "select username from user where user_id = ?";
+            pst1 = this.con.prepareStatement(s);
+            pst1.setString(1, this.u_id);
+            rs1 = pst1.executeQuery();
+            if(rs1.next()){
+                pr1.setText(rs1.getString("username"));
+            }
             
             String sql = "select distinct depart_from from flight order by depart_from asc";
             stmt = this.con.createStatement();
@@ -60,12 +84,11 @@ public class UserDashboard extends javax.swing.JFrame {
             while(rs2.next()){
                  c2.addItem(rs2.getString("arrive_at"));
             }
-            
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(rootPane, e);
-        }              
-    }     
+        }
+    }
     
 //    boolean isLeapYear(int y){
 //        return (((y%4 == 0) && (y%100 != 0)) || (y%400 == 0));        
@@ -92,7 +115,7 @@ public class UserDashboard extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
         titlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        pr1 = new javax.swing.JButton();
         b2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -124,13 +147,13 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel1.setText("AirNexa");
         titlePanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 186, 38));
 
-        jButton1.setText("UserName");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        pr1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        pr1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                pr1ActionPerformed(evt);
             }
         });
-        titlePanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 220, -1));
+        titlePanel.add(pr1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 220, 25));
 
         b2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         b2.setText("<--");
@@ -139,7 +162,7 @@ public class UserDashboard extends javax.swing.JFrame {
                 b2ActionPerformed(evt);
             }
         });
-        titlePanel.add(b2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 10, 60, -1));
+        titlePanel.add(b2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 10, 60, 25));
 
         mainPanel.add(titlePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 50));
 
@@ -352,12 +375,13 @@ public class UserDashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        profile pr = new profile();
+    private void pr1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pr1ActionPerformed
+        profile pr = new profile(this.u_id,this);
         //this.setVisible(false);
         pr.setVisible(true);
+        this.setVisible(false);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_pr1ActionPerformed
 
     private void c1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c1ActionPerformed
         // TODO add your handling code here:
@@ -366,29 +390,10 @@ public class UserDashboard extends javax.swing.JFrame {
     private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
            
         if(c2.getSelectedItem().toString().equalsIgnoreCase("Select") && c1.getSelectedItem().toString().equalsIgnoreCase("Select")){
+            JOptionPane.showMessageDialog(rootPane,"Please select the source and destination");
         } else {
             dept = c1.getSelectedItem().toString();
-            arrv = c2.getSelectedItem().toString();              
-            if(b1.isVisible()){
-                l1.setText("Flight Details");
-                
-                
-                sp1.setVisible(true);
-                sp1.setPreferredSize(new Dimension(836,257));
-
-                b4.setVisible(true);
-                b3.setVisible(true);
-                b2.setVisible(true);
-
-                b1.setVisible(false);
-
-                h1.setVisible(false);
-                h2.setVisible(false);
-
-                c1.setVisible(false);
-                c2.setVisible(false);       
-            }
-            
+            arrv = c2.getSelectedItem().toString();                         
                 
             try{                               
                 if (!dept.equals("Select") && arrv.equals("Select")) {
@@ -401,30 +406,54 @@ public class UserDashboard extends javax.swing.JFrame {
                     pst = con.prepareStatement("SELECT * FROM flight WHERE depart_from = ? AND arrive_at = ?");
                     pst.setString(1, dept);
                     pst.setString(2, arrv);
-                }
+                } 
                 
                 rs = pst.executeQuery();
                 
-                DefaultTableModel model = new DefaultTableModel();
-                model.setColumnIdentifiers(new String[] {
-                    "Departure From", "Departure Time", "Arrival At",
-                    "Arrival Time", "Airline", "Available Seat"
-                });
-                
-                
-                while(rs.next()){
-                    String f = rs.getString("depart_from");
-                    String dt = rs.getString("departure_time");
-                    String ar = rs.getString("arrive_at");
-                    String at = rs.getString("arrival_time");
-                    String air = rs.getString("airline");
-                    String s = rs.getString("seat_availability");
+                if (!rs.isBeforeFirst()) {
+                    // No flights found, show a message and clear the table
+                    JOptionPane.showMessageDialog(rootPane, "No flights found for the selected route.");                  
+                } else {               
+                    DefaultTableModel model = new DefaultTableModel();
+                    model.setColumnIdentifiers(new String[] {
+                        "Departure From", "Departure Time", "Arrival At",
+                        "Arrival Time", "Airline", "Available Seat"
+                    });
 
-                    Object row[] = { f, dt, ar, at, air, s };
-                    model.addRow(row);
+
+                    while(rs.next()){
+                        String f = rs.getString("depart_from");
+                        String dt = rs.getString("departure_time");
+                        String ar = rs.getString("arrive_at");
+                        String at = rs.getString("arrival_time");
+                        String air = rs.getString("airline");
+                        String s = rs.getString("seat_availability");
+
+                        Object row[] = { f, dt, ar, at, air, s };
+                        model.addRow(row);
+                    }
+                    t1.setModel(model);
+
+                    if(b1.isVisible()){
+                        l1.setText("Flight Details");
+
+
+                        sp1.setVisible(true);
+                        sp1.setPreferredSize(new Dimension(836,257));
+
+                        b4.setVisible(true);
+                        b3.setVisible(true);
+                        b2.setVisible(true);
+
+                        b1.setVisible(false);
+
+                        h1.setVisible(false);
+                        h2.setVisible(false);
+
+                        c1.setVisible(false);
+                        c2.setVisible(false);       
+                    }
                 }
-                t1.setModel(model);
-
             }
             catch(Exception e){
                 JOptionPane.showMessageDialog(rootPane, e);
@@ -464,21 +493,21 @@ public class UserDashboard extends javax.swing.JFrame {
         
         int selectedRow = t1.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(null, "Please select a flight to book.");
+            JOptionPane.showMessageDialog(rootPane, "Please select a flight to book.");
         }
-                
-        String f = t1.getValueAt(selectedRow, 0).toString();
-        String dt = t1.getValueAt(selectedRow, 1).toString();
-        String a = t1.getValueAt(selectedRow, 2).toString();
-        String at = t1.getValueAt(selectedRow, 3).toString();
-        String air = t1.getValueAt(selectedRow, 4).toString();
-        String s = t1.getValueAt(selectedRow, 5).toString();
+        else if(JOptionPane.showConfirmDialog(rootPane, "Are You Sure..?", "Confirm Booking", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+            String f = t1.getValueAt(selectedRow, 0).toString();
+            String dt = t1.getValueAt(selectedRow, 1).toString();
+            String a = t1.getValueAt(selectedRow, 2).toString();
+            String at = t1.getValueAt(selectedRow, 3).toString();
+            String air = t1.getValueAt(selectedRow, 4).toString();
+            String s = t1.getValueAt(selectedRow, 5).toString();
 
-        this.setVisible(false);
-        SearchFlight ob = new SearchFlight(f, dt, a, at, air, s);
-        ob.setVisible(true);
-        
+            this.setVisible(false);
+            SearchFlight ob = new SearchFlight(f, dt, a, at, air, s, this.u_id);
+            ob.setVisible(true);
 
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_b3ActionPerformed
 
@@ -508,7 +537,7 @@ public class UserDashboard extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new UserDashboard().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new UserDashboard("testuser").setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -520,7 +549,6 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> c2;
     private javax.swing.JLabel h1;
     private javax.swing.JLabel h2;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -529,6 +557,7 @@ public class UserDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jp5;
     private javax.swing.JLabel l1;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JButton pr1;
     private javax.swing.JScrollPane sp1;
     private javax.swing.JTable t1;
     private javax.swing.JPanel titlePanel;

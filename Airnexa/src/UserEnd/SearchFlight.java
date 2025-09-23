@@ -2,13 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package airnexa;
+package UserEnd;
+import java.sql.*;
+import javax.swing.*;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author User
  */
 public class SearchFlight extends javax.swing.JFrame {
+    
+    String u_id;
+    Connection con;
+    PreparedStatement pst;
+    ResultSet rs;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SearchFlight.class.getName());
 
@@ -20,11 +28,19 @@ public class SearchFlight extends javax.swing.JFrame {
      * @param at
      * @param air
      * @param s
+     * @param u_id
      */
-    public SearchFlight(String f, String dt, String a, String at, String air, String s) {
+    public SearchFlight(String f, String dt, String a, String at, String air, String s, String u_id) {
         initComponents();
+        this.u_id = u_id;
+        loadData();
     }
 
+    public void refreshData(){
+        loadData();
+    }
+    
+    
     private SearchFlight() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -42,7 +58,7 @@ public class SearchFlight extends javax.swing.JFrame {
         titlePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        pr1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -70,15 +86,15 @@ public class SearchFlight extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        titlePanel.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 10, 60, -1));
+        titlePanel.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 10, 60, 25));
 
-        jButton1.setText("UserName");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        pr1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        pr1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                pr1ActionPerformed(evt);
             }
         });
-        titlePanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 220, -1));
+        titlePanel.add(pr1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 220, 25));
 
         MainPanel.add(titlePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 50));
 
@@ -172,21 +188,37 @@ public class SearchFlight extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadData(){
+        try{
+            con = UserEnd.DatabaseConnection.getConnection();
+            String s = "select username from user where user_id = ?";
+            pst = this.con.prepareStatement(s);
+            pst.setString(1, this.u_id);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                pr1.setText(rs.getString("username"));
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        UserDashboard ob = new UserDashboard();
+        UserDashboard ob = new UserDashboard(u_id);
         this.setVisible(false);
         ob.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        profile ob = new profile();
+    private void pr1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pr1ActionPerformed
+        profile pr = new profile(this.u_id,this);
         //this.setVisible(false);
-        ob.setVisible(true);
-
+        pr.setVisible(true);
+        this.setVisible(false);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_pr1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,7 +247,6 @@ public class SearchFlight extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainPanel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -225,6 +256,7 @@ public class SearchFlight extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel l1;
     private javax.swing.JLabel l2;
+    private javax.swing.JButton pr1;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JPanel workingPanel;
     // End of variables declaration//GEN-END:variables

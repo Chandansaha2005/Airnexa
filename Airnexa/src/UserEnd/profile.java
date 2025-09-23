@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package airnexa;
+package UserEnd;
 
+import java.sql.*;
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,20 +17,39 @@ import java.awt.*;
 public class profile extends javax.swing.JFrame {
     
     boolean pr = false;
+    Connection con;
+    PreparedStatement pst;    
+    ResultSet rs;
+    String sql, u_id;
+    UserDashboard ob;
+    javax.swing.JFrame fr;
+    
+    
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(profile.class.getName());
 
     /**
      * Creates new form profile
+     * @param u_id
+     * @param fr
      */
-    public profile() {
+    public profile(String u_id, javax.swing.JFrame fr) {
         initComponents();
-        
+        try{
+            con = UserEnd.DatabaseConnection.getConnection();
+            this.u_id = u_id;
+            this.fr = fr;
+            loadData();
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }                
+        t1.setEnabled(false);
         b2.setEnabled(false);
         setFalse();
         
         if(!pr){
-            ImageIcon ogIc = new ImageIcon(getClass().getResource("/Images/defaultProfilePic.png"));
+            ImageIcon ogIc = new ImageIcon(getClass().getResource("/Assets/defaultProfilePic.png"));
             Image img = ogIc.getImage().getScaledInstance(105, 105, Image.SCALE_SMOOTH);
             L1.setIcon(new ImageIcon(img));
             L2.setText("Upload Profile Picture");
@@ -37,17 +57,40 @@ public class profile extends javax.swing.JFrame {
         
     }
 
-    private void setFalse(){
-        t1.setEnabled(false);
+    private profile() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void setFalse(){        
         t2.setEnabled(false);
         t3.setEnabled(false);
         t4.setEnabled(false);
     }
-    private void setTrue(){
-        t1.setEnabled(true);
+    private void setTrue(){        
         t2.setEnabled(true);
         t3.setEnabled(true);
         t4.setEnabled(true);
+    }
+    
+    private void loadData(){
+        try{
+            sql = "select * from user where user_id = ?";
+            pst = this.con.prepareStatement(sql);
+            pst.setString(1, u_id);
+            rs = pst.executeQuery();
+
+            if(rs.next()){
+                t1.setText(u_id);
+                t3.setText(rs.getString("username"));
+                t2.setText(rs.getString("email_id"));
+                t4.setText(rs.getString("phone_no"));                            
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No User Found!!");
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
     }
     
     
@@ -176,19 +219,19 @@ public class profile extends javax.swing.JFrame {
         workingPanel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 140));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel2.setText("Name");
+        jLabel2.setText("User ID");
         workingPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 150, 30));
-        workingPanel.add(t1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 150, 30));
+        workingPanel.add(t1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 250, 30));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel3.setText("Email ID");
         workingPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 150, 30));
-        workingPanel.add(t2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 250, 150, 30));
+        workingPanel.add(t2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 250, 250, 30));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel4.setText("User Name");
         workingPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 150, 30));
-        workingPanel.add(t3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, 150, 30));
+        workingPanel.add(t3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, 250, 30));
 
         b1.setText("Edit");
         b1.addActionListener(new java.awt.event.ActionListener() {
@@ -201,7 +244,7 @@ public class profile extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel5.setText("Contact No.");
         workingPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 350, 150, 30));
-        workingPanel.add(t4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 350, 150, 30));
+        workingPanel.add(t4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 350, 250, 30));
 
         b2.setText("Update");
         b2.addActionListener(new java.awt.event.ActionListener() {
@@ -232,8 +275,19 @@ public class profile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      
-        this.setVisible(false);
+
+        if(this.fr != null){
+            this.fr.setVisible(true);
+        }
+        if(this.fr instanceof UserDashboard userDashboard){
+            userDashboard.refreshData();
+        }
+        
+        if(this.fr instanceof SearchFlight searchFlight){
+            searchFlight.refreshData();
+        }
+        
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -255,6 +309,24 @@ public class profile extends javax.swing.JFrame {
         b2.setEnabled(false);
         setFalse();
         b1.setEnabled(true);
+        
+        try{
+            con = UserEnd.DatabaseConnection.getConnection();
+            sql = "update user set username = ?,email_id = ? ,phone_no = ? where user_id = ?";
+            pst = this.con.prepareStatement(sql);
+            pst.setString(1,t3.getText());
+            pst.setString(2,t2.getText());
+            pst.setString(3,t4.getText());
+            pst.setString(4,this.u_id);
+            if(JOptionPane.showConfirmDialog(rootPane,"Confirm..?" , "Updating Profile", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION && pst.executeUpdate() == 1){            
+                JOptionPane.showMessageDialog(rootPane,"Updation Successful...!!");
+                loadData();
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_b2ActionPerformed
