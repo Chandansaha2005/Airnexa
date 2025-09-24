@@ -37,7 +37,8 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         CardLayout cl = (CardLayout) (MainPanel.getLayout());
         cl.show(MainPanel, "DashBoardBox");
-
+        Timer sidebarTimer;
+        sidebarVisible = true;
         sidebarVisible = true;
         loadFlightData();
         loadBookingsData();
@@ -122,20 +123,56 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         top2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        flightoverview = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
+        totalflights = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        totalflights1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        totalflights2 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        totalflights3 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         top3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
+        bookingsoverview = new javax.swing.JPanel();
+        jPanel14 = new javax.swing.JPanel();
+        totalflights4 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        totalflights5 = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        totalflights6 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        totalflights7 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         top4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        totalflights8 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        totalflights9 = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         top5 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
+        jPanel20 = new javax.swing.JPanel();
+        totalflights10 = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jPanel21 = new javax.swing.JPanel();
+        totalflights11 = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
 
         FlightDialog.setBackground(new java.awt.Color(11, 23, 34));
         FlightDialog.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -637,7 +674,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         UsersPanel.setLayout(UsersPanelLayout);
         UsersPanelLayout.setHorizontalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1574, Short.MAX_VALUE)
+            .addGap(0, 1592, Short.MAX_VALUE)
         );
         UsersPanelLayout.setVerticalGroup(
             UsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -652,7 +689,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         ReportsPanel.setLayout(ReportsPanelLayout);
         ReportsPanelLayout.setHorizontalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1574, Short.MAX_VALUE)
+            .addGap(0, 1592, Short.MAX_VALUE)
         );
         ReportsPanelLayout.setVerticalGroup(
             ReportsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -667,7 +704,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         SettingsPanel.setLayout(SettingsPanelLayout);
         SettingsPanelLayout.setHorizontalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1574, Short.MAX_VALUE)
+            .addGap(0, 1592, Short.MAX_VALUE)
         );
         SettingsPanelLayout.setVerticalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -696,15 +733,15 @@ public class AdminDashBoard extends javax.swing.JFrame {
         stats.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
         stats.setLayout(new java.awt.GridLayout(0, 3, 10, 0));
 
-        jPanel3.setBackground(new java.awt.Color(11, 18, 32));
+        jPanel3.setBackground(new java.awt.Color(11, 18, 37));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        top2.setBackground(new java.awt.Color(11, 18, 32));
+        top2.setBackground(new java.awt.Color(11, 18, 37));
         top2.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
         top2.setLayout(new java.awt.BorderLayout());
 
         jLabel5.setBackground(new java.awt.Color(200, 200, 200));
-        jLabel5.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Flights Overview");
         jLabel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -712,30 +749,154 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         jPanel3.add(top2, java.awt.BorderLayout.PAGE_START);
 
+        flightoverview.setBackground(new java.awt.Color(11, 18, 37));
+        flightoverview.setLayout(new java.awt.GridLayout(4, 0, 0, 10));
+
+        jPanel8.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights.setBorder(null);
+
+        jLabel9.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("TOTAL FLIGHTS");
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 815, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
-        jPanel3.add(jPanel8, java.awt.BorderLayout.CENTER);
+        flightoverview.add(jPanel8);
+
+        jPanel9.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights1.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights1.setBorder(null);
+
+        jLabel10.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("ACTIVE FLIGHTS");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+
+        flightoverview.add(jPanel9);
+
+        jPanel12.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights2.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights2.setBorder(null);
+
+        jLabel11.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("UPCOMING FLIGHTS");
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+
+        flightoverview.add(jPanel12);
+
+        jPanel13.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights3.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights3.setBorder(null);
+
+        jLabel12.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("CANCELED FLIGHTS");
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights3, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+
+        flightoverview.add(jPanel13);
+
+        jPanel3.add(flightoverview, java.awt.BorderLayout.CENTER);
 
         stats.add(jPanel3);
 
         jPanel4.setBackground(new java.awt.Color(11, 18, 32));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        top3.setBackground(new java.awt.Color(11, 18, 32));
+        top3.setBackground(new java.awt.Color(11, 18, 37));
         top3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
         top3.setLayout(new java.awt.BorderLayout());
 
         jLabel6.setBackground(new java.awt.Color(200, 200, 200));
-        jLabel6.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Bookings Overview");
         jLabel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -743,18 +904,142 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
         jPanel4.add(top3, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+        bookingsoverview.setBackground(new java.awt.Color(11, 18, 37));
+        bookingsoverview.setLayout(new java.awt.GridLayout(4, 0, 0, 10));
+
+        jPanel14.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights4.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights4.setBorder(null);
+
+        jLabel13.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("TOTAL BOOKINS");
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights4, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 815, Short.MAX_VALUE)
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
-        jPanel4.add(jPanel9, java.awt.BorderLayout.CENTER);
+        bookingsoverview.add(jPanel14);
+
+        jPanel15.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights5.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights5.setBorder(null);
+
+        jLabel14.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("CONFIRMED BOOKINGS");
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights5, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+
+        bookingsoverview.add(jPanel15);
+
+        jPanel16.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights6.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights6.setBorder(null);
+
+        jLabel15.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("PENDING BOOKINGS");
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights6, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights6, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+
+        bookingsoverview.add(jPanel16);
+
+        jPanel17.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights7.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights7.setBorder(null);
+
+        jLabel16.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("CANCELED BOOKINGS");
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights7, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights7, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+
+        bookingsoverview.add(jPanel17);
+
+        jPanel4.add(bookingsoverview, java.awt.BorderLayout.CENTER);
 
         stats.add(jPanel4);
 
@@ -764,29 +1049,86 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(11, 18, 32));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
-        top4.setBackground(new java.awt.Color(11, 18, 32));
+        top4.setBackground(new java.awt.Color(11, 18, 37));
         top4.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
         top4.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setBackground(new java.awt.Color(200, 200, 200));
-        jLabel7.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Total User");
+        jLabel7.setText("Users Overview");
         jLabel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         top4.add(jLabel7, java.awt.BorderLayout.CENTER);
 
         jPanel6.add(top4, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+        jPanel10.setLayout(new java.awt.GridLayout(2, 0));
+
+        jPanel18.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights8.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights8.setBorder(null);
+
+        jLabel17.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("TOTAL USERS");
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights8, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights8, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
+
+        jPanel10.add(jPanel18);
+
+        jPanel19.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights9.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights9.setBorder(null);
+
+        jLabel18.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("NEW USERS");
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights9, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights9, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+
+        jPanel10.add(jPanel19);
 
         jPanel6.add(jPanel10, java.awt.BorderLayout.CENTER);
 
@@ -795,29 +1137,86 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(11, 18, 32));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
-        top5.setBackground(new java.awt.Color(11, 18, 32));
+        top5.setBackground(new java.awt.Color(11, 18, 37));
         top5.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
         top5.setLayout(new java.awt.BorderLayout());
 
         jLabel8.setBackground(new java.awt.Color(200, 200, 200));
-        jLabel8.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Total Revenue");
+        jLabel8.setText(" Revenue");
         jLabel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         top5.add(jLabel8, java.awt.BorderLayout.CENTER);
 
         jPanel7.add(top5, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+        jPanel11.setLayout(new java.awt.GridLayout(2, 0));
+
+        jPanel20.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights10.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights10.setBorder(null);
+
+        jLabel19.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("TOTAL REVENUE");
+
+        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
+        jPanel20.setLayout(jPanel20Layout);
+        jPanel20Layout.setHorizontalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights10, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+        jPanel20Layout.setVerticalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights10, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
+
+        jPanel11.add(jPanel20);
+
+        jPanel21.setBackground(new java.awt.Color(11, 18, 37));
+
+        totalflights11.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights11.setBorder(null);
+
+        jLabel20.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("MONTHLY REVENUE");
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(totalflights11, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalflights11, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+
+        jPanel11.add(jPanel21);
 
         jPanel7.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -1227,13 +1626,15 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
     private void toggleSidebar() {
         sidebarVisible = !sidebarVisible;
+
+        // Stop the previous timer if running
         if (sidebarTimer != null && sidebarTimer.isRunning()) {
             sidebarTimer.stop();
         }
 
-        final int targetWidth = sidebarVisible ? 220 : 0;
-        final int step = 5;
-        final int delay = 5;
+        final int targetWidth = sidebarVisible ? 220 : 0; // target width when visible/hidden
+        final int step = 5; // pixels per tick
+        final int delay = 5; // ms per tick
 
         sidebarTimer = new Timer(delay, new ActionListener() {
             @Override
@@ -1241,17 +1642,29 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 int currentWidth = sidebar.getWidth();
 
                 if (sidebarVisible && currentWidth < targetWidth) {
-                    sidebar.setPreferredSize(new Dimension(currentWidth + step, sidebar.getHeight()));
+                    currentWidth += step;
+                    if (currentWidth > targetWidth) {
+                        currentWidth = targetWidth;
+                    }
                 } else if (!sidebarVisible && currentWidth > targetWidth) {
-                    sidebar.setPreferredSize(new Dimension(currentWidth - step, sidebar.getHeight()));
+                    currentWidth -= step;
+                    if (currentWidth < targetWidth) {
+                        currentWidth = targetWidth;
+                    }
                 } else {
-                    ((Timer) e.getSource()).stop();
-                    sidebar.setPreferredSize(new Dimension(targetWidth, sidebar.getHeight()));
-                    return;
+                    ((Timer) e.getSource()).stop(); // stop timer when done
                 }
 
-                revalidate();
-                repaint();
+                // Update sidebar size
+                sidebar.setPreferredSize(new Dimension(currentWidth, sidebar.getHeight()));
+                sidebar.setMinimumSize(new Dimension(currentWidth, sidebar.getHeight()));
+                sidebar.setMaximumSize(new Dimension(currentWidth, sidebar.getHeight()));
+
+                // Force parent layout update
+                sidebar.revalidate();
+                sidebar.repaint();
+                getContentPane().revalidate();
+                getContentPane().repaint();
             }
         });
 
@@ -1348,25 +1761,49 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JButton addflight;
     private javax.swing.JPanel book_top;
     private javax.swing.JTable bookingTable;
+    private javax.swing.JPanel bookingsoverview;
     private javax.swing.JPanel bookingtable;
     private javax.swing.JButton deleteflight;
     private javax.swing.JSpinner depert;
     private javax.swing.JButton editflight;
     private javax.swing.JTable flightTable;
+    private javax.swing.JPanel flightoverview;
     private javax.swing.JPanel flighttable;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1398,5 +1835,17 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel top5;
     private javax.swing.JPanel topbar;
     private javax.swing.JPanel topbarleft;
+    private javax.swing.JTextField totalflights;
+    private javax.swing.JTextField totalflights1;
+    private javax.swing.JTextField totalflights10;
+    private javax.swing.JTextField totalflights11;
+    private javax.swing.JTextField totalflights2;
+    private javax.swing.JTextField totalflights3;
+    private javax.swing.JTextField totalflights4;
+    private javax.swing.JTextField totalflights5;
+    private javax.swing.JTextField totalflights6;
+    private javax.swing.JTextField totalflights7;
+    private javax.swing.JTextField totalflights8;
+    private javax.swing.JTextField totalflights9;
     // End of variables declaration//GEN-END:variables
 }
