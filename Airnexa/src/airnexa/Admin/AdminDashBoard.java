@@ -116,6 +116,8 @@ public class AdminDashBoard extends javax.swing.JFrame {
         ReportsPanel = new javax.swing.JPanel();
         SettingsPanel = new javax.swing.JPanel();
         DashBoardPanel = new javax.swing.JPanel();
+        top1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         FlightDialog.setBackground(new java.awt.Color(11, 23, 34));
         FlightDialog.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -658,17 +660,20 @@ public class AdminDashBoard extends javax.swing.JFrame {
         MainPanel.add(SettingsPanel, "SettingsBox");
 
         DashBoardPanel.setBackground(new java.awt.Color(11, 18, 32));
+        DashBoardPanel.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout DashBoardPanelLayout = new javax.swing.GroupLayout(DashBoardPanel);
-        DashBoardPanel.setLayout(DashBoardPanelLayout);
-        DashBoardPanelLayout.setHorizontalGroup(
-            DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1574, Short.MAX_VALUE)
-        );
-        DashBoardPanelLayout.setVerticalGroup(
-            DashBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 932, Short.MAX_VALUE)
-        );
+        top1.setBackground(new java.awt.Color(11, 18, 32));
+        top1.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 12, 8, 12));
+        top1.setLayout(new java.awt.BorderLayout());
+
+        jLabel4.setBackground(new java.awt.Color(200, 200, 200));
+        jLabel4.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Admin Dashboard");
+        jLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        top1.add(jLabel4, java.awt.BorderLayout.CENTER);
+
+        DashBoardPanel.add(top1, java.awt.BorderLayout.PAGE_START);
 
         MainPanel.add(DashBoardPanel, "DashBoardBox");
 
@@ -1201,6 +1206,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu1;
@@ -1219,6 +1225,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel menu;
     private javax.swing.JPanel sidebar;
     private javax.swing.JPanel top;
+    private javax.swing.JPanel top1;
     private javax.swing.JPanel topbar;
     private javax.swing.JPanel topbarleft;
     // End of variables declaration//GEN-END:variables
