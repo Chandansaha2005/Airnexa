@@ -11,8 +11,11 @@ package UserEnd;
 
 import java.awt.Dimension;
 import java.sql.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.table.TableModel;
 //import java.awt.Image;
 //import java.awt.image.BufferedImage;
 //import java.io.ByteArrayInputStream;
@@ -25,7 +28,10 @@ public class UserDashboard extends javax.swing.JFrame {
     PreparedStatement pst,pst1;
     ResultSet rs,rs1, rs2;
     String dept, arrv, u_id;
-    
+    private TableRowSorter<TableModel> sorter;
+    private DefaultTableModel tableModel;
+    List<String> airlines;
+    double maxPriceValue;
     
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserDashboard.class.getName());
@@ -89,7 +95,35 @@ public class UserDashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, e);
         }
     }
-    
+    private void applyFilters(String airline, double minPrice, double maxPrice) {
+        if (airline.equals("All") && minPrice == 0.0 && maxPrice == 99999.0) {
+            sorter.setRowFilter(null); // No filters, show all data
+            return;
+        }
+
+        RowFilter<TableModel, Object> rowFilter = new RowFilter<TableModel, Object>() {
+            @Override
+            public boolean include(Entry<? extends TableModel, ? extends Object> entry) {
+                String entryAirline = (String) entry.getValue(5); // Airline is at index 5
+
+                // Your "Ticekt Price" column is stored as a String in the table model,
+                // so you need to parse it to a number for comparison.
+                double entryPrice;
+                try {
+                    entryPrice = Double.parseDouble((String) entry.getValue(7)); // Price is at index 7
+                } catch (NumberFormatException ex) {
+                    entryPrice = 0.0; // Handle cases where the price is not a number
+                }
+
+                // Check if the row matches the filter criteria
+                boolean airlineMatch = airline.equals("All") || airline.equals(entryAirline);
+                boolean priceMatch = entryPrice >= minPrice && entryPrice <= maxPrice;
+
+                return airlineMatch && priceMatch;
+            }
+        };
+        sorter.setRowFilter(rowFilter);
+    }
 //    boolean isLeapYear(int y){
 //        return (((y%4 == 0) && (y%100 != 0)) || (y%400 == 0));        
 //    }
@@ -252,24 +286,27 @@ public class UserDashboard extends javax.swing.JFrame {
         jp5Layout.setHorizontalGroup(
             jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jp5Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
                 .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(b3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(b4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jp5Layout.createSequentialGroup()
-                                .addComponent(h1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(100, 100, 100)
-                                .addComponent(c1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(100, 100, 100)
-                                .addComponent(h2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(100, 100, 100)
-                                .addComponent(c2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(100, 100, 100)
-                                .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(sp1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1550, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(89, 89, 89))
+                    .addGroup(jp5Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(b3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sp1, javax.swing.GroupLayout.PREFERRED_SIZE, 1550, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jp5Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(h1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(c1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(h2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(c2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jp5Layout.createSequentialGroup()
+                        .addGap(1475, 1475, 1475)
+                        .addComponent(b4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jp5Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {b1, b4});
@@ -277,14 +314,18 @@ public class UserDashboard extends javax.swing.JFrame {
         jp5Layout.setVerticalGroup(
             jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jp5Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(h2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(c1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(c2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(h1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jp5Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(jp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(h2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(c1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(c2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(h1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jp5Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
                 .addComponent(b4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addComponent(sp1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,9 +396,7 @@ public class UserDashboard extends javax.swing.JFrame {
                         .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(downPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0))
         );
@@ -379,77 +418,104 @@ public class UserDashboard extends javax.swing.JFrame {
 
     private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
            
-        if(c2.getSelectedItem().toString().equalsIgnoreCase("Select") && c1.getSelectedItem().toString().equalsIgnoreCase("Select")){
-            JOptionPane.showMessageDialog(rootPane,"Please select the source and destination");
-        } else {
-            dept = c1.getSelectedItem().toString();
-            arrv = c2.getSelectedItem().toString();                         
-                
-            try{                               
-                if (!dept.equals("Select") && arrv.equals("Select")) {
-                    pst = con.prepareStatement("SELECT * FROM flight WHERE depart_from = ?");
-                    pst.setString(1, dept);
-                } else if (dept.equals("Select") && !arrv.equals("Select")) {
-                    pst = con.prepareStatement("SELECT * FROM flight WHERE arrive_at = ?");
-                    pst.setString(1, arrv);
-                } else if (!dept.equals("Select") && !arrv.equals("Select")) {
-                    pst = con.prepareStatement("SELECT * FROM flight WHERE depart_from = ? AND arrive_at = ?");
-                    pst.setString(1, dept);
-                    pst.setString(2, arrv);
-                } 
-                
-                rs = pst.executeQuery();
-                
-                if (!rs.isBeforeFirst()) {
-                    // No flights found, show a message and clear the table
-                    JOptionPane.showMessageDialog(rootPane, "No flights found for the selected route.");                  
-                } else {               
-                    DefaultTableModel model = new DefaultTableModel();
-                    model.setColumnIdentifiers(new String[] {
-                        "Flight Number","Departure From", "Departure Time", "Arrival At",
-                        "Arrival Time", "Airline", "Available Seat", "Ticekt Price"
-                    });
+        if (c2.getSelectedItem().toString().equalsIgnoreCase("Select") && c1.getSelectedItem().toString().equalsIgnoreCase("Select")) {
+            JOptionPane.showMessageDialog(rootPane, "Please select the source and destination");
+            return;
+        }
 
+        dept = c1.getSelectedItem().toString();
+        arrv = c2.getSelectedItem().toString();
 
-                    while(rs.next()){
-                        String f_no = rs.getString("flight_no");
-                        String f = rs.getString("depart_from");
-                        String dt = rs.getString("departure_time");
-                        String ar = rs.getString("arrive_at");
-                        String at = rs.getString("arrival_time");
-                        String air = rs.getString("airline");
-                        String s = rs.getString("seat_availability");
-                        String p = rs.getString("ticket_price");
+        try {
+            if (!dept.equals("Select") && arrv.equals("Select")) {
+                pst = con.prepareStatement("SELECT * FROM flight WHERE depart_from = ?");
+                pst.setString(1, dept);
+            } else if (dept.equals("Select") && !arrv.equals("Select")) {
+                pst = con.prepareStatement("SELECT * FROM flight WHERE arrive_at = ?");
+                pst.setString(1, arrv);
+            } else if (!dept.equals("Select") && !arrv.equals("Select")) {
+                pst = con.prepareStatement("SELECT * FROM flight WHERE depart_from = ? AND arrive_at = ?");
+                pst.setString(1, dept);
+                pst.setString(2, arrv);
+            }
 
-                        Object row[] = { f_no, f, dt, ar, at, air, s, p};
-                        model.addRow(row);
+            rs = pst.executeQuery();
+
+            if (!rs.isBeforeFirst()) {
+                JOptionPane.showMessageDialog(rootPane, "No flights found for the selected route.");
+                // Hide all flight-related UI elements
+                sp1.setVisible(false);
+                b4.setVisible(false);
+                b3.setVisible(false);
+                b2.setVisible(false);
+            } else {
+                DefaultTableModel model = new DefaultTableModel();
+                model.setColumnIdentifiers(new String[] {
+                    "Flight Number", "Departure From", "Departure Time", "Arrival At",
+                    "Arrival Time", "Airline", "Available Seat", "Ticket Price"
+                });
+
+                // Collect airlines and find max price while populating the table
+                List<String> airlinesList = new java.util.ArrayList<>();
+                maxPriceValue = 0.0;
+
+                while (rs.next()) {
+                    String f_no = rs.getString("flight_no");
+                    String f = rs.getString("depart_from");
+                    String dt = rs.getString("departure_time");
+                    String ar = rs.getString("arrive_at");
+                    String at = rs.getString("arrival_time");
+                    String air = rs.getString("airline");
+                    String s = rs.getString("seat_availability");
+                    String p = rs.getString("ticket_price");
+
+                    Object row[] = {f_no, f, dt, ar, at, air, s, p};
+                    model.addRow(row);
+
+                    if (!airlinesList.contains(air)) {
+                        airlinesList.add(air);
                     }
-                    t1.setModel(model);
 
-                    if(b1.isVisible()){
-                        l1.setText("Flight Details");
-
-
-                        sp1.setVisible(true);
-                        sp1.setPreferredSize(new Dimension(836,257));
-
-                        b4.setVisible(true);
-                        b3.setVisible(true);
-                        b2.setVisible(true);
-
-                        b1.setVisible(false);
-
-                        h1.setVisible(false);
-                        h2.setVisible(false);
-
-                        c1.setVisible(false);
-                        c2.setVisible(false);       
+                    try {
+                        double currentPrice = Double.parseDouble(p);
+                        if (currentPrice > maxPriceValue) {
+                            maxPriceValue = currentPrice;
+                        }
+                    } catch (NumberFormatException ex) {
+                        // Log or handle the case where a price is not a number
                     }
                 }
+
+                tableModel = model;
+                t1.setModel(tableModel);
+
+                sorter = new TableRowSorter<>(tableModel);
+                t1.setRowSorter(sorter);
+
+                l1.setText("Flight Details");
+                sp1.setVisible(true);
+                b4.setVisible(true);
+                b3.setVisible(true);
+                b2.setVisible(true);
+                b1.setVisible(false);
+                h1.setVisible(false);
+                h2.setVisible(false);
+                c1.setVisible(false);
+                c2.setVisible(false);
+
+                // Add action listener to the filter button here
+                // This ensures it has valid data to work with
+                b4.addActionListener((java.awt.event.ActionEvent evt1) -> {
+                    FlightFilterDialog dialog = new FlightFilterDialog(UserDashboard.this, airlinesList, maxPriceValue);
+                    dialog.setVisible(true);
+                    String selectedAirline = dialog.getSelectedAirline();
+                    double minPrice = dialog.getMinPrice();
+                    double maxPrice1 = dialog.getMaxPrice();
+                    applyFilters(selectedAirline, minPrice, maxPrice1);
+                });
             }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(rootPane, e);
-            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_b1ActionPerformed
@@ -504,7 +570,7 @@ public class UserDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_b3ActionPerformed
 
     private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_b4ActionPerformed
 
     /**
