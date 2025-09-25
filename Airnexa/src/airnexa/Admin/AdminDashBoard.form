@@ -510,7 +510,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="MANAGE FLIGHTS"/>
+            <Property name="text" type="java.lang.String" value="FLIGHTS"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -530,7 +530,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="MANAGE BOOKING"/>
+            <Property name="text" type="java.lang.String" value="BOOKINGS"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -1450,6 +1450,9 @@
                                   <Border info="null"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="totalflightsActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel9">
                               <Properties>
@@ -1479,7 +1482,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel10" min="-2" pref="241" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="totalflights1" min="-2" pref="245" max="-2" attributes="0"/>
+                                      <Component id="activeflights" min="-2" pref="245" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1489,7 +1492,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="totalflights1" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                          <Component id="activeflights" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel10" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="67" max="32767" attributes="0"/>
@@ -1498,7 +1501,7 @@
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JTextField" name="totalflights1">
+                            <Component class="javax.swing.JTextField" name="activeflights">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
@@ -1507,6 +1510,9 @@
                                   <Border info="null"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="activeflightsActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel10">
                               <Properties>
@@ -1536,7 +1542,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel11" min="-2" pref="241" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="totalflights2" min="-2" pref="245" max="-2" attributes="0"/>
+                                      <Component id="upcomingflights" min="-2" pref="245" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1546,7 +1552,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="totalflights2" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                          <Component id="upcomingflights" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel11" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="67" max="32767" attributes="0"/>
@@ -1555,7 +1561,7 @@
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JTextField" name="totalflights2">
+                            <Component class="javax.swing.JTextField" name="upcomingflights">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
@@ -1564,6 +1570,9 @@
                                   <Border info="null"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="upcomingflightsActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel11">
                               <Properties>
@@ -1593,7 +1602,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel12" min="-2" pref="241" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="totalflights3" min="-2" pref="245" max="-2" attributes="0"/>
+                                      <Component id="canceledflights" min="-2" pref="245" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1603,7 +1612,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="totalflights3" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                          <Component id="canceledflights" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel12" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="67" max="32767" attributes="0"/>
@@ -1612,7 +1621,7 @@
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JTextField" name="totalflights3">
+                            <Component class="javax.swing.JTextField" name="canceledflights">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
@@ -1621,6 +1630,9 @@
                                   <Border info="null"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="canceledflightsActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel12">
                               <Properties>
@@ -1726,7 +1738,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel13" min="-2" pref="241" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="totalflights4" min="-2" pref="245" max="-2" attributes="0"/>
+                                      <Component id="totalbookings" min="-2" pref="245" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1736,7 +1748,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="totalflights4" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                          <Component id="totalbookings" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel13" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="67" max="32767" attributes="0"/>
@@ -1745,7 +1757,7 @@
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JTextField" name="totalflights4">
+                            <Component class="javax.swing.JTextField" name="totalbookings">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
@@ -1754,6 +1766,9 @@
                                   <Border info="null"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="totalbookingsActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel13">
                               <Properties>
@@ -1783,7 +1798,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel14" min="-2" pref="241" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="totalflights5" min="-2" pref="245" max="-2" attributes="0"/>
+                                      <Component id="confirmedbookings" min="-2" pref="245" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1793,7 +1808,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="totalflights5" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                          <Component id="confirmedbookings" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel14" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="67" max="32767" attributes="0"/>
@@ -1802,7 +1817,7 @@
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JTextField" name="totalflights5">
+                            <Component class="javax.swing.JTextField" name="confirmedbookings">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
@@ -1811,6 +1826,9 @@
                                   <Border info="null"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confirmedbookingsActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel14">
                               <Properties>
@@ -1840,7 +1858,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel15" min="-2" pref="241" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="totalflights6" min="-2" pref="245" max="-2" attributes="0"/>
+                                      <Component id="pendingbookings" min="-2" pref="245" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1850,7 +1868,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="totalflights6" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                          <Component id="pendingbookings" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel15" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="67" max="32767" attributes="0"/>
@@ -1859,7 +1877,7 @@
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JTextField" name="totalflights6">
+                            <Component class="javax.swing.JTextField" name="pendingbookings">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
@@ -1868,6 +1886,9 @@
                                   <Border info="null"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pendingbookingsActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel15">
                               <Properties>
@@ -1897,7 +1918,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel16" min="-2" pref="241" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="totalflights7" min="-2" pref="245" max="-2" attributes="0"/>
+                                      <Component id="canceledbookings" min="-2" pref="245" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1907,7 +1928,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="totalflights7" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                          <Component id="canceledbookings" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel16" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="67" max="32767" attributes="0"/>
@@ -1916,7 +1937,7 @@
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JTextField" name="totalflights7">
+                            <Component class="javax.swing.JTextField" name="canceledbookings">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
@@ -1925,6 +1946,9 @@
                                   <Border info="null"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="canceledbookingsActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel16">
                               <Properties>
@@ -2037,7 +2061,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel17" min="-2" pref="241" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="totalflights8" min="-2" pref="245" max="-2" attributes="0"/>
+                                          <Component id="totalusers" min="-2" pref="245" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -2047,7 +2071,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="totalflights8" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                              <Component id="totalusers" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                               <Component id="jLabel17" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="54" max="32767" attributes="0"/>
@@ -2056,7 +2080,7 @@
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Component class="javax.swing.JTextField" name="totalflights8">
+                                <Component class="javax.swing.JTextField" name="totalusers">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                       <Color blue="25" green="12" red="b" type="rgb"/>
@@ -2065,6 +2089,9 @@
                                       <Border info="null"/>
                                     </Property>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="totalusersActionPerformed"/>
+                                  </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel17">
                                   <Properties>
@@ -2094,7 +2121,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel18" min="-2" pref="241" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="totalflights9" min="-2" pref="245" max="-2" attributes="0"/>
+                                          <Component id="newusers" min="-2" pref="245" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -2104,7 +2131,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="totalflights9" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                              <Component id="newusers" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                               <Component id="jLabel18" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="54" max="32767" attributes="0"/>
@@ -2113,7 +2140,7 @@
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Component class="javax.swing.JTextField" name="totalflights9">
+                                <Component class="javax.swing.JTextField" name="newusers">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                       <Color blue="25" green="12" red="b" type="rgb"/>
@@ -2122,6 +2149,9 @@
                                       <Border info="null"/>
                                     </Property>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newusersActionPerformed"/>
+                                  </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel18">
                                   <Properties>
@@ -2221,7 +2251,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel19" min="-2" pref="241" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="totalflights10" min="-2" pref="245" max="-2" attributes="0"/>
+                                          <Component id="totalrevenue" min="-2" pref="245" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -2231,7 +2261,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="totalflights10" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                              <Component id="totalrevenue" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                               <Component id="jLabel19" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="54" max="32767" attributes="0"/>
@@ -2240,7 +2270,7 @@
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Component class="javax.swing.JTextField" name="totalflights10">
+                                <Component class="javax.swing.JTextField" name="totalrevenue">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                       <Color blue="25" green="12" red="b" type="rgb"/>
@@ -2249,6 +2279,9 @@
                                       <Border info="null"/>
                                     </Property>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="totalrevenueActionPerformed"/>
+                                  </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel19">
                                   <Properties>
@@ -2278,7 +2311,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel20" min="-2" pref="241" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="totalflights11" min="-2" pref="245" max="-2" attributes="0"/>
+                                          <Component id="monthlyrevenue" min="-2" pref="245" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -2288,7 +2321,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="totalflights11" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                                              <Component id="monthlyrevenue" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                               <Component id="jLabel20" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="54" max="32767" attributes="0"/>
@@ -2297,7 +2330,7 @@
                                 </DimensionLayout>
                               </Layout>
                               <SubComponents>
-                                <Component class="javax.swing.JTextField" name="totalflights11">
+                                <Component class="javax.swing.JTextField" name="monthlyrevenue">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                       <Color blue="25" green="12" red="b" type="rgb"/>
@@ -2306,6 +2339,9 @@
                                       <Border info="null"/>
                                     </Property>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="monthlyrevenueActionPerformed"/>
+                                  </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel20">
                                   <Properties>
