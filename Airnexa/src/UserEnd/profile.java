@@ -22,7 +22,6 @@ public class profile extends javax.swing.JFrame {
     PreparedStatement pst;    
     ResultSet rs;
     String sql, u_id;
-    UserDashboard ob;
     javax.swing.JFrame fr;
     
     

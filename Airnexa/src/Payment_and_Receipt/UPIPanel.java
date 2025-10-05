@@ -13,33 +13,39 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 public class UPIPanel extends javax.swing.JPanel {
     int min, max;
-    String path;
+    String s, path;
+    
+    private final Payment parentFrame;
     /**
      * Creates new form UPIPanel
+     * @param parentFrame
      */
-    public UPIPanel() {
+    public UPIPanel(Payment parentFrame) {
         initComponents();
+        
+        this.parentFrame = parentFrame;
+        
         min = 1;
         max = 8;
-        path = "/Assets/";
+        s = "/Assets/";
         switch(randomQRGenerator()){
-            case 1 -> path += "qr1.jpg";
+            case 1 -> path = s + "qr1.jpg";
                 
-            case 2 -> path += "qr2.jpg";
+            case 2 -> path = s + "qr2.jpg";
                 
-            case 3 -> path += "qr3.jpg";
+            case 3 -> path = s + "qr3.jpg";
             
-            case 4 -> path += "qr4.jpg";
+            case 4 -> path = s + "qr4.jpg";
             
-            case 5 -> path += "qr5.jpg";
+            case 5 -> path = s + "qr5.jpg";
             
-            case 6 -> path += "qr6.jpg";
+            case 6 -> path = s + "qr6.jpg";
             
-            case 7 -> path += "qr7.jpg";
+            case 7 -> path = s + "qr7.jpg";
             
-            case 8 -> path += "qr8.jpg";
+            case 8 -> path = s + "qr8.jpg";
             
-            default -> path += "error.jpeg";
+            default -> path = s + "error.jpeg";
         }
         
         ImageIcon ogIc = new ImageIcon(getClass().getResource(path));
@@ -67,10 +73,11 @@ public class UPIPanel extends javax.swing.JPanel {
         l1 = new javax.swing.JLabel();
         ImagePanel = new javax.swing.JPanel();
         l2 = new javax.swing.JLabel();
+        b1 = new javax.swing.JButton();
 
         l1.setFont(new java.awt.Font("Times New Roman", 0, 32)); // NOI18N
         l1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        l1.setText("Scan QR to Pay");
+        l1.setText("Scan QR");
 
         ImagePanel.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -94,34 +101,51 @@ public class UPIPanel extends javax.swing.JPanel {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
+        b1.setFont(new java.awt.Font("Perpetua Titling MT", 1, 22)); // NOI18N
+        b1.setText("Pay");
+        b1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        b1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(l1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(ImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(100, 100, 100))
+                    .addComponent(ImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(15, 15, 15)
                 .addComponent(l1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addGap(25, 25, 25)
                 .addComponent(ImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
+        parentFrame.simulatePayment();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ImagePanel;
+    private javax.swing.JButton b1;
     private javax.swing.JLabel l1;
     private javax.swing.JLabel l2;
     // End of variables declaration//GEN-END:variables
