@@ -1435,7 +1435,7 @@
                                           <Component id="totalflights" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel9" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                                      <EmptySpace pref="66" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1446,6 +1446,13 @@
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
                                 </Property>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Poppins" size="24" style="1"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="99" green="0" red="0" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Total"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="null"/>
                                 </Property>
@@ -1495,7 +1502,7 @@
                                           <Component id="activeflights" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel10" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                                      <EmptySpace pref="66" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1506,6 +1513,13 @@
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
                                 </Property>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Poppins" size="24" style="1"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="a4" green="a5" red="e" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Active"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="null"/>
                                 </Property>
@@ -1555,7 +1569,7 @@
                                           <Component id="upcomingflights" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel11" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                                      <EmptySpace pref="66" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1566,6 +1580,13 @@
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
                                 </Property>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Poppins" size="24" style="1"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="b8" green="a5" red="36" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Upcoming"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="null"/>
                                 </Property>
@@ -1615,7 +1636,7 @@
                                           <Component id="canceledflights" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel12" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                                      <EmptySpace pref="66" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1626,6 +1647,13 @@
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
                                 </Property>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Poppins" size="24" style="1"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="0" green="0" red="cc" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Canceled"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="null"/>
                                 </Property>
@@ -1751,7 +1779,7 @@
                                           <Component id="totalbookings" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel13" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                                      <EmptySpace pref="66" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1762,6 +1790,13 @@
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
                                 </Property>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Poppins" size="24" style="1"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="99" green="0" red="0" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Total"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="null"/>
                                 </Property>
@@ -1811,7 +1846,7 @@
                                           <Component id="confirmedbookings" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel14" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                                      <EmptySpace pref="66" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1822,6 +1857,13 @@
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
                                 </Property>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Poppins" size="24" style="1"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="a4" green="a5" red="e" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Confirmed"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="null"/>
                                 </Property>
@@ -1871,7 +1913,7 @@
                                           <Component id="pendingbookings" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel15" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                                      <EmptySpace pref="66" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1882,6 +1924,13 @@
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
                                 </Property>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Poppins" size="24" style="1"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="b8" green="a5" red="36" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Pending"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="null"/>
                                 </Property>
@@ -1931,7 +1980,7 @@
                                           <Component id="canceledbookings" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                           <Component id="jLabel16" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="67" max="32767" attributes="0"/>
+                                      <EmptySpace pref="66" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1942,6 +1991,13 @@
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="25" green="12" red="b" type="rgb"/>
                                 </Property>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Poppins" size="24" style="1"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="0" green="0" red="cc" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Canceled"/>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="null"/>
                                 </Property>
@@ -2074,7 +2130,7 @@
                                               <Component id="totalusers" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                               <Component id="jLabel17" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace pref="54" max="32767" attributes="0"/>
+                                          <EmptySpace pref="53" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -2085,6 +2141,13 @@
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                       <Color blue="25" green="12" red="b" type="rgb"/>
                                     </Property>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Poppins" size="24" style="1"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="99" green="0" red="0" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Total"/>
                                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                       <Border info="null"/>
                                     </Property>
@@ -2134,7 +2197,7 @@
                                               <Component id="newusers" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                               <Component id="jLabel18" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace pref="54" max="32767" attributes="0"/>
+                                          <EmptySpace pref="53" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -2145,6 +2208,13 @@
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                       <Color blue="25" green="12" red="b" type="rgb"/>
                                     </Property>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Poppins" size="24" style="1"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="a4" green="a5" red="e" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="New"/>
                                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                       <Border info="null"/>
                                     </Property>
@@ -2264,7 +2334,7 @@
                                               <Component id="totalrevenue" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                               <Component id="jLabel19" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace pref="54" max="32767" attributes="0"/>
+                                          <EmptySpace pref="53" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -2275,6 +2345,13 @@
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                       <Color blue="25" green="12" red="b" type="rgb"/>
                                     </Property>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Poppins" size="24" style="1"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="99" green="0" red="0" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Total"/>
                                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                       <Border info="null"/>
                                     </Property>
@@ -2324,7 +2401,7 @@
                                               <Component id="monthlyrevenue" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                                               <Component id="jLabel20" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace pref="54" max="32767" attributes="0"/>
+                                          <EmptySpace pref="53" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -2335,6 +2412,13 @@
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                       <Color blue="25" green="12" red="b" type="rgb"/>
                                     </Property>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Poppins" size="24" style="1"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="a4" green="a5" red="e" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Monthly"/>
                                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                       <Border info="null"/>
                                     </Property>

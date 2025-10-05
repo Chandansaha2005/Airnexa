@@ -756,6 +756,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel8.setBackground(new java.awt.Color(11, 18, 37));
 
         totalflights.setBackground(new java.awt.Color(11, 18, 37));
+        totalflights.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        totalflights.setForeground(new java.awt.Color(0, 0, 153));
+        totalflights.setText("Total");
         totalflights.setBorder(null);
         totalflights.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -786,7 +789,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(totalflights, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         flightoverview.add(jPanel8);
@@ -794,6 +797,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(11, 18, 37));
 
         activeflights.setBackground(new java.awt.Color(11, 18, 37));
+        activeflights.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        activeflights.setForeground(new java.awt.Color(14, 165, 164));
+        activeflights.setText("Active");
         activeflights.setBorder(null);
         activeflights.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -824,7 +830,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(activeflights, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         flightoverview.add(jPanel9);
@@ -832,6 +838,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel12.setBackground(new java.awt.Color(11, 18, 37));
 
         upcomingflights.setBackground(new java.awt.Color(11, 18, 37));
+        upcomingflights.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        upcomingflights.setForeground(new java.awt.Color(54, 165, 184));
+        upcomingflights.setText("Upcoming");
         upcomingflights.setBorder(null);
         upcomingflights.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -862,7 +871,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(upcomingflights, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         flightoverview.add(jPanel12);
@@ -870,6 +879,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel13.setBackground(new java.awt.Color(11, 18, 37));
 
         canceledflights.setBackground(new java.awt.Color(11, 18, 37));
+        canceledflights.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        canceledflights.setForeground(new java.awt.Color(204, 0, 0));
+        canceledflights.setText("Canceled");
         canceledflights.setBorder(null);
         canceledflights.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -900,7 +912,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(canceledflights, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         flightoverview.add(jPanel13);
@@ -931,6 +943,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel14.setBackground(new java.awt.Color(11, 18, 37));
 
         totalbookings.setBackground(new java.awt.Color(11, 18, 37));
+        totalbookings.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        totalbookings.setForeground(new java.awt.Color(0, 0, 153));
+        totalbookings.setText("Total");
         totalbookings.setBorder(null);
         totalbookings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -961,7 +976,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(totalbookings, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         bookingsoverview.add(jPanel14);
@@ -969,6 +984,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel15.setBackground(new java.awt.Color(11, 18, 37));
 
         confirmedbookings.setBackground(new java.awt.Color(11, 18, 37));
+        confirmedbookings.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        confirmedbookings.setForeground(new java.awt.Color(14, 165, 164));
+        confirmedbookings.setText("Confirmed");
         confirmedbookings.setBorder(null);
         confirmedbookings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -999,7 +1017,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmedbookings, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         bookingsoverview.add(jPanel15);
@@ -1007,6 +1025,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel16.setBackground(new java.awt.Color(11, 18, 37));
 
         pendingbookings.setBackground(new java.awt.Color(11, 18, 37));
+        pendingbookings.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        pendingbookings.setForeground(new java.awt.Color(54, 165, 184));
+        pendingbookings.setText("Pending");
         pendingbookings.setBorder(null);
         pendingbookings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1037,7 +1058,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pendingbookings, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         bookingsoverview.add(jPanel16);
@@ -1045,6 +1066,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel17.setBackground(new java.awt.Color(11, 18, 37));
 
         canceledbookings.setBackground(new java.awt.Color(11, 18, 37));
+        canceledbookings.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        canceledbookings.setForeground(new java.awt.Color(204, 0, 0));
+        canceledbookings.setText("Canceled");
         canceledbookings.setBorder(null);
         canceledbookings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1075,7 +1099,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(canceledbookings, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         bookingsoverview.add(jPanel17);
@@ -1108,6 +1132,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel18.setBackground(new java.awt.Color(11, 18, 37));
 
         totalusers.setBackground(new java.awt.Color(11, 18, 37));
+        totalusers.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        totalusers.setForeground(new java.awt.Color(0, 0, 153));
+        totalusers.setText("Total");
         totalusers.setBorder(null);
         totalusers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1138,7 +1165,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(totalusers, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         jPanel10.add(jPanel18);
@@ -1146,6 +1173,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel19.setBackground(new java.awt.Color(11, 18, 37));
 
         newusers.setBackground(new java.awt.Color(11, 18, 37));
+        newusers.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        newusers.setForeground(new java.awt.Color(14, 165, 164));
+        newusers.setText("New");
         newusers.setBorder(null);
         newusers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1176,7 +1206,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newusers, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         jPanel10.add(jPanel19);
@@ -1206,6 +1236,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel20.setBackground(new java.awt.Color(11, 18, 37));
 
         totalrevenue.setBackground(new java.awt.Color(11, 18, 37));
+        totalrevenue.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        totalrevenue.setForeground(new java.awt.Color(0, 0, 153));
+        totalrevenue.setText("Total");
         totalrevenue.setBorder(null);
         totalrevenue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1236,7 +1269,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(totalrevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         jPanel11.add(jPanel20);
@@ -1244,6 +1277,9 @@ public class AdminDashBoard extends javax.swing.JFrame {
         jPanel21.setBackground(new java.awt.Color(11, 18, 37));
 
         monthlyrevenue.setBackground(new java.awt.Color(11, 18, 37));
+        monthlyrevenue.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        monthlyrevenue.setForeground(new java.awt.Color(14, 165, 164));
+        monthlyrevenue.setText("Monthly");
         monthlyrevenue.setBorder(null);
         monthlyrevenue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1274,7 +1310,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(monthlyrevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         jPanel11.add(jPanel21);
@@ -1865,8 +1901,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
             if (rs.next()) {
                 totalflights.setText(String.valueOf(rs.getInt("total")));
                 totalflights.setEditable(false);
-                totalflights.setFont(new java.awt.Font("Poppins", 1, 24));
-                totalflights.setForeground(new java.awt.Color(14, 165, 164));
                 totalflights.setHorizontalAlignment(javax.swing.JTextField.CENTER);
             }
 
@@ -1876,8 +1910,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
             if (rs.next()) {
                 activeflights.setText(String.valueOf(rs.getInt("active")));
                 activeflights.setEditable(false);
-                activeflights.setFont(new java.awt.Font("Poppins", 1, 24));
-                activeflights.setForeground(new java.awt.Color(34, 197, 94));
                 activeflights.setHorizontalAlignment(javax.swing.JTextField.CENTER);
             }
 
@@ -1887,8 +1919,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
             if (rs.next()) {
                 upcomingflights.setText(String.valueOf(rs.getInt("upcoming")));
                 upcomingflights.setEditable(false);
-                upcomingflights.setFont(new java.awt.Font("Poppins", 1, 24));
-                upcomingflights.setForeground(new java.awt.Color(59, 130, 246));
                 upcomingflights.setHorizontalAlignment(javax.swing.JTextField.CENTER);
             }
 
@@ -1898,8 +1928,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
             if (rs.next()) {
                 canceledflights.setText(String.valueOf(rs.getInt("canceled")));
                 canceledflights.setEditable(false);
-                canceledflights.setFont(new java.awt.Font("Poppins", 1, 24));
-                canceledflights.setForeground(new java.awt.Color(239, 68, 68));
                 canceledflights.setHorizontalAlignment(javax.swing.JTextField.CENTER);
             }
 
@@ -1925,8 +1953,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
             if (rs.next()) {
                 totalbookings.setText(String.valueOf(rs.getInt("total")));
                 totalbookings.setEditable(false);
-                totalbookings.setFont(new java.awt.Font("Poppins", 1, 24));
-                totalbookings.setForeground(new java.awt.Color(14, 165, 164));
                 totalbookings.setHorizontalAlignment(javax.swing.JTextField.CENTER);
             }
 
@@ -1936,8 +1962,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
             if (rs.next()) {
                 confirmedbookings.setText(String.valueOf(rs.getInt("confirmed")));
                 confirmedbookings.setEditable(false);
-                confirmedbookings.setFont(new java.awt.Font("Poppins", 1, 24));
-                confirmedbookings.setForeground(new java.awt.Color(34, 197, 94));
                 confirmedbookings.setHorizontalAlignment(javax.swing.JTextField.CENTER);
             }
 
@@ -1947,16 +1971,12 @@ public class AdminDashBoard extends javax.swing.JFrame {
             if (rs.next()) {
                 pendingbookings.setText(String.valueOf(rs.getInt("pending")));
                 pendingbookings.setEditable(false);
-                pendingbookings.setFont(new java.awt.Font("Poppins", 1, 24));
-                pendingbookings.setForeground(new java.awt.Color(59, 130, 246));
                 pendingbookings.setHorizontalAlignment(javax.swing.JTextField.CENTER);
             }
 
             // Canceled bookings (set to 0 for now)
             canceledbookings.setText("0");
             canceledbookings.setEditable(false);
-            canceledbookings.setFont(new java.awt.Font("Poppins", 1, 24));
-            canceledbookings.setForeground(new java.awt.Color(239, 68, 68));
             canceledbookings.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         } catch (SQLException e) {
@@ -1987,8 +2007,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
                     if (rs.next()) {
                         totalusers.setText(String.valueOf(rs.getInt("total")));
                         totalusers.setEditable(false);
-                        totalusers.setFont(new java.awt.Font("Poppins", 1, 24));
-                        totalusers.setForeground(new java.awt.Color(14, 165, 164));
                         totalusers.setHorizontalAlignment(javax.swing.JTextField.CENTER);
                         userTableFound = true;
                     }
@@ -2017,8 +2035,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
                     }
 
                     newusers.setEditable(false);
-                    newusers.setFont(new java.awt.Font("Poppins", 1, 24));
-                    newusers.setForeground(new java.awt.Color(34, 197, 94));
                     newusers.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
                     break; // Found working table, exit loop
@@ -2033,14 +2049,10 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 // No user table found, set default values
                 totalusers.setText("0");
                 totalusers.setEditable(false);
-                totalusers.setFont(new java.awt.Font("Poppins", 1, 24));
-                totalusers.setForeground(new java.awt.Color(14, 165, 164));
                 totalusers.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
                 newusers.setText("0");
                 newusers.setEditable(false);
-                newusers.setFont(new java.awt.Font("Poppins", 1, 24));
-                newusers.setForeground(new java.awt.Color(34, 197, 94));
                 newusers.setHorizontalAlignment(javax.swing.JTextField.CENTER);
             }
 
@@ -2049,14 +2061,10 @@ public class AdminDashBoard extends javax.swing.JFrame {
             // Set default values
             totalusers.setText("0");
             totalusers.setEditable(false);
-            totalusers.setFont(new java.awt.Font("Poppins", 1, 24));
-            totalusers.setForeground(new java.awt.Color(14, 165, 164));
             totalusers.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
             newusers.setText("0");
             newusers.setEditable(false);
-            newusers.setFont(new java.awt.Font("Poppins", 1, 24));
-            newusers.setForeground(new java.awt.Color(34, 197, 94));
             newusers.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         } finally {
             closeConnections();
@@ -2078,8 +2086,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 double revenue = rs.getDouble("total_revenue");
                 totalrevenue.setText(String.format("₹%.2f", revenue));
                 totalrevenue.setEditable(false);
-                totalrevenue.setFont(new java.awt.Font("Poppins", 1, 18));
-                totalrevenue.setForeground(new java.awt.Color(14, 165, 164));
                 totalrevenue.setHorizontalAlignment(javax.swing.JTextField.CENTER);
             }
 
@@ -2091,8 +2097,6 @@ public class AdminDashBoard extends javax.swing.JFrame {
                 double revenue = rs.getDouble("monthly_revenue");
                 monthlyrevenue.setText(String.format("₹%.2f", revenue));
                 monthlyrevenue.setEditable(false);
-                monthlyrevenue.setFont(new java.awt.Font("Poppins", 1, 18));
-                monthlyrevenue.setForeground(new java.awt.Color(34, 197, 94));
                 monthlyrevenue.setHorizontalAlignment(javax.swing.JTextField.CENTER);
             }
 
@@ -2101,14 +2105,10 @@ public class AdminDashBoard extends javax.swing.JFrame {
             // Set default values on error
             totalrevenue.setText("₹0.00");
             totalrevenue.setEditable(false);
-            totalrevenue.setFont(new java.awt.Font("Poppins", 1, 18));
-            totalrevenue.setForeground(new java.awt.Color(14, 165, 164));
             totalrevenue.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
             monthlyrevenue.setText("₹0.00");
             monthlyrevenue.setEditable(false);
-            monthlyrevenue.setFont(new java.awt.Font("Poppins", 1, 18));
-            monthlyrevenue.setForeground(new java.awt.Color(34, 197, 94));
             monthlyrevenue.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         } finally {
             closeConnections();
