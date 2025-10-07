@@ -9,18 +9,24 @@ package Payment_and_Receipt;
  * @author User
  */
 
+import Payment_and_Receipt.JPanels.UPIPanel;
+import Payment_and_Receipt.JPanels.CardPanel;
+import Payment_and_Receipt.JPanels.NetBankingPanel;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.sql.*;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Payment extends javax.swing.JFrame {
-    String b_id, f_id, u_id;
+    public String b_id, u_id, p_id ;
     Connection con;
     PreparedStatement pst, pst1;
     ResultSet rs, rs1;
@@ -47,7 +53,7 @@ public class Payment extends javax.swing.JFrame {
                 price = rs.getString("ticket_price");
                 l2.setText(formatPrice(price));
                 this.u_id = rs.getString("user_id");
-                this.f_id = rs.getString("flight_id");
+                rs.getString("flight_id");
             }
             else{
                 JOptionPane.showMessageDialog(rootPane, "Booking ID not found!!");
@@ -92,7 +98,77 @@ public class Payment extends javax.swing.JFrame {
         }
     }
     
-    public void simulatePayment() {
+    private void something(){        
+        String selectedMethod = c1.getSelectedItem().toString();
+        try {
+            // Step 1: Generate Payment ID and get current date/time
+            this.p_id = generatePaymentID(con); // A new method to get the ID
+            String paymentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+            // Step 2: Insert payment record into the database
+            String sql3 = "INSERT INTO payment (payment_id, booking_id, amount, payment_date, payment_method, status) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst3 = con.prepareStatement(sql3);
+            pst3.setInt(1, Integer.parseInt(this.p_id));
+            pst3.setInt(2, Integer.parseInt(this.b_id));
+            pst3.setDouble(3, Double.parseDouble(this.price));
+            pst3.setTimestamp(4, stringToTimestamp(paymentDate));
+            pst3.setString(5, selectedMethod);            
+            pst3.setString(6, "Completed");
+
+            pst3.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Payment successful! Your transaction has been recorded.");
+
+            // Step 3: Now, open the Receipt page
+            // Pass the payment ID and method to the Receipt constructor
+            Receipt receipt = new Receipt(this.b_id, this.p_id, selectedMethod);
+            receipt.setVisible(true);
+            this.dispose(); // Close the payment window
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error recording payment: " + e.getMessage());
+        }
+    }
+    
+    private Timestamp stringToTimestamp(String s){
+        Timestamp t = null;
+        try {
+            // Use a standard SimpleDateFormat to parse the string into a java.util.Date
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            java.util.Date parsedDate = sdf.parse(s);
+
+            // Create a java.sql.Timestamp using the milliseconds from the java.util.Date
+            t = new Timestamp(parsedDate.getTime());
+        } catch (ParseException ex) {
+            // Log the error instead of just printing it
+            logger.log(java.util.logging.Level.SEVERE, "Date parsing failed", ex);
+            // Display an error message to the user
+            JOptionPane.showMessageDialog(this, "Error parsing date: " + ex.getMessage(), "Date Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return t;
+    }
+    
+    public static String generatePaymentID(Connection con) throws SQLException {
+        String sql = "SELECT payment_id FROM payment ORDER BY payment_id ASC";
+
+        try (PreparedStatement pst = con.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery()) {
+
+            int nextAvailableId = 1;
+            while (rs.next()) {
+                int currentId = rs.getInt("payment_id");
+                if (currentId != nextAvailableId) {
+                    // Found a gap, return the missing ID
+                    return String.valueOf(nextAvailableId);
+                }
+                nextAvailableId++;
+            }
+            // No gaps found, return the next ID in the sequence
+            return String.valueOf(nextAvailableId);
+        }
+    }
+    
+    
+    public void simulatePayment(String p) {
         // Step 1: Show "Proceeding for payment" message
         JOptionPane.showMessageDialog(this, "Proceeding for payment...", "Payment Status", JOptionPane.INFORMATION_MESSAGE);
         
@@ -100,15 +176,13 @@ public class Payment extends javax.swing.JFrame {
         int delay = 2000; 
         
         // Timer listener that executes the success message and screen clearing
-        ActionListener taskPerformer = (ActionEvent evt) -> {
+        ActionListener taskPerformer;
+        taskPerformer = (ActionEvent evt) -> {
             // Step 3: Show "Payment Successful!!" message
             JOptionPane.showMessageDialog(Payment.this, "Payment Successful!!", "Payment Status", JOptionPane.INFORMATION_MESSAGE);
             
             // Step 4: Hide the payment panel and repaint
-            this.dispose();
-            Receipt receipt = new Receipt(b_id);
-            receipt.setVisible(true);
-            
+            something();
             // The timer must stop after execution
             ((Timer)evt.getSource()).stop();
         };
@@ -141,8 +215,6 @@ public class Payment extends javax.swing.JFrame {
         c1 = new javax.swing.JComboBox<>();
         pnlCards = new javax.swing.JPanel();
         l1 = new javax.swing.JLabel();
-        b1 = new javax.swing.JButton();
-        b4 = new javax.swing.JButton();
         l2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -229,19 +301,6 @@ public class Payment extends javax.swing.JFrame {
         l1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         l1.setText("Amount : ");
         main.add(l1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 620, 170, 40));
-
-        b1.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        b1.setText("Confirm");
-        b1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b1ActionPerformed(evt);
-            }
-        });
-        main.add(b1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 680, 150, 40));
-
-        b4.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        b4.setText("Back");
-        main.add(b4, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 680, 150, 40));
 
         l2.setFont(new java.awt.Font("Segoe UI", 0, 26)); // NOI18N
         l2.setForeground(new java.awt.Color(0, 0, 0));
@@ -333,10 +392,6 @@ public class Payment extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_c1ActionPerformed
 
-    private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_b1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -363,10 +418,8 @@ public class Payment extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b1;
     private javax.swing.JButton b2;
     private javax.swing.JButton b3;
-    private javax.swing.JButton b4;
     private javax.swing.JComboBox<String> c1;
     private javax.swing.JPanel downPanel;
     private javax.swing.JPanel heading;

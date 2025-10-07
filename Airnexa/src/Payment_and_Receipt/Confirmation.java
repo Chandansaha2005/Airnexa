@@ -27,9 +27,9 @@ public class Confirmation extends javax.swing.JFrame {
     public Confirmation(String b_id) {
         initComponents();        
         try{
-            this.b_id = "5";
-            this.u_id = "5";
-            this.f_id = "5";                    
+            this.b_id = "2";
+            this.u_id = "2";
+            this.f_id = "2";                    
             //this.b_id = b_id;
             con = UserEnd.DatabaseConnection.getConnection();            
             b1.setEnabled(c1.isSelected());
@@ -49,9 +49,6 @@ public class Confirmation extends javax.swing.JFrame {
         }
     }
 
-    private Confirmation() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
     private void loadUserName(){
         try{
@@ -630,8 +627,7 @@ public class Confirmation extends javax.swing.JFrame {
                 deleteBooking();
                 
                 this.setVisible(false);
-                LastOne ob = new LastOne("");
-                ob.setVisible(true);
+                new LastOne(false).setVisible(true);
             }
         }
         catch(Exception e){

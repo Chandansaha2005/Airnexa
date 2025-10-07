@@ -21,6 +21,7 @@ public class FlightFilterDialog extends javax.swing.JDialog {
     private double maxPrice = Double.MAX_VALUE;
 
     private final double maxFlightPrice; // A new variable to store the max price
+// A new variable to store the max price
     
     /**
      * Creates new form FlightFilterDialog
@@ -66,13 +67,12 @@ public class FlightFilterDialog extends javax.swing.JDialog {
             airlineComboBox.addItem(airline);
         }               
         setLocationRelativeTo(parent);
-        
+                       
     }
 
     private FlightFilterDialog(JFrame jFrame, ArrayList<Object> arrayList) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
 
     public String getSelectedAirline() {
         return selectedAirline;

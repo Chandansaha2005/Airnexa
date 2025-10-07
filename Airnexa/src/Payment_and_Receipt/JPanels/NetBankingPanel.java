@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 
-package Payment_and_Receipt;
+package Payment_and_Receipt.JPanels;
 
+import Payment_and_Receipt.Payment;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.*;
@@ -37,9 +38,6 @@ public class NetBankingPanel extends javax.swing.JPanel {
         }
     }
 
-    private NetBankingPanel() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
     private double getAmountFromPaymentFrame() {
         try{
@@ -145,7 +143,7 @@ public class NetBankingPanel extends javax.swing.JPanel {
 
             if (response == JOptionPane.YES_OPTION) {
                 // If the user confirms, proceed with the simulated transaction
-                parentFrame.simulatePayment();
+                parentFrame.simulatePayment("Net Banking");
             }
         }
         // TODO add your handling code here:

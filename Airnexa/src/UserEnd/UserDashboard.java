@@ -9,7 +9,6 @@ package UserEnd;
  * @author User
  */
 
-import java.awt.Dimension;
 import java.sql.*;
 import java.util.List;
 import javax.swing.*;
@@ -30,7 +29,6 @@ public class UserDashboard extends javax.swing.JFrame {
     String dept, arrv, u_id;
     private TableRowSorter<TableModel> sorter;
     private DefaultTableModel tableModel;
-    List<String> airlines;
     double maxPriceValue;
     
     

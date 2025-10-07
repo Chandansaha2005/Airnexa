@@ -4,27 +4,65 @@
  */
 package Payment_and_Receipt;
 
+import java.awt.event.*;
+import javax.swing.*;
+
+
 /**
  *
  * @author User
  */
 public class LastOne extends javax.swing.JFrame {
-    String b_id;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LastOne.class.getName());
 
     /**
      * Creates new form LastOne
-     * @param b_id
+     * @param flag
      */
-    public LastOne(String b_id) {
+    public LastOne(boolean flag) {
         initComponents();
-        this.b_id = b_id;
+        l1.setText("Booking "+ (flag ? "Completed" : "Cancelled") + "...");
         
-        if(b_id.equals("")){
-            b2.setVisible(false);
-        }
+        setLocationRelativeTo(null);
     }
 
+    private void closingFunction(){
+        int res = JOptionPane.showConfirmDialog(                
+                this,
+                "Are You sure you want to close the application..?",
+                "Exit Confirmation",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+        
+        if(res == JOptionPane.YES_OPTION){
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Closing Application",
+                    "Closing",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            
+            int delay = 1000;
+            
+            ActionListener taskPerformer = (ActionEvent evt) -> {
+                JOptionPane.showMessageDialog(
+                        LastOne.this,
+                        "Thank You!! Goodbye.",
+                        "Finished",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+                
+                System.exit(0);
+                
+                ((Timer)evt.getSource()).stop();
+            };
+            
+            Timer timer = new Timer(delay, taskPerformer);
+            timer.setRepeats(false);
+            timer.start();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,65 +72,98 @@ public class LastOne extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        heading = new javax.swing.JPanel();
+        l1 = new javax.swing.JLabel();
+        workingPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        b2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
-        jLabel1.setText("Thankuuuuuuuuuuuuuuuuuuuuuu");
+        heading.setBackground(new java.awt.Color(153, 153, 153));
+        heading.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        heading.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 48)); // NOI18N
-        jLabel3.setText("*^___^*");
+        l1.setFont(new java.awt.Font("Perpetua Titling MT", 1, 36)); // NOI18N
+        l1.setForeground(new java.awt.Color(255, 255, 255));
+        l1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        heading.add(l1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 100));
 
-        b2.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        b2.setText("<--");
-        b2.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setFont(new java.awt.Font("Castellar", 0, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Choosing AirNexa !");
+
+        jLabel2.setFont(new java.awt.Font("Castellar", 0, 36)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Thank You for ");
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Your Journey Awaits!");
+
+        jButton1.setFont(new java.awt.Font("Bookman Old Style", 1, 28)); // NOI18N
+        jButton1.setText("Close");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b2ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout workingPanelLayout = new javax.swing.GroupLayout(workingPanel);
+        workingPanel.setLayout(workingPanelLayout);
+        workingPanelLayout.setHorizontalGroup(
+            workingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(workingPanelLayout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addGroup(workingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(150, 150, 150))
+        );
+        workingPanelLayout.setVerticalGroup(
+            workingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(workingPanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jLabel2)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(68, 68, 68))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(194, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(b2)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1))
-                        .addGap(159, 159, 159))))
+            .addComponent(heading, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(workingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(b2)
-                .addGap(383, 383, 383)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(436, Short.MAX_VALUE))
+                .addComponent(heading, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(workingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
-       
-       Confirmation ob = new Confirmation(b_id);
-       this.setVisible(false);
-       ob.setVisible(true);
-
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        closingFunction();       
+        
         // TODO add your handling code here:
-    }//GEN-LAST:event_b2ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,13 +188,17 @@ public class LastOne extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new LastOne("1").setVisible(true);
+            new LastOne(true).setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b2;
+    private javax.swing.JPanel heading;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel l1;
+    private javax.swing.JPanel workingPanel;
     // End of variables declaration//GEN-END:variables
 }

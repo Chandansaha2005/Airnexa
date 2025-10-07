@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Payment_and_Receipt;
+package Payment_and_Receipt.JPanels;
 
 /**
  *
  * @author User
  */
+import Payment_and_Receipt.Payment;
 import java.awt.*;
 import java.util.Random;
 import javax.swing.ImageIcon;
@@ -137,7 +138,7 @@ public class UPIPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
-        parentFrame.simulatePayment();
+        parentFrame.simulatePayment("UPI");
 
         // TODO add your handling code here:
     }//GEN-LAST:event_b1ActionPerformed

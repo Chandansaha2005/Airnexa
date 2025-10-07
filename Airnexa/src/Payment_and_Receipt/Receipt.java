@@ -8,19 +8,120 @@ package Payment_and_Receipt;
  *
  * @author User
  */
+
+import java.io.File;
+import java.sql.*;
+import javax.swing.*;
+
+
 public class Receipt extends javax.swing.JFrame {
+
+    Connection con;
+    PreparedStatement pst;
+    ResultSet rs;
+    
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Receipt.class.getName());
-    String b_id;
+    String b_id, u_id, f_id, p_id, pr, dt, p_mtd;
     /**
      * Creates new form Receipt
      * @param b_id
+     * @param p_id
+     * @param p
      */
-    public Receipt(String b_id) {
-        initComponents();
+    public Receipt(String b_id, String p_id, String p) {
+         initComponents();
         this.b_id = b_id;
+        this.p_id = p_id;
+        this.p_mtd = p;
+        displayReceiptDetails();  
+        
+        setLocationRelativeTo(null);
     }
+    
+    private void displayReceiptDetails() {
+        try {
+            this.con = UserEnd.DatabaseConnection.getConnection();
 
+            String bookingSql = "SELECT * FROM booking WHERE booking_id = ?";
+            PreparedStatement bookingPst = con.prepareStatement(bookingSql);
+            bookingPst.setString(1, b_id);
+            ResultSet bookingRs = bookingPst.executeQuery();
+
+            String paymentSql = "SELECT amount, payment_date FROM payment WHERE payment_id = ?";
+            PreparedStatement paymentPst = con.prepareStatement(paymentSql);
+            paymentPst.setString(1, p_id);
+            ResultSet paymentRs = paymentPst.executeQuery();
+
+            if (bookingRs.next() && paymentRs.next()) {
+                this.u_id = bookingRs.getString("user_id");
+                this.f_id = bookingRs.getString("flight_id");
+                this.pr = paymentRs.getString("amount");
+                this.dt = paymentRs.getString("payment_date");
+
+                // Now call setValues() to populate the JLabels
+                setValues();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Error: Booking or Payment details not found.", "Data Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try { if (con != null) con.close(); } catch (SQLException se) {}
+        }
+    }
+    
+    private void setValues() {
+        // Populate the JLabels with data from the class variables
+        b1.setText(b_id);
+        f1.setText(f_id);
+        u1.setText(u_id);
+        b2.setText(dt);
+
+        p1.setText(pr);
+        p2.setText(p_mtd);
+
+        // Disable the JLabels to prevent user interaction and show the data
+        b1.setEnabled(false);
+        b2.setEnabled(false);
+        f1.setEnabled(false);
+        u1.setEnabled(false);
+        p1.setEnabled(false);
+        p2.setEnabled(false);
+    }
+    
+    private void generatePDF(){
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Save Your Receipt..");
+        fc.setSelectedFile(new File("AirNexa_Receipt_" + b_id + ".pdf"));
+        
+        int userSelection = fc.showSaveDialog(this);
+        
+        if(userSelection == JFileChooser.APPROVE_OPTION){
+            File f = fc.getSelectedFile();
+            
+            PDFGenerator.generateReceiptPdf(
+                f.getAbsolutePath(),
+                b_id,
+                f_id,
+                u_id,
+                dt,
+                pr,
+                p_mtd,
+                p_id
+            );
+            JOptionPane.showMessageDialog(this, "PDF receipt saved successfully!");
+        }
+    }
+    
+    private void closePage(){
+        this.dispose();
+        new LastOne(true).setVisible(true);
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,32 +131,233 @@ public class Receipt extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        heading = new javax.swing.JPanel();
+        l1 = new javax.swing.JLabel();
+        booking = new javax.swing.JPanel();
+        l2 = new java.awt.Label();
+        l3 = new javax.swing.JLabel();
+        l4 = new javax.swing.JLabel();
+        b1 = new javax.swing.JLabel();
+        l5 = new javax.swing.JLabel();
+        f1 = new javax.swing.JLabel();
+        l6 = new javax.swing.JLabel();
+        u1 = new javax.swing.JLabel();
+        l7 = new javax.swing.JLabel();
+        b2 = new javax.swing.JLabel();
+        payment = new javax.swing.JPanel();
+        l8 = new javax.swing.JLabel();
+        l9 = new javax.swing.JLabel();
+        p1 = new javax.swing.JLabel();
+        p2 = new javax.swing.JLabel();
+        btn1 = new javax.swing.JButton();
+        btn2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        jLabel1.setText("Kuch toh Ayega yaha.. :)");
+        heading.setBackground(new java.awt.Color(153, 153, 153));
+        heading.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        l1.setFont(new java.awt.Font("Perpetua Titling MT", 1, 36)); // NOI18N
+        l1.setForeground(new java.awt.Color(255, 255, 255));
+        l1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        l1.setText("Payment confirmation");
+        l1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout headingLayout = new javax.swing.GroupLayout(heading);
+        heading.setLayout(headingLayout);
+        headingLayout.setHorizontalGroup(
+            headingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(l1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        headingLayout.setVerticalGroup(
+            headingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(l1, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+        );
+
+        l2.setAlignment(java.awt.Label.CENTER);
+        l2.setBackground(new java.awt.Color(0, 150, 0));
+        l2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        l2.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        l2.setText("Booking Successful");
+
+        l3.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
+        l3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        l3.setText("Your Booking and Payment have confirmed");
+
+        l4.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        l4.setText("Booking ID");
+
+        b1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+
+        l5.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        l5.setText("Flight ID");
+
+        f1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+
+        l6.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        l6.setText("User ID");
+
+        u1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+
+        l7.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        l7.setText("Booking Date");
+
+        b2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+
+        javax.swing.GroupLayout bookingLayout = new javax.swing.GroupLayout(booking);
+        booking.setLayout(bookingLayout);
+        bookingLayout.setHorizontalGroup(
+            bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bookingLayout.createSequentialGroup()
+                .addContainerGap(49, Short.MAX_VALUE)
+                .addGroup(bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(l5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(200, 200, 200)
+                .addGroup(bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(f1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(u1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(105, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bookingLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(l3, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        bookingLayout.setVerticalGroup(
+            bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bookingLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(l2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(l3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addGroup(bookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(bookingLayout.createSequentialGroup()
+                        .addComponent(l4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(l5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(l6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(l7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, bookingLayout.createSequentialGroup()
+                        .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(f1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(u1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(b2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+
+        payment.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        l8.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        l8.setText("Amount Paid");
+
+        l9.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        l9.setText("Payment Method");
+
+        p1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+
+        p2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+
+        btn1.setBackground(new java.awt.Color(0, 204, 255));
+        btn1.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        btn1.setForeground(new java.awt.Color(0, 0, 0));
+        btn1.setText("Download PDF");
+        btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn1ActionPerformed(evt);
+            }
+        });
+
+        btn2.setFont(new java.awt.Font("Corbel", 0, 24)); // NOI18N
+        btn2.setText("Close");
+        btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout paymentLayout = new javax.swing.GroupLayout(payment);
+        payment.setLayout(paymentLayout);
+        paymentLayout.setHorizontalGroup(
+            paymentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentLayout.createSequentialGroup()
+                .addContainerGap(50, Short.MAX_VALUE)
+                .addGroup(paymentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(l9, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l8, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(200, 200, 200)
+                .addGroup(paymentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(p2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE))
+            .addGroup(paymentLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100)
+                .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        paymentLayout.setVerticalGroup(
+            paymentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paymentLayout.createSequentialGroup()
+                .addContainerGap(50, Short.MAX_VALUE)
+                .addGroup(paymentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(l8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(p1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(paymentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(l9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(p2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(paymentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(175, 175, 175)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(175, Short.MAX_VALUE))
+            .addComponent(heading, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(booking, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(payment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addComponent(heading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(booking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(payment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
+        generatePDF();        
+        closePage();               
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn1ActionPerformed
+
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+        closePage();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,11 +382,30 @@ public class Receipt extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Receipt("1").setVisible(true);
+            new Receipt("1", "1", "upi").setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel b1;
+    private javax.swing.JLabel b2;
+    private javax.swing.JPanel booking;
+    private javax.swing.JButton btn1;
+    private javax.swing.JButton btn2;
+    private javax.swing.JLabel f1;
+    private javax.swing.JPanel heading;
+    private javax.swing.JLabel l1;
+    private java.awt.Label l2;
+    private javax.swing.JLabel l3;
+    private javax.swing.JLabel l4;
+    private javax.swing.JLabel l5;
+    private javax.swing.JLabel l6;
+    private javax.swing.JLabel l7;
+    private javax.swing.JLabel l8;
+    private javax.swing.JLabel l9;
+    private javax.swing.JLabel p1;
+    private javax.swing.JLabel p2;
+    private javax.swing.JPanel payment;
+    private javax.swing.JLabel u1;
     // End of variables declaration//GEN-END:variables
 }

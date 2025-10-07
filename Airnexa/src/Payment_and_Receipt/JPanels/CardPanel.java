@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Payment_and_Receipt;
+package Payment_and_Receipt.JPanels;
 
+import Payment_and_Receipt.Payment;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 
@@ -265,7 +266,7 @@ public class CardPanel extends javax.swing.JPanel {
         if(t1.getText().equals("") || t2.getText().equals("") || t3.getText().equals("") || t4.getText().equals("") || t5.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Please Enter All Details!!!!!!");
         } else if (isValidDetails()){                     
-            parentFrame.simulatePayment();
+            parentFrame.simulatePayment("Card");
         }
 
         // TODO add your handling code here:
