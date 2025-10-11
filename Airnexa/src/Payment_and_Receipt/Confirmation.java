@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Payment_and_Receipt;
-import UserEnd.SearchFlight;
+import UserEnd.PassengerDetails;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.sql.*;
@@ -615,7 +615,7 @@ public class Confirmation extends javax.swing.JFrame {
 
     private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
         this.setVisible(false);
-        SearchFlight ob = new SearchFlight(f_id, this.u_id);
+        PassengerDetails ob = new PassengerDetails(f_id, this.u_id);
         ob.setVisible(true);
 
         // TODO add your handling code here:

@@ -335,7 +335,7 @@ public class profile extends javax.swing.JFrame {
             userDashboard.refreshData();
         }
         
-        if(this.fr instanceof SearchFlight searchFlight){
+        if(this.fr instanceof PassengerDetails searchFlight){
             searchFlight.refreshData();
         }
         

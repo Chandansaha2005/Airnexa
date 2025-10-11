@@ -26,7 +26,7 @@ public class UserDashboard extends javax.swing.JFrame {
     Statement stmt, stmt2;
     PreparedStatement pst,pst1;
     ResultSet rs,rs1, rs2;
-    String dept, arrv, u_id;
+    String dept, arrv, u_id, fl_no;
     private TableRowSorter<TableModel> sorter;
     private DefaultTableModel tableModel;
     double maxPriceValue;
@@ -43,7 +43,6 @@ public class UserDashboard extends javax.swing.JFrame {
         try{
             con = UserEnd.DatabaseConnection.getConnection();
 //            this.u_id = u_id;
-//            pr1.setText(u_id);
             this.u_id = "1";
             
             loadData();
@@ -122,17 +121,26 @@ public class UserDashboard extends javax.swing.JFrame {
         };
         sorter.setRowFilter(rowFilter);
     }
-//    boolean isLeapYear(int y){
-//        return (((y%4 == 0) && (y%100 != 0)) || (y%400 == 0));        
-//    }
-//
-//    static int getDays(String str){        
-//        return switch (str) {
-//            case "1", "3", "5", "7", "8", "10", "12" -> 31;
-//            case "2" -> 28;
-//            default -> 30;
-//        };        
-//    }
+    
+    private String getFlightId(){
+        String id = "";
+        try{
+            con = UserEnd.DatabaseConnection.getConnection();
+            String sql = "select flight_id from flight where flight_no = ?";
+            pst = this.con.prepareStatement(sql);
+            pst.setString(1, fl_no);
+            rs = pst.executeQuery();
+            
+            if(rs.next()){
+                id = rs.getString("flight_id");
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+        return id;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -550,18 +558,15 @@ public class UserDashboard extends javax.swing.JFrame {
         int selectedRow = t1.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(rootPane, "Please select a flight to book.");
-        }/*
-        
-        ekhane flight er id or no. pass koraboooooo...*****
-        */
-        else if(JOptionPane.showConfirmDialog(rootPane, "Are You Sure..?", "Confirm Booking", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+        }
+        else if(JOptionPane.showConfirmDialog(rootPane, "Confirm...?", "Confirm Booking", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
             
             
-            String f_id = t1.getValueAt(selectedRow, 0).toString();            
-
-            this.setVisible(false);
-            SearchFlight ob = new SearchFlight(f_id, this.u_id);
-            ob.setVisible(true);
+            this.fl_no = t1.getValueAt(selectedRow, 0).toString();            
+            
+            String f_id = getFlightId();
+            this.dispose();
+            new PassengerDetails(f_id, this.u_id).setVisible(true);
 
         }
         // TODO add your handling code here:
