@@ -13,10 +13,9 @@ import javax.swing.*;
  */
 public class Co_PassengersDetails extends javax.swing.JFrame {
     
-    String b_id, c_id;
+    int b_id;
     Connection con;
     PreparedStatement pst;
-    ResultSet rs;
     int n;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Co_PassengersDetails.class.getName());
@@ -25,25 +24,111 @@ public class Co_PassengersDetails extends javax.swing.JFrame {
      * Creates new form SearchFlight
      * @param b_id
      * @param n
-     * @param c_id
      */
-    public Co_PassengersDetails(String b_id, int n, String c_id) {
-        initComponents();
-        this.b_id = b_id;
-        this.c_id = c_id;
-        this.n = n;
-        
-        if (n == 2){
-            B1.setText("Done..");
+    public Co_PassengersDetails(int b_id, int n) {
+        try {
+            initComponents();
+            this.con = UserEnd.DatabaseConnection.getConnection();
+            this.b_id = b_id;       
+            this.n = n;
+            setLocationRelativeTo(null);
+            if (n == 2){
+                B1.setText("Done..");
+            }
+        } catch (SQLException ex) {
+            System.getLogger(Co_PassengersDetails.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
+
+    private boolean isValidCoPassengerDetails() {
+
+        // --- Get text from your JTextFields (replace with your variable names) ---
+        String fullName = t1.getText().trim();
+        String seatNumber = t2.getText().trim();
+        String aadharNumber = t4.getText().trim();
+        String ageStr = t3.getText().trim();
+
+        // --- Validation Checks ---
+
+        // Check for any empty fields first
+        if (fullName.isEmpty() || seatNumber.isEmpty() || aadharNumber.isEmpty() || ageStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required. Please fill them all.");
+            return false;
+        }
+
+        // 1. Full Name: Must be letters and spaces only
+        if (!fullName.matches("^[a-zA-Z\\s]+$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Full Name. Please use only letters and spaces.");
+            return false;
+        }
+
+        // 2. Seat Number: Must be in a format like "12A" or "3F" (case-insensitive)
+        if (!seatNumber.matches("(?i)^\\d{1,2}[A-Z]$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Seat Number. Format must be like '23A'.");
+            return false;
+        }
+
+        // 3. AADHAR Number: Must be exactly 12 numeric digits
+        if (!aadharNumber.matches("^\\d{12}$")) {
+            JOptionPane.showMessageDialog(this, "Invalid AADHAR Number. Must be exactly 12 numeric digits.");
+            return false;
+        }
+
+        // 4. Age: Must be a number between 1 and 120
+        try {
+            int age = Integer.parseInt(ageStr);
+            if (age < 1 || age > 120) {
+                JOptionPane.showMessageDialog(this, "Invalid Age. Must be between 1 and 120.");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid Age. Must be a valid number.");
+            return false;
+        }
+
+        // If all checks pass, return true
+        return true;
+    }
+    
+    private void updateCoPassenger(){
+        try{            
+            String nm, s_no, a_no;   
+            int age;
+            nm = t1.getText();
+            age = Integer.parseInt(t3.getText());
+            s_no = t2.getText();
+            a_no = t4.getText();
+                        
+            if(nm.equals("") || t3.getText().equals("") || s_no.equals("") || a_no.equals("")){
+                JOptionPane.showMessageDialog(rootPane,"Please Fill all of the fields!!");
+            }
+            else{
+                String sql;
+                sql ="INSERT INTO co_passengers ( booking_id, name, age, seat_number, aadhar) VALUES (?, ?, ?, ?, ?)";
+                pst = this.con.prepareStatement(sql);                
+                pst.setInt(1, this.b_id);
+                pst.setString(2, nm);
+                pst.setInt(3, age);
+                pst.setString(4, s_no);
+                pst.setString(5, a_no);
+                if(JOptionPane.showConfirmDialog(rootPane, "Confirm..?","Updating Co-Passenger Details",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION && pst.executeUpdate() == 1){
+                    JOptionPane.showMessageDialog(rootPane,"Updation Successful...!!");
+                }
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane,"Error!!\n" + e);
+        }
+    }    
     
     private void goToNextPage(int n){        
-        if(n > 1){            
-            Co_PassengersDetails ob = new Co_PassengersDetails(b_id, n, c_id);
+        updateCoPassenger();
+        if(n > 1){                      
+            Co_PassengersDetails ob = new Co_PassengersDetails(b_id, n);
             ob.setVisible(true);
         }        
         else {           
+            JOptionPane.showMessageDialog(rootPane, "Data Collected Successfully..!!");
             Confirmation ob = new Confirmation(this.b_id);
             ob.setVisible(true);
         }        
@@ -279,9 +364,10 @@ public class Co_PassengersDetails extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void B1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B1ActionPerformed
-
-        goToNextPage(n - 1);
-        this.dispose();
+        if(isValidCoPassengerDetails()){
+            goToNextPage(n - 1);
+            this.dispose();
+        }        
     }//GEN-LAST:event_B1ActionPerformed
 
     

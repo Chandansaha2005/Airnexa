@@ -26,7 +26,9 @@ public class UserDashboard extends javax.swing.JFrame {
     Statement stmt, stmt2;
     PreparedStatement pst,pst1;
     ResultSet rs,rs1, rs2;
-    String dept, arrv, u_id, fl_no;
+    String dept, arrv, fl_no;
+    int u_id;
+    
     private TableRowSorter<TableModel> sorter;
     private DefaultTableModel tableModel;
     double maxPriceValue;
@@ -38,12 +40,12 @@ public class UserDashboard extends javax.swing.JFrame {
      * Creates new form UserDashboard
      * @param u_id
      */
-    public UserDashboard(String u_id) {
+    public UserDashboard(int u_id) {
         initComponents();            
         try{
-            con = UserEnd.DatabaseConnection.getConnection();
+            this.con = UserEnd.DatabaseConnection.getConnection();
 //            this.u_id = u_id;
-            this.u_id = "1";
+            this.u_id = 3;
             
             loadData();
             
@@ -65,7 +67,7 @@ public class UserDashboard extends javax.swing.JFrame {
         try{
             String s = "select username from user where user_id = ?";
             pst1 = this.con.prepareStatement(s);
-            pst1.setString(1, this.u_id);
+            pst1.setInt(1, this.u_id);
             rs1 = pst1.executeQuery();
             if(rs1.next()){
                 pr1.setText(rs1.getString("username"));
@@ -122,17 +124,16 @@ public class UserDashboard extends javax.swing.JFrame {
         sorter.setRowFilter(rowFilter);
     }
     
-    private String getFlightId(){
-        String id = "";
+    private int getFlightId(){
+        int id = 0;
         try{
-            con = UserEnd.DatabaseConnection.getConnection();
             String sql = "select flight_id from flight where flight_no = ?";
             pst = this.con.prepareStatement(sql);
             pst.setString(1, fl_no);
             rs = pst.executeQuery();
             
             if(rs.next()){
-                id = rs.getString("flight_id");
+                id = rs.getInt("flight_id");
             }
             
         }
@@ -455,7 +456,13 @@ public class UserDashboard extends javax.swing.JFrame {
                 b3.setVisible(false);
                 b2.setVisible(false);
             } else {
-                DefaultTableModel model = new DefaultTableModel();
+                DefaultTableModel model = new DefaultTableModel() {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        // This makes all cells uneditable
+                        return false;
+                    }
+                };
                 model.setColumnIdentifiers(new String[] {
                     "Flight Number", "Departure From", "Departure Time", "Arrival At",
                     "Arrival Time", "Airline", "Available Seat", "Ticket Price"
@@ -559,14 +566,17 @@ public class UserDashboard extends javax.swing.JFrame {
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(rootPane, "Please select a flight to book.");
         }
-        else if(JOptionPane.showConfirmDialog(rootPane, "Confirm...?", "Confirm Booking", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
-            
-            
-            this.fl_no = t1.getValueAt(selectedRow, 0).toString();            
-            
-            String f_id = getFlightId();
-            this.dispose();
-            new PassengerDetails(f_id, this.u_id).setVisible(true);
+        else if(JOptionPane.showConfirmDialog(rootPane, "Confirm...?", "Confirm Booking", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){                        
+            try {
+                this.fl_no = t1.getValueAt(selectedRow, 0).toString();
+                
+                int f_id = getFlightId();
+                this.dispose();
+                PassengerDetails ob = new PassengerDetails(f_id, this.u_id);
+                ob.setVisible(true);
+            } catch (SQLException ex) {
+                System.getLogger(UserDashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
 
         }
         // TODO add your handling code here:
@@ -598,7 +608,9 @@ public class UserDashboard extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new UserDashboard("testuser").setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            new UserDashboard(1).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

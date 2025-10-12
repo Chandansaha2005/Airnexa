@@ -4,14 +4,12 @@
  */
 package UserEnd;
 import Payment_and_Receipt.Confirmation;
-import java.awt.HeadlessException;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.*;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class PassengerDetails extends javax.swing.JFrame {
     
-    String u_id, f_id, b_id, c_id;
+    int u_id, f_id, b_id;
     Connection con;
     PreparedStatement pst;
     ResultSet rs;
@@ -31,76 +29,154 @@ public class PassengerDetails extends javax.swing.JFrame {
      * Creates new form SearchFlight
      * @param f_id
      * @param u_id
+     * @throws java.sql.SQLException
      */
-    public PassengerDetails(String f_id, String u_id) {
+    public PassengerDetails(int f_id, int u_id) throws SQLException {
         initComponents();
+        this.con = UserEnd.DatabaseConnection.getConnection();
+        
         this.u_id = u_id;
         this.f_id = f_id;
-        this.c_id = c_idGenerator();
-        this.b_id = b_idGenerator();
         this.price = getPrice();
         b1.setEnabled(false);
         loadData();
+        setLocationRelativeTo(null);
     }        
 
     public void refreshData(){
         loadData();
+    }    
+
+    private boolean isValidPassengerDetails() {
+
+        // --- Get text from your JTextFields (replace with your variable names) ---
+        String fullName = t1.getText().trim();
+        String seatNumber = t2.getText().trim();
+        String aadharNumber = t4.getText().trim();
+        String ageStr = t3.getText().trim();
+        String totalPassengersStr = t5.getText().trim();
+
+        // --- Validation Checks ---
+
+        // Check for any empty fields first
+        if (fullName.isEmpty() || seatNumber.isEmpty() || aadharNumber.isEmpty() || ageStr.isEmpty() || totalPassengersStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required. Please fill them all.");
+            return false;
+        }
+
+        // 1. Full Name: Must be letters and spaces only
+        if (!fullName.matches("^[a-zA-Z\\s]+$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Full Name. Please use only letters and spaces.");
+            return false;
+        }
+
+        // 2. Seat Number: Must be in a format like "12A" or "3F" (case-insensitive)
+        if (!seatNumber.matches("(?i)^\\d{1,2}[A-Z]$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Seat Number. Format must be like '23A'.");
+            return false;
+        }
+
+        // 3. AADHAR Number: Must be exactly 12 numeric digits
+        if (!aadharNumber.matches("^\\d{12}$")) {
+            JOptionPane.showMessageDialog(this, "Invalid AADHAR Number. Must be exactly 12 numeric digits.");
+            return false;
+        }
+
+        // 4. Age: Must be a number between 1 and 120
+        try {
+            int age = Integer.parseInt(ageStr);
+            if (age < 1 || age > 120) {
+                JOptionPane.showMessageDialog(this, "Invalid Age. Must be between 1 and 120.");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid Age. Must be a valid number.");
+            return false;
+        }
+
+        // 5. Total Passengers: Must be a number greater than 0
+        try {
+            int totalPassengers = Integer.parseInt(totalPassengersStr);
+            if (totalPassengers < 1) {
+                JOptionPane.showMessageDialog(this, "Invalid Total Passengers. Must be at least 1.");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid Total Passengers. Must be a valid number.");
+            return false;
+        }
+
+        // If all checks pass, return true
+        return true;
+    }
+    
+    private void getBookinID(){
+        try{
+            this.con = UserEnd.DatabaseConnection.getConnection();
+            pst = con.prepareStatement("select booking_id from booking where user_id = ? and flight_id = ?");
+            pst.setInt(1, u_id);
+            pst.setInt(2, f_id);
+            rs = pst.executeQuery();
+            
+            while(rs.next()){
+                this.b_id = rs.getInt("booking_id");
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
     }
     
     private void updateCoPassenger(){
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","Meghna@1208");
-            
-            String nm, age, s_no, a_no;            
+        try{                       
+            String nm, s_no, a_no;   
+            int age;
+            getBookinID();            
             nm = t1.getText();
-            age = t4.getText();
+            age = Integer.parseInt(t3.getText());
             s_no = t2.getText();
-            a_no = t3.getText();
+            a_no = t4.getText();
                         
-            if(nm.equals("") || age.equals("") || s_no.equals("") || a_no.equals("")){
+            if(nm.equals("") || t3.getText().equals("") || s_no.equals("") || a_no.equals("") || t5.getText().equals("")){
                 JOptionPane.showMessageDialog(rootPane,"Please Fill all of the fields!!");
             }
             else{
                 String sql;
-                sql ="INSERT INTO co_passenger (co_passenger_id, booking_id, name, age, seat_number, aadhar) VALUES (?, ?, ?, ?, ?, ?)";
+                sql ="INSERT INTO co_passengers (booking_id, name, age, seat_number, aadhar) VALUES (?, ?, ?, ?, ?)";
                 pst = this.con.prepareStatement(sql);
-                pst.setString(1,this.c_id);
-                pst.setString(2, this.b_id);
-                pst.setString(3, nm);
-                pst.setString(4, age);
-                pst.setString(5, s_no);
-                pst.setString(6, a_no);
+                pst.setInt(1, this.b_id);
+                pst.setString(2, nm);
+                pst.setInt(3, age);
+                pst.setString(4, s_no);
+                pst.setString(5, a_no);
                 if(JOptionPane.showConfirmDialog(rootPane, "Confirm..?","Updating Co-Passenger Details",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION && pst.executeUpdate() == 1){
                     JOptionPane.showMessageDialog(rootPane,"Updation Successful...!!");
                 }
             }
         }
-        catch(HeadlessException | ClassNotFoundException | SQLException e){
+        catch(Exception e){
             JOptionPane.showMessageDialog(rootPane,"Error!!\n" + e);
         }
     }
+    
     private void updateBooking(){
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","Meghna@1208");
-            
+        try{            
             String sql;
-            String paymentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            String paymentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-            sql ="INSERT INTO booking (booking_id, user_id, flight_id, date_time, ticket_price, number_of_seats) VALUES (?, ?, ?, ?, ?, ?)";
-            pst = this.con.prepareStatement(sql);
-            pst.setString(1,this.b_id);
-            pst.setString(2,this.u_id);
-            pst.setString(3,this.f_id);
-            pst.setTimestamp(4, stringToTimestamp(paymentDate));
-            pst.setDouble(5,this.total);
-            pst.setInt(6,this.seats);
+            sql ="INSERT INTO booking (user_id, flight_id, date_time, ticket_price, number_of_seats) VALUES ( ?, ?, ?, ?, ?)";
+            pst = this.con.prepareStatement(sql);            
+            pst.setInt(1,this.u_id);
+            pst.setInt(2,this.f_id);
+            pst.setTimestamp(3, stringToTimestamp(paymentDate));
+            pst.setDouble(4,this.total);
+            pst.setInt(5,this.seats);
             if(pst.executeUpdate() == 1){
                 JOptionPane.showMessageDialog(rootPane,"Updation Successful...!!");
             }
         }
-        catch(HeadlessException | ClassNotFoundException | SQLException e){
+        catch(Exception e){
             JOptionPane.showMessageDialog(rootPane,"Error!!\n" + e);
         }
     }
@@ -109,7 +185,7 @@ public class PassengerDetails extends javax.swing.JFrame {
         Timestamp t = null;
         try {
             // Use a standard SimpleDateFormat to parse the string into a java.util.Date
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             java.util.Date parsedDate = sdf.parse(s);
 
             // Create a java.sql.Timestamp using the milliseconds from the java.util.Date
@@ -125,52 +201,14 @@ public class PassengerDetails extends javax.swing.JFrame {
     
     private void goToNextPage(int n){        
         if(n > 1){            
-            Co_PassengersDetails ob = new Co_PassengersDetails(b_id, n, c_id);
+            Co_PassengersDetails ob = new Co_PassengersDetails(b_id, n);
             ob.setVisible(true);
         }        
         else {           
             Confirmation ob = new Confirmation(this.b_id);
             ob.setVisible(true);
         }        
-    }
-    
-    private String c_idGenerator(){
-        int c = 1;
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","Meghna@1208");
-            String sql;
-            sql = "select * from co_passenger";
-            pst = this.con.prepareStatement(sql);
-            rs = pst.executeQuery();
-            while(rs.next()){
-                c++;
-            }                       
-        }
-        catch(ClassNotFoundException | SQLException e){
-            JOptionPane.showMessageDialog(rootPane,"Error!!\n" + e);
-        }
-        return "" + c;
-    }
-    
-    private String b_idGenerator(){
-        int c=1;
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline?useSSL=false","root","Meghna@1208");
-            String sql;
-            sql = "select * from booking";
-            pst = this.con.prepareStatement(sql);
-            rs = pst.executeQuery();
-            while(rs.next()){
-                c++;
-            }                       
-        }
-        catch(ClassNotFoundException | SQLException e){
-            JOptionPane.showMessageDialog(rootPane,"Error!!\n" + e);
-        }
-        return "" + c;
-    } 
+    }            
     
     private PassengerDetails() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -179,10 +217,9 @@ public class PassengerDetails extends javax.swing.JFrame {
     private double getPrice(){
         double pr = 0.0;
         try{
-            con = UserEnd.DatabaseConnection.getConnection();
             String sql = "select * from flight where flight_id = ?";
             pst = this.con.prepareStatement(sql);
-            pst.setString(1, this.f_id);
+            pst.setInt(1, this.f_id);
             rs = pst.executeQuery();
             
             if(rs.next()){
@@ -366,6 +403,11 @@ public class PassengerDetails extends javax.swing.JFrame {
         t3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
 
         t4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        t4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t4ActionPerformed(evt);
+            }
+        });
 
         t5.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         t5.addActionListener(new java.awt.event.ActionListener() {
@@ -484,10 +526,9 @@ public class PassengerDetails extends javax.swing.JFrame {
 
     private void loadData(){
         try{
-            con = UserEnd.DatabaseConnection.getConnection();
             String s = "select username from user where user_id = ?";
             pst = this.con.prepareStatement(s);
-            pst.setString(1, this.u_id);
+            pst.setInt(1, this.u_id);
             rs = pst.executeQuery();
             if(rs.next()){
                 pr1.setText(rs.getString("username"));
@@ -519,13 +560,14 @@ public class PassengerDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_t5ActionPerformed
 
     private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
-
-        this.seats = Integer.parseInt(t5.getText());
-        this.total = this.price * this.seats;        
-        updateBooking();
-        updateCoPassenger();
-        goToNextPage(seats);           
-        this.dispose();
+        if(isValidPassengerDetails()){
+            this.seats = Integer.parseInt(t5.getText());
+            this.total = this.price * this.seats;        
+            updateBooking();
+            updateCoPassenger();
+            goToNextPage(seats);           
+            this.dispose();
+        }
     }//GEN-LAST:event_b1ActionPerformed
 
     private void cb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb1ActionPerformed
@@ -533,6 +575,10 @@ public class PassengerDetails extends javax.swing.JFrame {
         b1.setEnabled(cb1.isSelected());
         
     }//GEN-LAST:event_cb1ActionPerformed
+
+    private void t4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t4ActionPerformed
 
     /**
      * @param args the command line arguments

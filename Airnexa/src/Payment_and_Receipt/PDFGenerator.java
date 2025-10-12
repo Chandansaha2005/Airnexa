@@ -23,16 +23,12 @@ public class PDFGenerator {
      *
      * @param filePath The path where the PDF will be saved.
      * @param bookingId The booking ID.
-     * @param flightId The flight ID.
-     * @param userId The user ID.
      * @param bookingDate The booking date.
      * @param amountPaid The amount paid.
      * @param paymentMethod The payment method.
      * @param paymentId The payment ID.
      */
-    public static void generateReceiptPdf(String filePath, String bookingId, String flightId,
-                                          String userId, String bookingDate, String amountPaid,
-                                          String paymentMethod, String paymentId) {
+    public static void generateReceiptPdf(String filePath, String bookingId, String bookingDate, String amountPaid, String paymentMethod, String paymentId) {
         try {
             PdfWriter writer = new PdfWriter(filePath);
             PdfDocument pdf = new PdfDocument(writer);
@@ -55,9 +51,7 @@ public class PDFGenerator {
                 bookingTable.setWidth(400);
                 bookingTable.setTextAlignment(TextAlignment.LEFT);
                 bookingTable.setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER);
-                addTableRow(bookingTable, "Booking ID:", bookingId);
-                addTableRow(bookingTable, "Flight ID:", flightId);
-                addTableRow(bookingTable, "User ID:", userId);
+                addTableRow(bookingTable, "Booking ID:", bookingId);                
                 addTableRow(bookingTable, "Booking Date:", bookingDate);
                 document.add(bookingTable);
                 document.add(new Paragraph("\n"));
@@ -68,9 +62,9 @@ public class PDFGenerator {
                 paymentTable.setWidth(400);
                 paymentTable.setTextAlignment(TextAlignment.LEFT);
                 paymentTable.setHorizontalAlignment(com.itextpdf.layout.properties.HorizontalAlignment.CENTER);
-                addTableRow(paymentTable, "Amount Paid:", amountPaid);
-                addTableRow(paymentTable, "Payment Method:", paymentMethod);
                 addTableRow(paymentTable, "Payment ID:", paymentId);
+                addTableRow(paymentTable, "Amount Paid:", amountPaid);
+                addTableRow(paymentTable, "Payment Method:", paymentMethod);                
                 document.add(paymentTable);
                 document.add(new Paragraph("\n"));
                 

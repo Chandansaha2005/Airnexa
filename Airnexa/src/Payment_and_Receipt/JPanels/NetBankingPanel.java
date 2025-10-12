@@ -43,7 +43,7 @@ public class NetBankingPanel extends javax.swing.JPanel {
         try{
             String sql = "select * from booking where booking_id = ?";
             pst = this.con.prepareStatement(sql);
-            pst.setString(1, parentFrame.b_id);            
+            pst.setInt(1, parentFrame.b_id);            
             rs = pst.executeQuery();
             
             if(rs.next()){

@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter;
 
 
 public class Payment extends javax.swing.JFrame {
-    public String b_id, u_id, p_id ;
+    public int b_id, u_id, p_id ;
     Connection con;
     PreparedStatement pst, pst1;
     ResultSet rs, rs1;
@@ -39,21 +39,20 @@ public class Payment extends javax.swing.JFrame {
      * Creates new form Payment
      * @param b_id
      */
-    public Payment(String b_id) {
+    public Payment(int b_id) {
         initComponents();
         this.b_id = b_id;
         
         try{            
-            con = UserEnd.DatabaseConnection.getConnection();
+            this.con = UserEnd.DatabaseConnection.getConnection();
             sql = "select * from booking where booking_id = ?";
             pst = this.con.prepareStatement(sql);
-            pst.setString(WIDTH, b_id);
+            pst.setInt(1, b_id);
             rs = pst.executeQuery();
             if(rs.next()){
                 price = rs.getString("ticket_price");
                 l2.setText(formatPrice(price));
-                this.u_id = rs.getString("user_id");
-                rs.getString("flight_id");
+                this.u_id = rs.getInt("user_id");
             }
             else{
                 JOptionPane.showMessageDialog(rootPane, "Booking ID not found!!");
@@ -61,7 +60,7 @@ public class Payment extends javax.swing.JFrame {
             
             String s = "select username from user where user_id = ?";
             pst1 = this.con.prepareStatement(s);
-            pst1.setString(1, u_id);
+            pst1.setInt(1, u_id);
             rs1 = pst1.executeQuery();
             
             if(rs1.next()){                
@@ -102,25 +101,23 @@ public class Payment extends javax.swing.JFrame {
         String selectedMethod = c1.getSelectedItem().toString();
         try {
             // Step 1: Generate Payment ID and get current date/time
-            this.p_id = generatePaymentID(con); // A new method to get the ID
             String paymentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
             // Step 2: Insert payment record into the database
-            String sql3 = "INSERT INTO payment (payment_id, booking_id, amount, payment_date, payment_method, status) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql3 = "INSERT INTO payment (booking_id, amount, payment_date, payment_method, status) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pst3 = con.prepareStatement(sql3);
-            pst3.setInt(1, Integer.parseInt(this.p_id));
-            pst3.setInt(2, Integer.parseInt(this.b_id));
-            pst3.setDouble(3, Double.parseDouble(this.price));
-            pst3.setTimestamp(4, stringToTimestamp(paymentDate));
-            pst3.setString(5, selectedMethod);            
-            pst3.setString(6, "Completed");
+            pst3.setInt(1, this.b_id);
+            pst3.setDouble(2, Double.parseDouble(this.price));
+            pst3.setTimestamp(3, stringToTimestamp(paymentDate));
+            pst3.setString(4, selectedMethod);            
+            pst3.setString(5, "Completed");
 
             pst3.executeUpdate();
             JOptionPane.showMessageDialog(this, "Payment successful! Your transaction has been recorded.");
 
             // Step 3: Now, open the Receipt page
             // Pass the payment ID and method to the Receipt constructor
-            Receipt receipt = new Receipt(this.b_id, this.p_id, selectedMethod);
+            Receipt receipt = new Receipt(this.b_id);
             receipt.setVisible(true);
             this.dispose(); // Close the payment window
 
@@ -414,7 +411,7 @@ public class Payment extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Payment("1").setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Payment(1).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

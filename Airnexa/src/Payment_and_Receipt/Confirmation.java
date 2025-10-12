@@ -16,7 +16,7 @@ public class Confirmation extends javax.swing.JFrame {
     Connection con;
     PreparedStatement pst, pst1;
     ResultSet rs;
-    String u_id,b_id,f_id,c_id;//*****b_id is must*****
+    int u_id,b_id,f_id,c_id;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Confirmation.class.getName());
 
@@ -24,15 +24,14 @@ public class Confirmation extends javax.swing.JFrame {
      * Creates new form Confirmation
      * @param b_id
      */
-    public Confirmation(String b_id) {
+    public Confirmation(int b_id) {
         initComponents();        
         try{
-            this.b_id = "2";
-            this.u_id = "2";
-            this.f_id = "2";                    
-            //this.b_id = b_id;
-            con = UserEnd.DatabaseConnection.getConnection();            
+            this.b_id = b_id;
+            setId();                    
+            this.con = UserEnd.DatabaseConnection.getConnection();            
             b1.setEnabled(c1.isSelected());
+            b6.setEnabled(false);
             setAllFalse();
             loadUserName();
             loadFlightDetails();
@@ -48,13 +47,32 @@ public class Confirmation extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, e);
         }
     }
-
+    
+    private void setId(){
+        try{
+            this.con = UserEnd.DatabaseConnection.getConnection();  
+            String sql = "select * from booking where booking_id = ?";
+            pst = this.con.prepareStatement(sql);
+            pst.setInt(1, b_id);
+            rs = pst.executeQuery();
+            
+            if(rs.next()){
+                this.u_id = rs.getInt("user_id");
+                this.f_id = rs.getInt("flight_id");
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }
     
     private void loadUserName(){
         try{
+            this.con = UserEnd.DatabaseConnection.getConnection();  
             String s = "select username from user where user_id = ?";
             pst = this.con.prepareStatement(s);
-            pst.setString(1, this.u_id);
+            pst.setInt(1, this.u_id);
             rs = pst.executeQuery();
             if(rs.next()){
                 pr1.setText(rs.getString("username"));
@@ -72,9 +90,10 @@ public class Confirmation extends javax.swing.JFrame {
         String h = h1.getText(), sql;    
         try{
             if(h.equalsIgnoreCase("Flight Details")){
+                this.con = UserEnd.DatabaseConnection.getConnection();  
                 sql = "select * from flight where flight_id = ?";
                 pst = this.con.prepareStatement(sql);
-                pst.setString(1,f_id);//f_id
+                pst.setInt(1,f_id);//f_id
                 rs = pst.executeQuery();
 
                 if(rs.next()){
@@ -102,9 +121,10 @@ public class Confirmation extends javax.swing.JFrame {
     private void loadPassengerDetails(){
         try{
             String sql;
+            this.con = UserEnd.DatabaseConnection.getConnection();  
             sql = "select * from co_passengers where booking_id = ?";
             pst = this.con.prepareStatement(sql);
-            pst.setString(1, b_id);            
+            pst.setInt(1, b_id);            
             rs = pst.executeQuery();
             
             while(rs.next()){
@@ -118,13 +138,14 @@ public class Confirmation extends javax.swing.JFrame {
     
     private void load(){
         try{
-            this.c_id = c2.getSelectedItem().toString();
-            t9.setText(b_id);
+            this.c_id = Integer.parseInt(c2.getSelectedItem().toString());
+            t9.setText("" + b_id);
             String sql;
+            this.con = UserEnd.DatabaseConnection.getConnection();  
             sql = "select * from co_passengers where booking_id = ? and co_passenger_id = ?";
             pst = this.con.prepareStatement(sql);
-            pst.setString(1, b_id);
-            pst.setString(2, c_id);
+            pst.setInt(1, b_id);
+            pst.setInt(2, c_id);
             rs = pst.executeQuery();
             if(rs.next()){
                 t10.setText(rs.getString("name"));
@@ -140,14 +161,15 @@ public class Confirmation extends javax.swing.JFrame {
     
     private void deleteBooking(){
         try{
+            this.con = UserEnd.DatabaseConnection.getConnection();  
             String sql,sql1;
             sql = "delete from booking where booking_id = ?";
             pst = this.con.prepareStatement(sql);
-            pst.setString(1, b_id);
+            pst.setInt(1, b_id);
             
             sql1 = "delete from co_passengers where booking_id = ?";
             pst1 = this.con.prepareStatement(sql1);
-            pst1.setString(1, b_id);
+            pst1.setInt(1, b_id);
             if(pst.executeUpdate() == 1 && pst1.executeUpdate() == 1){
                 JOptionPane.showMessageDialog(rootPane, "Booking Cancelled Succesfully!!");
             }
@@ -169,7 +191,30 @@ public class Confirmation extends javax.swing.JFrame {
         t10.setEnabled(false);
         t11.setEnabled(false);
         t12.setEnabled(false);
-        t13.setEnabled(false);       
+        t13.setEnabled(false); 
+        
+    }
+    
+    private void updateDetails(){
+        try{
+            this.con = UserEnd.DatabaseConnection.getConnection();
+            pst = con.prepareStatement("update co_passengers set name = ?, age = ?, seat_number = ?, aadhar = ? where co_passenger_id = ? and booking_id = ?");
+            pst.setString(1, t10.getText());
+            pst.setString(2, t11.getText());
+            pst.setString(3, t13.getText());
+            pst.setString(4, t12.getText());
+            
+            pst.setInt(5, Integer.parseInt(c2.getSelectedItem().toString()));
+            pst.setInt(6, this.b_id);
+            
+            if(pst.executeUpdate() == 1){
+                JOptionPane.showMessageDialog(rootPane, "Data Updated Suceesfully!!");
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
     }
 
     /**
@@ -225,10 +270,11 @@ public class Confirmation extends javax.swing.JFrame {
         l12 = new javax.swing.JLabel();
         t13 = new javax.swing.JTextField();
         l13 = new javax.swing.JLabel();
+        b5 = new javax.swing.JButton();
+        b6 = new javax.swing.JButton();
         b4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
 
         titlePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -512,6 +558,11 @@ public class Confirmation extends javax.swing.JFrame {
         t13.setFont(new java.awt.Font("Verdana", 0, 28)); // NOI18N
         t13.setForeground(new java.awt.Color(255, 255, 255));
         t13.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        t13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t13ActionPerformed(evt);
+            }
+        });
         Passengers.add(t13, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 600, 350, -1));
 
         l13.setBackground(new java.awt.Color(0, 0, 0));
@@ -520,6 +571,24 @@ public class Confirmation extends javax.swing.JFrame {
         l13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         l13.setText("Seat Number");
         Passengers.add(l13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 600, 250, -1));
+
+        b5.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        b5.setText("Edit");
+        b5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b5ActionPerformed(evt);
+            }
+        });
+        Passengers.add(b5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, 120, 40));
+
+        b6.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        b6.setText("Update");
+        b6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b6ActionPerformed(evt);
+            }
+        });
+        Passengers.add(b6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, 120, 40));
 
         main.add(Passengers, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 950, 1600, 750));
 
@@ -614,16 +683,20 @@ public class Confirmation extends javax.swing.JFrame {
     }//GEN-LAST:event_c2PropertyChange
 
     private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
-        this.setVisible(false);
-        PassengerDetails ob = new PassengerDetails(f_id, this.u_id);
-        ob.setVisible(true);
-
-        // TODO add your handling code here:
+        try {
+            this.setVisible(false);
+            PassengerDetails ob = new PassengerDetails(f_id, this.u_id);
+            ob.setVisible(true);
+            
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            System.getLogger(Confirmation.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }//GEN-LAST:event_b3ActionPerformed
 
     private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
         try{
-            if(JOptionPane.showConfirmDialog(rootPane, "Are You Sure..?", "Cancel Booking", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            if(JOptionPane.showConfirmDialog(rootPane, "Confirm..?", "Cancel Booking", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 deleteBooking();
                 
                 this.setVisible(false);
@@ -635,6 +708,37 @@ public class Confirmation extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_b4ActionPerformed
+
+    private void b5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b5ActionPerformed
+        // TODO add your handling code here:        
+        c2.setEnabled(false);
+        b5.setEnabled(false);
+        t10.setEnabled(true);
+        t11.setEnabled(true);
+        t12.setEnabled(true);
+        t13.setEnabled(true);
+        b6.setEnabled(true);
+    }//GEN-LAST:event_b5ActionPerformed
+
+    private void b6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b6ActionPerformed
+        // TODO add your handling code here:       
+        if(t10.getText().equals("") || t11.getText().equals("") || t12.getText().equals("") || t13.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Please fill all fields to update...!!");            
+        } else {
+            c2.setEnabled(true); 
+            b5.setEnabled(true);
+            t10.setEnabled(false);
+            t11.setEnabled(false);
+            t12.setEnabled(false);
+            t13.setEnabled(false);            
+            b6.setEnabled(false);            
+            updateDetails();
+        }
+    }//GEN-LAST:event_b6ActionPerformed
+
+    private void t13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t13ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -658,7 +762,9 @@ public class Confirmation extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Confirmation("1").setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            new Confirmation(1).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -668,6 +774,8 @@ public class Confirmation extends javax.swing.JFrame {
     private javax.swing.JButton b2;
     private javax.swing.JButton b3;
     private javax.swing.JButton b4;
+    private javax.swing.JButton b5;
+    private javax.swing.JButton b6;
     private javax.swing.JCheckBox c1;
     private javax.swing.JComboBox<String> c2;
     private javax.swing.JPanel downPanel;

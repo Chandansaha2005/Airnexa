@@ -8,6 +8,9 @@ import Payment_and_Receipt.Confirmation;
 import java.sql.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 /**
  *
@@ -17,11 +20,14 @@ import java.awt.*;
 
 public class profile extends javax.swing.JFrame {
     
+    byte[] photo = null;
+    String filename = null;    
     boolean pr = false;
     Connection con;
     PreparedStatement pst;    
     ResultSet rs;
-    String sql, u_id;
+    String sql;
+    int u_id;
     javax.swing.JFrame fr;
     
     
@@ -33,8 +39,8 @@ public class profile extends javax.swing.JFrame {
      * @param u_id
      * @param fr
      */
-    public profile(String u_id, javax.swing.JFrame fr) {
-        initComponents();
+    public profile(int u_id, javax.swing.JFrame fr) {
+        initComponents();        
         try{
             con = UserEnd.DatabaseConnection.getConnection();
             this.u_id = u_id;
@@ -46,13 +52,14 @@ public class profile extends javax.swing.JFrame {
         }                
         t1.setEnabled(false);
         b2.setEnabled(false);
+        b3.setEnabled(false);
         setFalse();
         
         if(!pr){
             ImageIcon ogIc = new ImageIcon(getClass().getResource("/Assets/defaultProfilePic.png"));
             Image img = ogIc.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
             L1.setIcon(new ImageIcon(img));
-            L2.setText("Upload Profile Picture");
+            b3.setText("Upload Profile Picture");
         }       
         
     }
@@ -72,23 +79,40 @@ public class profile extends javax.swing.JFrame {
         t4.setEnabled(true);
     }
     
-    private void loadData(){
-        try{
-            sql = "select * from user where user_id = ?";
+    private void loadData() {
+        try {
+            sql = "SELECT * FROM user WHERE user_id = ?";
             pst = this.con.prepareStatement(sql);
-            pst.setString(1, u_id);
+            pst.setInt(1, u_id);
             rs = pst.executeQuery();
 
-            if(rs.next()){
-                t1.setText(u_id);
+            if (rs.next()) {
+                t1.setText("" + u_id);
                 t3.setText(rs.getString("username"));
                 t2.setText(rs.getString("email_id"));
-                t4.setText(rs.getString("phone_no"));                            
+                t4.setText(rs.getString("phone_no"));
+
+                // *** NEW CODE TO LOAD THE IMAGE ***
+                byte[] imageData = rs.getBytes("profile_pic");
+
+                if (imageData != null) {
+                    // If an image exists in the database, display it
+                    ImageIcon imageIcon = new ImageIcon(new ImageIcon(imageData).getImage().getScaledInstance(L1.getWidth(), L1.getHeight(), Image.SCALE_SMOOTH));
+                    L1.setIcon(imageIcon);
+                    b3.setText("Change Profile Picture");
+                    pr = true; // Flag that a profile picture exists
+                } else {
+                    // If no image exists, display the default
+                    ImageIcon ogIc = new ImageIcon(getClass().getResource("/Assets/defaultProfilePic.png"));
+                    Image img = ogIc.getImage().getScaledInstance(L1.getWidth(), L1.getHeight(), Image.SCALE_SMOOTH);
+                    L1.setIcon(new ImageIcon(img));
+                    b3.setText("Upload Profile Picture");
+                    pr = false;
+                }
             } else {
                 JOptionPane.showMessageDialog(rootPane, "No User Found!!");
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e);
         }
     }
@@ -111,8 +135,8 @@ public class profile extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         workingPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        L2 = new javax.swing.JLabel();
         L1 = new javax.swing.JLabel();
+        b3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         t1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -184,10 +208,9 @@ public class profile extends javax.swing.JFrame {
         workingPanel.setBackground(new java.awt.Color(255, 255, 255));
         workingPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        L2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        L2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                L2MouseClicked(evt);
+        b3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b3ActionPerformed(evt);
             }
         });
 
@@ -196,23 +219,23 @@ public class profile extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(L2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(L1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addComponent(b3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(10, 10, 10))
+                    .addComponent(L1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(L1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(L2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(b3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         workingPanel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 250, 250));
@@ -347,43 +370,51 @@ public class profile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void L2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_L2MouseClicked
-       
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_L2MouseClicked
-
     private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
         b1.setEnabled(false);    
         setTrue();
         b2.setEnabled(true);
+        b3.setEnabled(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_b1ActionPerformed
 
     private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
         b2.setEnabled(false);
+        b3.setEnabled(false);
         setFalse();
         b1.setEnabled(true);
-        
-        try{
+
+        try {
             con = UserEnd.DatabaseConnection.getConnection();
-            sql = "update user set username = ?,email_id = ? ,phone_no = ? where user_id = ?";
+
+            // *** MODIFIED SQL QUERY ***
+            sql = "UPDATE user SET username = ?, email_id = ?, phone_no = ?, profile_pic = ? WHERE user_id = ?";
+
             pst = this.con.prepareStatement(sql);
-            pst.setString(1,t3.getText());
-            pst.setString(2,t2.getText());
-            pst.setString(3,t4.getText());
-            pst.setString(4,this.u_id);
-            if(JOptionPane.showConfirmDialog(rootPane,"Confirm..?" , "Updating Profile", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){            
-                if(pst.executeUpdate() == 1){                
-                    JOptionPane.showMessageDialog(rootPane,"Updation Successful...!!");
-                    
+            pst.setString(1, t3.getText());
+            pst.setString(2, t2.getText());
+            pst.setString(3, t4.getText());
+
+            // *** NEW CODE TO SAVE THE IMAGE ***
+            if (photo != null) {
+                pst.setBytes(4, photo);
+            } else {
+                // If no new photo was selected, don't change the existing one
+                // We need to get the existing photo first to avoid overwriting it with null
+                pst.setNull(4, java.sql.Types.BLOB); // Or handle this more gracefully
+            }
+
+            pst.setInt(5, this.u_id);
+
+            if (JOptionPane.showConfirmDialog(rootPane, "Confirm..?", "Updating Profile", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                if (pst.executeUpdate() == 1) {
+                    JOptionPane.showMessageDialog(rootPane, "Updation Successful...!!");
                 }
             }
-            loadData();
-            
-        }
-        catch(Exception e){
+            loadData(); // Reload all data, including the new image
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e);
         }
 
@@ -393,6 +424,33 @@ public class profile extends javax.swing.JFrame {
     private void t1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_t1ActionPerformed
+
+    private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
+        // TODO add your handling code here:
+        try {
+            JFileChooser chooser = new JFileChooser();
+            chooser.showOpenDialog(null);
+            File f = chooser.getSelectedFile();
+            filename = f.getAbsolutePath();
+
+            // Read the chosen file into a byte array
+            File image = new File(filename);
+            FileInputStream fis = new FileInputStream(image);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+            for(int readNum; (readNum = fis.read(buf)) != -1;){
+                bos.write(buf, 0, readNum);
+            }
+            photo = bos.toByteArray();
+
+            // Display the chosen image in your JLabel (L1) as a preview
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(photo).getImage().getScaledInstance(L1.getWidth(), L1.getHeight(), Image.SCALE_SMOOTH));
+            L1.setIcon(imageIcon);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }//GEN-LAST:event_b3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -421,10 +479,10 @@ public class profile extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel L1;
-    private javax.swing.JLabel L2;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JButton b1;
     private javax.swing.JButton b2;
+    private javax.swing.JButton b3;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

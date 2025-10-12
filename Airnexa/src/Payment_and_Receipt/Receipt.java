@@ -17,23 +17,20 @@ import javax.swing.*;
 public class Receipt extends javax.swing.JFrame {
 
     Connection con;
-    PreparedStatement pst;
-    ResultSet rs;
+    PreparedStatement pst, pst1;
+    ResultSet rs, rs1;
     
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Receipt.class.getName());
-    String b_id, u_id, f_id, p_id, pr, dt, p_mtd;
+    int b_id, u_id, f_id;
+    String pr, dt, p_mtd, f_b_id, f_p_id;
     /**
      * Creates new form Receipt
      * @param b_id
-     * @param p_id
-     * @param p
-     */
-    public Receipt(String b_id, String p_id, String p) {
+       */
+    public Receipt(int b_id) {
          initComponents();
-        this.b_id = b_id;
-        this.p_id = p_id;
-        this.p_mtd = p;
+        this.b_id = b_id;     
         displayReceiptDetails();  
         
         setLocationRelativeTo(null);
@@ -43,21 +40,20 @@ public class Receipt extends javax.swing.JFrame {
         try {
             this.con = UserEnd.DatabaseConnection.getConnection();
 
-            String bookingSql = "SELECT * FROM booking WHERE booking_id = ?";
-            PreparedStatement bookingPst = con.prepareStatement(bookingSql);
-            bookingPst.setString(1, b_id);
-            ResultSet bookingRs = bookingPst.executeQuery();
+            pst = con.prepareStatement("SELECT * FROM booking WHERE booking_id = ?");
+            pst.setInt(1, b_id);
+            rs = pst.executeQuery();
 
-            String paymentSql = "SELECT amount, payment_date FROM payment WHERE payment_id = ?";
-            PreparedStatement paymentPst = con.prepareStatement(paymentSql);
-            paymentPst.setString(1, p_id);
-            ResultSet paymentRs = paymentPst.executeQuery();
+            pst1 = con.prepareStatement("SELECT * FROM payment WHERE booking_id = ?");
+            pst1.setInt(1, b_id);
+            rs1 = pst1.executeQuery();
 
-            if (bookingRs.next() && paymentRs.next()) {
-                this.u_id = bookingRs.getString("user_id");
-                this.f_id = bookingRs.getString("flight_id");
-                this.pr = paymentRs.getString("amount");
-                this.dt = paymentRs.getString("payment_date");
+            if (rs.next() && rs1.next()) {
+                this.u_id = rs.getInt("user_id");
+                this.f_id = rs.getInt("flight_id");
+                this.pr = rs1.getString("amount");
+                this.dt = rs1.getString("payment_date");
+                this.p_mtd = rs1.getString("payment_method");
 
                 // Now call setValues() to populate the JLabels
                 setValues();
@@ -75,9 +71,9 @@ public class Receipt extends javax.swing.JFrame {
     
     private void setValues() {
         // Populate the JLabels with data from the class variables
-        b1.setText(b_id);
-        f1.setText(f_id);
-        u1.setText(u_id);
+        b1.setText("" + b_id);
+        f1.setText("" + f_id);
+        u1.setText("" + u_id);
         b2.setText(dt);
 
         p1.setText(pr);
@@ -92,7 +88,30 @@ public class Receipt extends javax.swing.JFrame {
         p2.setEnabled(false);
     }
     
+    private void getFullID(){
+        try{
+            this.con = UserEnd.DatabaseConnection.getConnection();
+            
+            pst = con.prepareStatement("select full_booking_id from booking where booking_id = ?");
+            pst.setInt(1, b_id);
+            rs = pst.executeQuery();
+            pst1 = con.prepareStatement("select full_payment_id from payment where booking_id = ?");
+            pst1.setInt(1, b_id);
+            rs1 = pst1.executeQuery();
+            
+            if(rs.next() && rs1.next()){
+                this.f_b_id = rs.getString("full_booking_id");
+                this.f_p_id = rs1.getString("full_payment_id");
+            }            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }
+    
     private void generatePDF(){
+        
+        getFullID();
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Save Your Receipt..");
         fc.setSelectedFile(new File("AirNexa_Receipt_" + b_id + ".pdf"));
@@ -102,16 +121,7 @@ public class Receipt extends javax.swing.JFrame {
         if(userSelection == JFileChooser.APPROVE_OPTION){
             File f = fc.getSelectedFile();
             
-            PDFGenerator.generateReceiptPdf(
-                f.getAbsolutePath(),
-                b_id,
-                f_id,
-                u_id,
-                dt,
-                pr,
-                p_mtd,
-                p_id
-            );
+            PDFGenerator.generateReceiptPdf(f.getAbsolutePath(), f_b_id, dt, pr, p_mtd, f_p_id);
             JOptionPane.showMessageDialog(this, "PDF receipt saved successfully!");
         }
     }
@@ -382,7 +392,7 @@ public class Receipt extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Receipt("1", "1", "upi").setVisible(true);
+            new Receipt(1).setVisible(true);
         });
     }
 
