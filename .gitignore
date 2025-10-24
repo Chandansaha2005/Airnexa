@@ -20,6 +20,7 @@
 # === JVM crash logs ===
 hs_err_pid*
 replay_pid*
+/Airnexa/nbproject/private/
 
 # === NetBeans build artifacts ===
 /build/
