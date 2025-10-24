@@ -47,5 +47,7 @@ ehthumbs.db
 
 # === Sensitive config files ===
 config.properties
+/Airnexa/build/
+/Airnexa/dist/
 /Airnexa/dist/
 /Airnexa/build/

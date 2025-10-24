@@ -1,0 +1,434 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package Payment_and_Receipt;
+
+/**
+ *
+ * @author User
+ */
+
+import Payment_and_Receipt.JPanels.UPIPanel;
+import Payment_and_Receipt.JPanels.CardPanel;
+import Payment_and_Receipt.JPanels.NetBankingPanel;
+import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.sql.*;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+
+public class Payment extends javax.swing.JFrame {
+    public int b_id, u_id, p_id ;
+    Connection con;
+    PreparedStatement pst, pst1;
+    ResultSet rs, rs1;
+    String sql, price;
+    CardLayout cardLayout;
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Payment.class.getName());
+
+    /**
+     * Creates new form Payment
+     * @param b_id
+     */
+    public Payment(int b_id) {
+        initComponents();
+        this.b_id = b_id;
+        
+        try{            
+            this.con = UserEnd.DatabaseConnection.getConnection();
+            sql = "select * from booking where booking_id = ?";
+            pst = this.con.prepareStatement(sql);
+            pst.setInt(1, b_id);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                price = rs.getString("ticket_price");
+                l2.setText(formatPrice(price));
+                this.u_id = rs.getInt("user_id");
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Booking ID not found!!");
+            }
+            
+            String s = "select username from user where user_id = ?";
+            pst1 = this.con.prepareStatement(s);
+            pst1.setInt(1, u_id);
+            rs1 = pst1.executeQuery();
+            
+            if(rs1.next()){                
+                pr1.setText(rs1.getString("username"));
+            }
+            
+            cardLayout = new CardLayout();
+            pnlCards.setLayout(cardLayout);
+            
+            UPIPanel upiPanel = new UPIPanel(this);
+            CardPanel cardPanel = new CardPanel(this);
+            NetBankingPanel netPanel = new NetBankingPanel(this);
+
+            pnlCards.add(upiPanel, "UPI");
+            pnlCards.add(cardPanel, "CARD");
+            pnlCards.add(netPanel, "NET");
+                        
+            pnlCards.setVisible(false);                                               
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }
+    
+    private String formatPrice(String p){
+        try{
+            double c = Double.parseDouble(p);
+            NumberFormat f = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
+            
+            return f.format(c);
+        }
+        catch(NumberFormatException e){
+            return "Invalid price input";
+        }
+    }
+    
+    private void something(){        
+        String selectedMethod = c1.getSelectedItem().toString();
+        try {
+            // Step 1: Generate Payment ID and get current date/time
+            String paymentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+            // Step 2: Insert payment record into the database
+            String sql3 = "INSERT INTO payment (booking_id, amount, payment_date, payment_method, status) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pst3 = con.prepareStatement(sql3);
+            pst3.setInt(1, this.b_id);
+            pst3.setDouble(2, Double.parseDouble(this.price));
+            pst3.setTimestamp(3, stringToTimestamp(paymentDate));
+            pst3.setString(4, selectedMethod);            
+            pst3.setString(5, "Completed");
+
+            pst3.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Payment successful! Your transaction has been recorded.");
+
+            // Step 3: Now, open the Receipt page
+            // Pass the payment ID and method to the Receipt constructor
+            Receipt receipt = new Receipt(this.b_id);
+            receipt.setVisible(true);
+            this.dispose(); // Close the payment window
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error recording payment: " + e.getMessage());
+        }
+    }
+    
+    private Timestamp stringToTimestamp(String s){
+        Timestamp t = null;
+        try {
+            // Use a standard SimpleDateFormat to parse the string into a java.util.Date
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            java.util.Date parsedDate = sdf.parse(s);
+
+            // Create a java.sql.Timestamp using the milliseconds from the java.util.Date
+            t = new Timestamp(parsedDate.getTime());
+        } catch (ParseException ex) {
+            // Log the error instead of just printing it
+            logger.log(java.util.logging.Level.SEVERE, "Date parsing failed", ex);
+            // Display an error message to the user
+            JOptionPane.showMessageDialog(this, "Error parsing date: " + ex.getMessage(), "Date Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return t;
+    }
+    
+    public static String generatePaymentID(Connection con) throws SQLException {
+        String sql = "SELECT payment_id FROM payment ORDER BY payment_id ASC";
+
+        try (PreparedStatement pst = con.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery()) {
+
+            int nextAvailableId = 1;
+            while (rs.next()) {
+                int currentId = rs.getInt("payment_id");
+                if (currentId != nextAvailableId) {
+                    // Found a gap, return the missing ID
+                    return String.valueOf(nextAvailableId);
+                }
+                nextAvailableId++;
+            }
+            // No gaps found, return the next ID in the sequence
+            return String.valueOf(nextAvailableId);
+        }
+    }
+    
+    
+    public void simulatePayment(String p) {
+        // Step 1: Show "Proceeding for payment" message
+        JOptionPane.showMessageDialog(this, "Proceeding for payment...", "Payment Status", JOptionPane.INFORMATION_MESSAGE);
+        
+        // Step 2: Use a Swing Timer for a delay (e.g., 2000 milliseconds = 2 seconds)
+        int delay = 2000; 
+        
+        // Timer listener that executes the success message and screen clearing
+        ActionListener taskPerformer;
+        taskPerformer = (ActionEvent evt) -> {
+            // Step 3: Show "Payment Successful!!" message
+            JOptionPane.showMessageDialog(Payment.this, "Payment Successful!!", "Payment Status", JOptionPane.INFORMATION_MESSAGE);
+            
+            // Step 4: Hide the payment panel and repaint
+            something();
+            // The timer must stop after execution
+            ((Timer)evt.getSource()).stop();
+        };
+        
+        // Create and start the Timer
+        Timer timer = new Timer(delay, taskPerformer);
+        timer.setRepeats(false); // Ensure it only runs once
+        timer.start();
+    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        titlePanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        pr1 = new javax.swing.JButton();
+        b2 = new javax.swing.JButton();
+        leftPanel = new javax.swing.JPanel();
+        downPanel = new javax.swing.JPanel();
+        rightPanel = new javax.swing.JPanel();
+        b3 = new javax.swing.JButton();
+        heading = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        main = new javax.swing.JPanel();
+        c1 = new javax.swing.JComboBox<>();
+        pnlCards = new javax.swing.JPanel();
+        l1 = new javax.swing.JLabel();
+        l2 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
+        setResizable(false);
+
+        titlePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Imprint MT Shadow", 0, 48)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("AirNexa");
+        titlePanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 110));
+
+        pr1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        pr1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pr1ActionPerformed(evt);
+            }
+        });
+        titlePanel.add(pr1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1430, 30, 350, 35));
+
+        b2.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        b2.setText("<--");
+        b2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b2ActionPerformed(evt);
+            }
+        });
+        titlePanel.add(b2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1520, 30, 75, 35));
+
+        leftPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        downPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        rightPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        b3.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        b3.setText("<--");
+        b3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b3ActionPerformed(evt);
+            }
+        });
+        rightPanel.add(b3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 75, 35));
+
+        heading.setBackground(new java.awt.Color(204, 204, 204));
+        heading.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Perpetua Titling MT", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Payment");
+        heading.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1700, 100));
+
+        main.setBackground(new java.awt.Color(255, 255, 255));
+        main.setPreferredSize(new java.awt.Dimension(1700, 700));
+        main.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        c1.setFont(new java.awt.Font("Times New Roman", 0, 28)); // NOI18N
+        c1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Payment Method", "UPI / QR Code", "Card", "Net Banking" }));
+        c1.setRenderer(new CenterAlignmentRenderer());
+        c1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                c1ActionPerformed(evt);
+            }
+        });
+        main.add(c1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 70, 350, 50));
+
+        javax.swing.GroupLayout pnlCardsLayout = new javax.swing.GroupLayout(pnlCards);
+        pnlCards.setLayout(pnlCardsLayout);
+        pnlCardsLayout.setHorizontalGroup(
+            pnlCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 450, Short.MAX_VALUE)
+        );
+        pnlCardsLayout.setVerticalGroup(
+            pnlCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 450, Short.MAX_VALUE)
+        );
+
+        main.add(pnlCards, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 140, 450, 450));
+
+        l1.setFont(new java.awt.Font("Perpetua Titling MT", 1, 24)); // NOI18N
+        l1.setForeground(new java.awt.Color(0, 0, 0));
+        l1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        l1.setText("Amount : ");
+        main.add(l1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 620, 170, 40));
+
+        l2.setFont(new java.awt.Font("Segoe UI", 0, 26)); // NOI18N
+        l2.setForeground(new java.awt.Color(0, 0, 0));
+        l2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        l2.setText(" ");
+        main.add(l2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 610, 230, 40));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(main, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(heading, javax.swing.GroupLayout.PREFERRED_SIZE, 1700, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1810, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(downPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1810, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(heading, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(main, javax.swing.GroupLayout.PREFERRED_SIZE, 767, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, 0)
+                        .addComponent(downPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void pr1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pr1ActionPerformed
+        UserEnd.profile pr = new UserEnd.profile(this.u_id,this);
+        //this.setVisible(false);
+        pr.setVisible(true);
+        this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pr1ActionPerformed
+
+    private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b2ActionPerformed
+
+    private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
+        this.setVisible(false);
+        Confirmation ob = new Confirmation(b_id);
+        ob.setVisible(true);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_b3ActionPerformed
+
+    private void c1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c1ActionPerformed
+        String choice = (String) c1.getSelectedItem();
+
+        if (choice != null) {
+            if (choice.contains("UPI")) {
+                // Show the UPI panel and make the container visible
+                cardLayout.show(pnlCards, "UPI");
+                pnlCards.setVisible(true);
+            } else if (choice.contains("Card")) {
+                // Show the Card panel and make the container visible
+                cardLayout.show(pnlCards, "CARD");
+                pnlCards.setVisible(true);                
+            } else if (choice.contains("Net")) {
+                // Show the Card panel and make the container visible
+                cardLayout.show(pnlCards, "NET");
+                pnlCards.setVisible(true);                
+            } else {
+                // If "Select Payment Method" or any other option is chosen, hide the panel
+                pnlCards.setVisible(false);
+            }
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_c1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new Payment(1).setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b2;
+    private javax.swing.JButton b3;
+    private javax.swing.JComboBox<String> c1;
+    private javax.swing.JPanel downPanel;
+    private javax.swing.JPanel heading;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel l1;
+    private javax.swing.JLabel l2;
+    private javax.swing.JPanel leftPanel;
+    private javax.swing.JPanel main;
+    private javax.swing.JPanel pnlCards;
+    private javax.swing.JButton pr1;
+    private javax.swing.JPanel rightPanel;
+    private javax.swing.JPanel titlePanel;
+    // End of variables declaration//GEN-END:variables
+}
