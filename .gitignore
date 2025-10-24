@@ -21,3 +21,31 @@
 hs_err_pid*
 replay_pid*
 
+# === NetBeans build artifacts ===
+/build/
+/dist/
+/nbbuild/
+/nbdist/
+/nbproject/private/
+/firstapplication/build/
+/firstapplication/nbproject/private/
+
+# === Gradle/Maven (if used) ===
+/target/
+/.gradle/
+/out/
+/mvn/
+
+# === IDE metadata ===
+/.idea/
+*.iml
+.vscode/
+
+# === OS-specific ===
+Thumbs.db
+ehthumbs.db
+
+# === Sensitive config files ===
+config.properties
+/Airnexa/dist/
+/Airnexa/build/
