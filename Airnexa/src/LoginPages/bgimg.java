@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 /**
  *
- * @author User
+ * @author Subbhojyoti
  */
 public class bgimg extends JPanel {
      private final Image bgImage;

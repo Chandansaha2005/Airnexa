@@ -8,9 +8,11 @@ import java.awt.Image;
 import java.sql.*;
 import javax.swing.*;
 
+
+
 /**
  *
- * @author User
+ * @author Subhojyoti
  */
 public class Forgot extends javax.swing.JFrame {
     int otpCode = 0;

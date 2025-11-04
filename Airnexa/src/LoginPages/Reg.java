@@ -9,7 +9,7 @@ import java.sql.*;
 import javax.swing.*;
 /**
  *
- * @author User
+ * @author Subhojyoti
  */
 public class Reg extends javax.swing.JFrame {
     Connection con;

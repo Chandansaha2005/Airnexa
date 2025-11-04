@@ -10,7 +10,7 @@ import javax.swing.*;
 
 /**
  *
- * @author User
+ * @author Subhojyoti
  */
 public class Login extends javax.swing.JFrame {
     Connection con;
