@@ -1357,7 +1357,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
         System.out.println("Flights clicked");
 
         try {
-            con = airnexa.DatabaseConnection.getConnection();
+            con = DatabaseConnection.getConnection();
             String sql = "SELECT * FROM flight";
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -1593,7 +1593,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
     private void loadBookingsData() {
         try {
-            con = airnexa.DatabaseConnection.getConnection();
+            con = DatabaseConnection.getConnection();
             String sql = "SELECT * FROM booking";
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -1638,7 +1638,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
 
     private void loadFlightData() {
         try {
-            con = airnexa.DatabaseConnection.getConnection();
+            con = DatabaseConnection.getConnection();
             String sql = "SELECT * FROM flight";
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -1687,7 +1687,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private void addFlightToDB(String flightNo, String airline, String source, String destination,
             Timestamp depTime, Timestamp arrTime, int seats, double price) {
         try {
-            con = airnexa.DatabaseConnection.getConnection();
+            con = DatabaseConnection.getConnection();
             String sql = "INSERT INTO flight (flight_no, airline, depart_from, departure_time, arrive_at, arrival_time, seat_availability, ticket_price) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
 
@@ -1716,7 +1716,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
     private void updateFlightInDB(int flightId, String flightNo, String airline, String source,
             String destination, Timestamp depTime, Timestamp arrTime, int seats, double price) {
         try {
-            con = airnexa.DatabaseConnection.getConnection();
+            con = DatabaseConnection.getConnection();
             String sql = "UPDATE flight SET flight_no=?, airline=?, depart_from=?, departure_time=?, "
                     + "arrive_at=?, arrival_time=?, seat_availability=?, ticket_price=? WHERE flight_id=?";
             PreparedStatement pst = con.prepareStatement(sql);
@@ -1749,7 +1749,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
             // Get the flight ID from selected row
             int flightId = (Integer) flightTable.getValueAt(selectedRow, 0);
 
-            con = airnexa.DatabaseConnection.getConnection();
+            con = DatabaseConnection.getConnection();
             String sql = "DELETE FROM flight WHERE flight_id = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, flightId);
@@ -1892,7 +1892,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
      */
     private void loadFlightStats() {
         try {
-            con = airnexa.DatabaseConnection.getConnection();
+            con = DatabaseConnection.getConnection();
             stmt = con.createStatement();
 
             // Total flights
@@ -1944,7 +1944,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
      */
     private void loadBookingStats() {
         try {
-            con = airnexa.DatabaseConnection.getConnection();
+            con = DatabaseConnection.getConnection();
             stmt = con.createStatement();
 
             // Total bookings
@@ -1992,7 +1992,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
      */
     private void loadUserStats() {
         try {
-            con = airnexa.DatabaseConnection.getConnection();
+            con = DatabaseConnection.getConnection();
             stmt = con.createStatement();
 
             // Try different possible table names for users
@@ -2076,7 +2076,7 @@ public class AdminDashBoard extends javax.swing.JFrame {
      */
     private void loadRevenueStats() {
         try {
-            con = airnexa.DatabaseConnection.getConnection();
+            con = DatabaseConnection.getConnection();
             stmt = con.createStatement();
 
             // Total revenue

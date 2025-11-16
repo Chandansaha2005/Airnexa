@@ -45,7 +45,7 @@ public class UserDashboard extends javax.swing.JFrame {
         try{
             this.con = UserEnd.DatabaseConnection.getConnection();
 //            this.u_id = u_id;
-            this.u_id = 3;
+            this.u_id = 33;
             
             loadData();
             

@@ -18,7 +18,7 @@ public class DatabaseConnection {
   
     private static final String URL = "jdbc:mysql://localhost:3306/airline?useSSL=false&allowPublicKeyRetrieval=true";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "S@tyam2006";
+    private static final String PASSWORD = "1234567k";
     
     public static Connection getConnection() throws SQLException {
         try {
