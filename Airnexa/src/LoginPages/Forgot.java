@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package LoginPages;
-
 import java.awt.Image;
 import java.sql.*;
 import javax.swing.*;
@@ -11,6 +10,7 @@ import javax.swing.*;
 
 
 /**
+ * 
  *
  * @author Subhojyoti
  */
